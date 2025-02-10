@@ -1,5 +1,8 @@
 # Support information
 
+> [!NOTE]
+> Make sure to use the spacing indicated below or in the page templates as improper spacing and layout of values can cause issues in the how the page is generated
+
 ## GCWeb Jekyll page template example
 
 ```yaml
@@ -27,6 +30,20 @@ script: "https://domain.ca/your-awesome-script.js" # Optional. You can add custo
 ---
 
 <p>Content that would be displayed on the page</p>
+```
+
+## Additional GCWeb Jekyll page template settings (Optional)
+
+```yaml
+breadcrumbs: false                                 # Disable the breadcrumb
+
+nositesearch: true                                 # Remove the site search
+nomenu: true                                       # Remove the top menu
+feedback: false                                    # Remove the feedback
+share: false                                       # Remove the share button
+noFooterMain: true                                 # Remove the footer
+noFooterContextual: true                           # Remove the Contextual footer
+noFooterCorporate: true                            # Remove the Corporate footer
 ```
 
 ## Resources
