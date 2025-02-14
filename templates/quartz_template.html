@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Portal (Quartz) - [Test 01]</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--
+        <base href="/gol-ged/mima/quartz/">
+    -->
+    <link rel="icon" type="image/x-icon" href="https://www.canada.ca/etc/designs/canada/wet-boew/assets/favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&amp;subset=latin,latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic&amp;subset=latin,latin-ext" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cra-design.github.io/portal/templates/css/styles.css" media="all">
+    <link rel="stylesheet" href="https://cra-design.github.io/portal/templates/css/portal.css">
+    <noscript>
+        <link rel="stylesheet" href="https://cra-design.github.io/portal/templates/css/styles.css">
+    </noscript>
+</head>
+
+<body class="mat-typography" style="--theme-color: #26374A;">
+    <app-root ng-version="17.3.2">
+        <div class="quartz-demo default-theme"><quartz-header>
+                <nav class="quartz-skip-links">
+                    <ul id="wb-tphp" class="wb-init wb-disable-inited">
+                        <li class="quartz-slc visible-sm visible-md visible-lg"><a tabindex="0" class="quartz-sl"> Skip to main content </a></li>
+                        <li class="quartz-slc visible-sm visible-md visible-lg"><a tabindex="0" class="quartz-sl"> Skip to "About government" </a></li>
+                    </ul>
+                </nav>
+                <div class="toolbar hidden-print">
+                    <mat-toolbar class="mat-toolbar mat-toolbar-single-row">
+                        <div>
+                            <img src="https://www.canada.ca/etc/designs/canada/cdts/gcweb/v5_0_2/wet-boew/assets/sig-blk-en.svg" alt="" class="header-img"><span class="quartz-invisible">Government of Canada</span>
+                        </div>
+                        <div class="header-link-wrap"><a tabindex="0" lang="fr" class="header-links">Français</a></div>
+                    </mat-toolbar>
+                </div>
+                <div>
+
+
+                    <quartz-ribbon class="quartz-ribbon-wrap ng-star-inserted" style="height: 66.05px;">
+                        <div class="ribbon-spacer hidden-print ng-star-inserted" style="height: 66.05px;"></div>
+                        <mat-toolbar class="mat-toolbar hidden-print mat-elevation-z6 quartz-ribbon sticky mat-toolbar-single-row" style="top: -66.05px; left: initial; width: initial; margin-bottom: -66.05px; position: relative;">
+                            <div class="quartz-ribbon-container flex-container-row flex-100">
+                                <div class="quartz-ribbon-title flex-container-row flex-xs-auto">
+
+                                    <quartz-icon-button class="quartz-invisible quartz-sidenav-button ng-star-inserted"><button class="mat-mdc-tooltip-trigger quartz-button quartz-icon-button mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base" type="" name="" value=""><span class="mat-mdc-button-persistent-ripple mdc-icon-button__ripple"></span><mat-icon role="img" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="font"> menu </mat-icon><span class="quartz-invisible ng-star-inserted">toggle menu</span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></button></quartz-icon-button>
+
+
+
+                                    <div class="ng-star-inserted">
+                                        <p class="quartz-ribbon-agency">Canada Revenue Agency</p>
+                                        <p class="quartz-ribbon-application">My Business Account</p>
+                                    </div>
+                                </div>
+                                <div class="quartz-ribbon-content flex-auto"></div>
+                                <div class="ribbon-menu-wrap flex-auto ng-star-inserted">
+                                    <span class="ribbon-menu-trigger">
+                                        <quartz-primary-button>
+                                            <button class="quartz-button quartz-primary-button mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base" style="padding: 6px 12px 8px;">
+                                                <span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label">
+                                                    <div style="float: left;">
+                                                        <mat-icon role="img" class="ribbon-menu-profile-icon myba-rac-icon material-icons mat-ligature-font mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font"> work </mat-icon><span class="quartz-invisible"></span>
+                                                    </div>
+                                                    <div style="float: left; align-self: center;"><span class="quartz-ribbon-menu-title ng-star-inserted"> YOUR BUSINESS NAME </span><mat-icon role="img" class="ribbon-menu-expand-icon material-icons mat-ligature-font mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font"> expand_more </mat-icon>
+                                                        <p class="quartz-ribbon-menu-subtitle ng-star-inserted"> 123456789 </p>
+                                                    </div>
+                                                </span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></button>
+                                        </quartz-primary-button>
+                                        <quartz-menu-trigger class="ng-star-inserted"><span role="button" aria-label="button" class="mat-mdc-menu-trigger" aria-haspopup="menu" aria-expanded="false"></span></quartz-menu-trigger>
+                                        <quartz-menu>
+                                            <mat-menu class="ng-star-inserted"></mat-menu></quartz-menu>
+                                    </span>
+                                </div>
+                            </div>
+                        </mat-toolbar>
+                    </quartz-ribbon>
+
+
+
+                    <quartz-sidenav class="quartz-sidenav ng-star-inserted">
+                        <mat-sidenav-container autosize="true" class="mat-drawer-container mat-sidenav-container mat-drawer-transition">
+                            <div class="mat-drawer-backdrop ng-star-inserted"></div>
+                            <div class="cdk-visually-hidden cdk-focus-trap-anchor" aria-hidden="true"></div>
+
+                            <mat-sidenav tabindex="-1" class="mat-drawer mat-sidenav quartz-sidenav hidden-print mat-drawer-side mat-drawer-opened ng-star-inserted" style="transform: none; visibility: visible;">
+                                <div class="mat-drawer-inner-container">
+
+
+
+
+                                    <quartz-sidenav-menu class="ng-star-inserted">
+                                        <div class="sidenav-subhead ng-star-inserted"><span class="quartz-invisible"></span> Business number (BN)
+                                        </div>
+                                        <mat-nav-list role="navigation" class="mat-mdc-nav-list mat-mdc-list-base mdc-list" aria-disabled="false">
+
+
+                                            <form novalidate="" class="ng-invalid ng-star-inserted ng-touched ng-dirty">
+                                                <quartz-form-field-group controlname="dropdown">
+                                                    <quartz-form-field-label class="quartz-invisible ng-star-inserted"><span class="quartz-label-title"><label id="quartz-dropdown-1-input-label" for="quartz-dropdown-1" class="ng-star-inserted"><span class="ng-star-inserted"><span><strong>Lorem </strong></span></span><quartz-sr-field-error class="ng-star-inserted"></quartz-sr-field-error></label></span></quartz-form-field-label>
+                                                    <div class="formFieldContainer ng-star-inserted">
+                                                        <quartz-dropdown formcontrolname="dropdown" class="ng-untouched ng-pristine ng-invalid">
+                                                            <select class="quartz-dropdown quartz-dropdown-invalid" id="quartz-dropdown-1" style="display: block; width: 100%;">
+                                                                <option value="" class="placeholder ng-star-inserted">Select One</option>
+                                                                <option selected="selected" value="123456789" class="ng-star-inserted"> 12345 6789 </option>
+                                                            </select>
+                                                        </quartz-dropdown>
+                                                    </div>
+                                                    <quartz-field-error aria-hidden="false" class="ng-star-inserted">
+                                                    </quartz-field-error>
+                                                </quartz-form-field-group>
+                                            </form>
+                                        </mat-nav-list>
+                                    </quartz-sidenav-menu>
+
+                                    <quartz-rule class="ng-star-inserted">
+                                        <div class="horizontal"></div>
+                                    </quartz-rule>
+
+
+                                    <quartz-sidenav-menu class="ng-star-inserted">
+                                        <div class="sidenav-subhead ng-star-inserted"><span class="quartz-invisible"></span> Navigation </div>
+                                        <mat-nav-list role="navigation" class="mat-mdc-nav-list mat-mdc-list-base mdc-list" aria-disabled="false">
+
+
+
+                                            <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><mat-icon role="img" class="mat-icon notranslate sidenav-button-icon material-icons mat-ligature-font mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="font"> home </mat-icon><span class="mdc-button__label"><span class="ng-star-inserted"> Overview </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+                                            <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/item02"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><mat-icon role="img" class="mat-icon notranslate sidenav-button-icon material-icons mat-ligature-font mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="font"> work </mat-icon><span class="mdc-button__label"><span class="ng-star-inserted"> Profile </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+
+
+
+                                            <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/item03"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label"><span class="ng-star-inserted"> Menu item 3 </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+
+                                            <quartz-sidenav-expandable-button class="ng-star-inserted"><mat-expansion-panel class="quartz-expand-sidenav ng-star-inserted">
+                                                    <mat-expansion-panel-header role="button" tabindex="-2" class="quartz-expand-header ng-star-inserted" id="mat-expansion-panel-header-16" aria-controls="cdk-accordion-child-0" aria-expanded="false" aria-disabled="false"><span class="mat-content mat-content-hide-toggle"><a href="javascript:void(0)" class="mdc-button mat-mdc-button flex-container-row quartz-button quartz-expand-sidenav-button quartz-sidenav-button mat-unthemed mat-mdc-button-base"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label"><span width="100%" class="ng-star-inserted"> More services </span></span><mat-icon role="img" class="expansion-icon material-icons mat-ligature-font mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font"> chevron_right </mat-icon><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></span></mat-expansion-panel-header>
+                                                    <div role="region" class="mat-expansion-panel-content ng-trigger ng-trigger-bodyExpansion" id="cdk-accordion-child-0" aria-labelledby="mat-expansion-panel-header-16" style="height: 0px; visibility: hidden;">
+                                                        <div class="mat-expansion-panel-body">
+                                                            <mat-nav-list role="navigation" class="mat-mdc-nav-list mat-mdc-list-base mdc-list" aria-disabled="false">
+                                                                <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/subitem1"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label"><span class="ng-star-inserted"> Trust account registration </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+                                                                <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/subitem2"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label"><span class="ng-star-inserted"> Open a non-resident tax account </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+                                                                <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/subitem3"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label"><span class="ng-star-inserted"> Create a COVID-19 Rent subsidies (CERS) number </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+                                                            </mat-nav-list>
+                                                        </div>
+                                                    </div>
+                                                </mat-expansion-panel>
+                                            </quartz-sidenav-expandable-button>
+
+
+
+
+
+                                        </mat-nav-list>
+                                    </quartz-sidenav-menu>
+
+
+                                    <quartz-rule class="ng-star-inserted">
+                                        <div class="horizontal"></div>
+                                    </quartz-rule>
+
+
+                                    <quartz-sidenav-menu class="ng-star-inserted">
+                                        <div class="sidenav-subhead ng-star-inserted"><span class="quartz-invisible"></span> Correspondence
+                                        </div>
+                                        <mat-nav-list role="navigation" class="mat-mdc-nav-list mat-mdc-list-base mdc-list" aria-disabled="false">
+                                            <quartz-sidenav-expandable-button class="ng-star-inserted">
+                                                <mat-expansion-panel class="quartz-expand-sidenav ng-star-inserted">
+                                                    <mat-expansion-panel-header role="button" tabindex="-2" class="quartz-expand-header ng-star-inserted" id="mat-expansion-panel-header-1" aria-controls="cdk-accordion-child-1" aria-expanded="false" aria-disabled="false"><span class="mat-content mat-content-hide-toggle"><a href="javascript:void(0)" class="mdc-button mat-mdc-button flex-container-row quartz-button quartz-expand-sidenav-button quartz-sidenav-button mat-unthemed mat-mdc-button-base"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label"><span width="100%" class="ng-star-inserted"> Menu item 5 </span></span><mat-icon role="img" class="expansion-icon material-icons mat-ligature-font mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font"> chevron_right </mat-icon><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></span></mat-expansion-panel-header>
+                                                    <div role="region" class="mat-expansion-panel-content ng-trigger ng-trigger-bodyExpansion" id="cdk-accordion-child-1" aria-labelledby="mat-expansion-panel-header-1" style="height: 0px; visibility: hidden;">
+                                                        <div class="mat-expansion-panel-body">
+                                                            <mat-nav-list role="navigation" class="mat-mdc-nav-list mat-mdc-list-base mdc-list" aria-disabled="false">
+
+                                                                <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/subitem4"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label"><span class="ng-star-inserted"> Sub menu item 4 </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+
+                                                            </mat-nav-list>
+                                                        </div>
+                                                    </div>
+                                                </mat-expansion-panel>
+                                            </quartz-sidenav-expandable-button>
+                                            <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/item08"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><mat-icon role="img" class="mat-icon notranslate sidenav-button-icon material-icons mat-ligature-font mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="font"> mail </mat-icon><span class="mdc-button__label"><span class="ng-star-inserted"> Mail </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+                                            <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/item09"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><mat-icon role="img" class="mat-icon notranslate sidenav-button-icon material-icons mat-ligature-font mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="font"> description </mat-icon><span class="mdc-button__label"><span class="ng-star-inserted"> Submit documents </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+                                            <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/item10"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label"><span class="ng-star-inserted"> Connect with us </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+                                            <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/item11"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label"><span class="ng-star-inserted"> Message centre </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+                                            <quartz-sidenav-button class="ng-star-inserted"><a class="mdc-button mat-mdc-button quartz-button quartz-sidenav-button mat-unthemed mat-mdc-button-base" href="#/item12"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label"><span class="ng-star-inserted"> Audit enquiries </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></a></quartz-sidenav-button>
+
+                                        </mat-nav-list>
+                                    </quartz-sidenav-menu>
+
+
+
+                                </div>
+                            </mat-sidenav>
+
+
+                            <div class="cdk-visually-hidden cdk-focus-trap-anchor" aria-hidden="true"></div>
+                            <mat-sidenav-content class="mat-drawer-content mat-sidenav-content" style="margin-left: 280px;">
+                                <div class="container">
+                                    <div class="settings-panel">
+                                        <mat-drawer-container class="mat-drawer-container">
+                                            <mat-drawer-content class="mat-drawer-content">
+                                                <router-outlet></router-outlet>
+                                                <app-header-demo class="ng-star-inserted">
+<!--
+<quartz-sub-ribbon>
+    <div class="quartz-sub-ribbon hidden-print"><mat-toolbar class="mat-toolbar mat-toolbar-single-row">
+            <div tabindex="0" class="quartz-sub-ribbon-link-wrap"><a class="back-button"><mat-icon role="img" class="ribbon-icon material-icons mat-ligature-font mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font">chevron_left</mat-icon><span class="quartz-invisible ng-star-inserted"> Back to</span><span class="title-link"> Back </span></a></div>
+        </mat-toolbar></div>
+</quartz-sub-ribbon>-->
+                                                    <quartz-page-title>
+                                                        <div class="page-heading flex-container-column">
+                                                            <div class="page-title-top flex-container-row">
+                                                                <div class="page-title-wrap">
+                                                                    <h1 id="wb-cont" tabindex="0"><span class="small-heading ng-star-inserted"> small Heading </span><!--<mat-icon role="img" class="mat-icon notranslate sidenav-button-icon material-icons mat-ligature-font mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="font"> home </mat-icon>--><span class="page-title">Overview</span></h1>
+                                                                    <span class="hidden-print help-buttons ng-star-inserted"><quartz-link-button class="right page-help ng-star-inserted"><button class="quartz-button quartz-link-button mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base" type="" name="" value="_https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-businesses/business-account/help-business-account.html"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span>
+                                                                                <mat-icon role="img" class="mat-icon notranslate icon-left material-icons mat-ligature-font mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="font"> help </mat-icon><span class="mdc-button__label"><span class="ng-star-inserted"> Help </span><span class="quartz-invisible ng-star-inserted"> Note: This help button will open in a new window or tab. </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></button></quartz-link-button></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="page-title-bottom flex-container-column">
+                                                                <div class="page-title-bottom-wrap flex-container-row">
+                                                                    <quartz-as-of-date class="app-as-of flex-40 ng-star-inserted">
+                                                                        <div class="text-left small">
+                                                                            <p class="as-of ng-star-inserted">As of October 28, 2024</p>
+                                                                        </div>
+                                                                    </quartz-as-of-date>
+                                                                    <div class="print-save hidden-print flex-60 ng-star-inserted">
+                                                                        <div class="right flex-container-row">
+                                                                            <div class="ng-star-inserted"><quartz-link-button class="right"><button class="quartz-button quartz-link-button mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base" type="" name="" value="print"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label"><span class="ng-star-inserted"> Print/Save </span><span class="quartz-invisible ng-star-inserted"> Button: Print the current page or save it as a PDF document. </span></span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></button></quartz-link-button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--<div class="page-title-client-name ng-star-inserted">
+                                                        <p>Client: Nick Jones</p>
+                                                    </div>-->
+                                                                <div class="page-title-bn ng-star-inserted">
+                                                                    <p>Business number: 123456789</p>
+                                                                </div>
+                                                                <div class="page-title-bn ng-star-inserted">
+                                                                    <p>Business name: Jon Doe</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </quartz-page-title>
+
+
+
+
+
+
+                                                </app-header-demo>
+
+
+
+<!--  PANEL START -->
+                                                <app-panel-demo class="ng-star-inserted">
+                                                    <quartz-panel class="ng-star-inserted">
+                                                        <mat-card appearance="outlined" class="mat-mdc-card mdc-card elevated quartz-panel mat-mdc-card-outlined mdc-card--outlined">
+                                                            <mat-card-title class="mat-mdc-card-title matCardTitle flex-container-row">
+                                                                <div>
+                                                                    <h2 class="panelTitle panelflex-start ng-star-inserted"><span class="ng-star-inserted">Lorem ipsum dolor </span></h2>
+                                                                </div>
+                                                                <div></div>
+                                                            </mat-card-title>
+                                                            <mat-card-content class="mat-mdc-card-content default-quartz-panel"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu vestibulum dui. Etiam eget nunc scelerisque risus fringilla pretium. </mat-card-content>
+                                                        </mat-card>
+                                                    </quartz-panel>
+                                                </app-panel-demo>
+<!-- PANEL END -->
+<br>
+<!-- ACCORDION START -->
+
+<quartz-accordion>
+    <mat-expansion-panel hidetoggle="true" class="mat-expansion-panel quartz-accordion ng-star-inserted">
+        <mat-expansion-panel-header role="button" collapsedheight="auto" expandedheight="auto" class="mat-expansion-panel-header mat-focus-indicator quartz-accordion-panel-header ng-star-inserted" id="mat-expansion-panel-header-3" tabindex="0" aria-controls="cdk-accordion-child-3" aria-expanded="false" aria-disabled="false" style="height: auto;">
+            <span class="mat-content mat-content-hide-toggle"><mat-panel-title class="mat-expansion-panel-header-title quartz-accordion-panel-title"><mat-icon role="img" class="mat-icon notranslate quartz-accordion-expansion-indicator closed material-icons mat-ligature-font mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font"> chevron_right </mat-icon><mat-icon role="img" class="mat-icon notranslate quartz-accordion-expansion-indicator opened material-icons mat-ligature-font mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font"> expand_more </mat-icon><span class="quartz-accordion-panel-title-content"> Accordion heading text </span></mat-panel-title></span>
+        </mat-expansion-panel-header>
+        <div role="region" class="mat-expansion-panel-content ng-trigger ng-trigger-bodyExpansion" id="cdk-accordion-child-3" aria-labelledby="mat-expansion-panel-header-3" style="height: 0px; visibility: hidden;">
+            <div class="mat-expansion-panel-body"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu vestibulum dui. Etiam eget nunc </div>
+        </div>
+    </mat-expansion-panel>
+</quartz-accordion>
+
+<!-- ACCORDION END-->
+<br>
+<!-- TABS START -->
+<quartz-tabs class="quartz-tabs"><mat-tab-group class="mat-mdc-tab-group mat-primary mat-mdc-tab-group-stretch-tabs ng-star-inserted" style="--mat-tab-animation-duration: 500ms;"><mat-tab-header class="mat-mdc-tab-header"><button aria-hidden="true" type="button" tabindex="-1" class="mat-ripple mat-mdc-tab-header-pagination mat-mdc-tab-header-pagination-before mat-mdc-tab-header-pagination-disabled" disabled="">
+                <div class="mat-mdc-tab-header-pagination-chevron"></div>
+            </button>
+            <div class="mat-mdc-tab-label-container">
+                <div role="tablist" class="mat-mdc-tab-list" style="transform: translateX(0px);">
+                    <div class="mat-mdc-tab-labels">
+
+                        <div role="tab" class="mdc-tab mat-mdc-tab mat-mdc-focus-indicator ng-star-inserted mdc-tab--active mdc-tab-indicator--active" id="mat-tab-label-4-0" tabindex="0" aria-posinset="1" aria-setsize="3" aria-controls="mat-tab-content-4-0" aria-selected="true" aria-disabled="false"><span class="mdc-tab__ripple"></span>
+                            <div class="mat-ripple mat-mdc-tab-ripple"></div><span class="mdc-tab__content"><span class="mdc-tab__text-label"><quartz-tab-label class="ng-star-inserted"><span class="ng-star-inserted"> Tab 1</span></quartz-tab-label></span></span><span class="mdc-tab-indicator"><span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span></span>
+                        </div>
+
+                        <div role="tab" class="mdc-tab mat-mdc-tab mat-mdc-focus-indicator ng-star-inserted" id="mat-tab-label-4-1" tabindex="-1" aria-posinset="2" aria-setsize="3" aria-controls="mat-tab-content-4-1" aria-selected="false" aria-disabled="false"><span class="mdc-tab__ripple"></span>
+                            <div class="mat-ripple mat-mdc-tab-ripple"></div><span class="mdc-tab__content"><span class="mdc-tab__text-label"><quartz-tab-label class="ng-star-inserted"><span class="ng-star-inserted"> Tab 2</span></quartz-tab-label></span></span><span class="mdc-tab-indicator"><span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span></span>
+                        </div>
+
+                        <div role="tab" class="mdc-tab mat-mdc-tab mat-mdc-focus-indicator ng-star-inserted" id="mat-tab-label-4-2" tabindex="-1" aria-posinset="3" aria-setsize="3" aria-controls="mat-tab-content-4-2" aria-selected="false" aria-disabled="false"><span class="mdc-tab__ripple"></span>
+                            <div class="mat-ripple mat-mdc-tab-ripple"></div><span class="mdc-tab__content"><span class="mdc-tab__text-label"><quartz-tab-label class="ng-star-inserted"><span class="ng-star-inserted"> Tab 3</span></quartz-tab-label></span></span><span class="mdc-tab-indicator"><span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span></span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <button aria-hidden="true" type="button" tabindex="-1" class="mat-ripple mat-mdc-tab-header-pagination mat-mdc-tab-header-pagination-after mat-mdc-tab-header-pagination-disabled" disabled="">
+                <div class="mat-mdc-tab-header-pagination-chevron"></div>
+            </button>
+        </mat-tab-header>
+        <div class="mat-mdc-tab-body-wrapper">
+
+            <mat-tab-body role="tabpanel" class="mat-mdc-tab-body ng-star-inserted mat-mdc-tab-body-active" id="mat-tab-content-0-0" aria-labelledby="mat-tab-label-0-0" aria-hidden="false">
+                <div class="mat-mdc-tab-body-content ng-trigger ng-trigger-translateTab" style="transform: none;"><mat-card appearance="outlined" class="mat-mdc-card mdc-card mat-mdc-card-outlined mdc-card--outlined ng-star-inserted">
+                        <p class="ng-star-inserted"> dolor sit amet, consectetur adipiscing elit. Etiam eu vestibulum dui. Etiam eget nunc scelerisque risus fringilla pretium. </p>
+                    </mat-card></div>
+            </mat-tab-body>
+
+            <mat-tab-body role="tabpanel" class="mat-mdc-tab-body ng-star-inserted" id="mat-tab-content-0-1" aria-labelledby="mat-tab-label-0-1" aria-hidden="true">
+                <div class="mat-mdc-tab-body-content ng-trigger ng-trigger-translateTab" style="transform: translate3d(100%, 0px, 0px); min-height: 1px; visibility: hidden;"><mat-card appearance="outlined" class="mat-mdc-card mdc-card mat-mdc-card-outlined mdc-card--outlined ng-star-inserted">
+                    <p class="ng-star-inserted"> et gravida tristique, dui sem rutrum urna, quis posuere augue ipsum eleifend sem. Morbi eget nisl at nisl lobortis fringilla nec eget nunc. </p>
+                </mat-card></div>
+            </mat-tab-body>
+
+            <mat-tab-body role="tabpanel" class="mat-mdc-tab-body ng-star-inserted" id="mat-tab-content-0-2" aria-labelledby="mat-tab-label-0-2" aria-hidden="true">
+                <div class="mat-mdc-tab-body-content ng-trigger ng-trigger-translateTab" style="transform: translate3d(100%, 0px, 0px); min-height: 1px; visibility: hidden;"><mat-card appearance="outlined" class="mat-mdc-card mdc-card mat-mdc-card-outlined mdc-card--outlined ng-star-inserted">
+                    <p class="ng-star-inserted"> in ipsum ornare suscipit. Aenean eget libero sed quam posuere ultrices. Etiam auctor urna sodales, dapibus lectus quis, gravida ante. </p>
+                </mat-card></div>
+            </mat-tab-body>
+
+        </div>
+    </mat-tab-group></quartz-tabs>
+
+<!-- TABS END -->
+<br>
+<!-- BUTTON FOR OVERLAY START -->
+<quartz-primary-button class="ng-star-inserted">
+    <button class="quartz-button quartz-primary-button mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base" popovertarget="cdk-overlay-1"><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label">Show dialog</span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span><span class="mat-ripple mat-mdc-button-ripple"></span></button>
+</quartz-primary-button>
+<!-- BUTTON FOR OVERLAY END -->
+<br>
+<!-- Grid Test Start -->
+<!--
+<mat-grid-list cols="4" rowHeight="100px">
+    @for (tile of tiles; track tile) {
+    <mat-grid-tile
+        [colspan]="tile.cols"
+        [rowspan]="tile.rows"
+        [style.background]="tile.color">{{tile.text}}</mat-grid-tile>
+    }
+</mat-grid-list>
+-->
+
+<br>
+
+
+<mat-grid-list cols="2" rowheight="2:1" class="mat-grid-list">
+    <div>
+    <mat-grid-tile class="mat-grid-tile" rowspan="1" colspan="1" style="width: calc(50% - 0.5px);">
+        <div class="mat-grid-tile-content">B1</div>
+    </mat-grid-tile>
+    <mat-grid-tile class="mat-grid-tile" rowspan="1" colspan="1" style="width: calc(50% - 0.5px);">
+        <div class="mat-grid-tile-content">B2</div>
+    </mat-grid-tile>
+    <mat-grid-tile class="mat-grid-tile" rowspan="1" colspan="1" style="width: calc(50% - 0.5px);">
+        <div class="mat-grid-tile-content">B3</div>
+    </mat-grid-tile>
+    <mat-grid-tile class="mat-grid-tile" rowspan="1" colspan="1" style="width: calc(50% - 0.5px);">
+        <div class="mat-grid-tile-content">B4</div>
+    </mat-grid-tile>
+    </div>
+</mat-grid-list>
+
+
+<br>
+
+
+<mat-grid-list cols="2" rowheight="2:1" class="mat-grid-list" style="padding-bottom: calc(50% + 0px);">
+    <div><mat-grid-tile class="mat-grid-tile" rowspan="1" colspan="1" style="background:lightgrey; left: 0px;width: calc(50% - 0.5px);margin-top: 0px;padding-top: calc(25% - 0.5px);">
+            <div class="mat-grid-tile-content">1</div>
+        </mat-grid-tile><mat-grid-tile class="mat-grid-tile" rowspan="1" colspan="1" style="background:lightgrey; left: calc(50% + 0.5px); width: calc(50% - 0.5px); margin-top: 0px; padding-top: calc(25% - 0.5px);">
+            <div class="mat-grid-tile-content">2</div>
+        </mat-grid-tile><mat-grid-tile class="mat-grid-tile" rowspan="1" colspan="1" style="background:lightgrey; left: 0px; width: calc(50% - 0.5px); margin-top: calc(25% + 0.5px); padding-top: calc(25% - 0.5px);">
+            <div class="mat-grid-tile-content">3</div>
+        </mat-grid-tile><mat-grid-tile class="mat-grid-tile" rowspan="1" colspan="1" style="background:lightgrey; left: calc(50% + 0.5px); width: calc(50% - 0.5px); margin-top: calc(25% + 0.5px); padding-top: calc(25% - 0.5px);">
+            <div class="mat-grid-tile-content">4</div>
+        </mat-grid-tile></div>
+</mat-grid-list>
+
+
+<br>
+
+
+<mat-grid-list cols="4" rowheight="100px" class="mat-grid-list" style="height: calc(201px);">
+    <div><mat-grid-tile class="mat-grid-tile ng-star-inserted" rowspan="1" colspan="3" style="background:lightgrey; left: 0px; width: calc(75% - 0.25px); top: 0px; height: calc(100px);">
+            <div class="mat-grid-tile-content">One</div>
+        </mat-grid-tile><mat-grid-tile class="mat-grid-tile ng-star-inserted" rowspan="2" colspan="1" style="background:lightgrey; left: calc(75% + 0.75px); width: calc(25% - 0.75px); top: 0px; height: calc(201px);">
+            <div class="mat-grid-tile-content">Two</div>
+        </mat-grid-tile><mat-grid-tile class="mat-grid-tile ng-star-inserted" rowspan="1" colspan="1" style="background:lightgrey; left: 0px; width: calc(25% - 0.75px); top: calc(101px); height: calc(100px);">
+            <div class="mat-grid-tile-content">Three</div>
+        </mat-grid-tile><mat-grid-tile class="mat-grid-tile ng-star-inserted" rowspan="1" colspan="2" style="background:lightgrey; left: calc(25% + 0.25px); width: calc(50% - 0.5px); top: calc(101px); height: calc(100px);">
+            <div class="mat-grid-tile-content">Four</div>
+        </mat-grid-tile></div>
+</mat-grid-list>
+<!-- Grid Test End -->
+
+                                            </mat-drawer-content>
+
+
+                                            <quartz-version-screen-id>
+                                                <dl class="quartz-list quartz-list-description quartz-list-horizontal versionScreenId">
+                                                    <dt class="ng-star-inserted">Screen ID: </dt>
+                                                    <dd class="ng-star-inserted">AAA.BBB.123</dd>
+                                                    <dt class="ng-star-inserted"><br class="ng-star-inserted">Version:</dt>
+                                                    <dd> 2024-10-28</dd>
+                                                </dl>
+                                            </quartz-version-screen-id>
+
+
+                                        </mat-drawer-container>
+                                    </div>
+                                </div>
+                            </mat-sidenav-content>
+                        </mat-sidenav-container>
+                    </quartz-sidenav>
+
+
+
+                    <quartz-footer id="wb-info" tabindex="-1">
+                        <footer>
+                            <div class="footer flex-container hidden-print" style="background-image: url(&quot;https://www.canada.ca/etc/designs/canada/cdts/gcweb/v5_0_2/wet-boew/assets/landscape.png&quot;);">
+                                <div>
+                                    <ul class="link-wrap">
+                                        <li><a target="_blank" rel="noopener noreferrer" href="https://www.canada.ca/en/revenue-agency/services/e-services/e-services-individuals/account-individuals/about-account.html" class="footer-links-top footer-links"> About My Account <span class="quartz-invisible">Note: this link will open a new browser window</span></a></li>
+                                        <li><a target="_blank" rel="noopener noreferrer" href="https://www.canada.ca/en/revenue-agency/services/e-services/e-services-individuals/account-individuals/preview-account-terms-conditions-use.html" class="footer-links-top footer-links"> Terms and conditions for My Account <span class="quartz-invisible">Note: this link will open a new browser window</span></a></li>
+                                        <li><a target="_blank" rel="noopener noreferrer" href="https://www.canada.ca/en/revenue-agency/services/e-services/e-services-individuals/account-individuals/suggestions-account.html" class="footer-links-top footer-links"> Your suggestions <span class="quartz-invisible">Note: this link will open a new browser window</span></a></li>
+                                        <li><a target="_blank" rel="noopener noreferrer" href="https://www.canada.ca/en/revenue-agency/corporate/contact-information.html" class="footer-links-top footer-links"> Contact the CRA <span class="quartz-invisible">Note: this link will open a new browser window</span></a></li>
+                                        <li><a target="_blank" rel="noopener noreferrer" href="https://www.canada.ca/en/revenue-agency/corporate/contact-information/check-cra-processing-times.html" class="footer-links-top footer-links"> Check CRA processing times <span class="quartz-invisible">Note: this link will open a new browser window</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="footer-down-wrap hidden-print">
+                                <div class="footer-down">
+                                    <div>
+                                        <ul class="footer-links-wrap">
+                                            <li><a target="_blank" rel="noopener noreferrer" href="https://www.canada.ca/en/transparency/terms.html" class="footer-links"> Terms and conditions <span class="quartz-invisible">Note: this link will open a new browser window</span></a></li>
+                                            <li><a target="_blank" rel="noopener noreferrer" href="https://www.canada.ca/en/transparency/privacy.html" class="footer-links"> Privacy <span class="quartz-invisible">Note: this link will open a new browser window</span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="footer-img-wrap">
+                                    <img src="https://www.canada.ca/etc/designs/canada/cdts/gcweb/v5_0_2/wet-boew/assets/wmms-blk.svg" alt="Symbol of the Government of Canada" class="footer-img">
+                                </div>
+                            </div>
+                        </footer>
+                    </quartz-footer>
+                </div>
+            </quartz-header>
+        </div>
+    </app-root>
+
+<div class="quartz-invisible cdk-overlay-container" aria-hidden="true">
+
+    <div class="quartz-invisible cdk-overlay-backdrop cdk-overlay-transparent-backdrop cdk-overlay-backdrop-showing"></div>
+    <div class="quartz-invisible cdk-overlay-connected-position-bounding-box" dir="ltr" style="height: 1188.35px; width: 244.162px; align-items: flex-start; justify-content: flex-start;">
+
+
+        <div id="cdk-overlay-4" class="cdk-overlay-pane" style="position: static;">
+            <div tabindex="-1" role="menu" class="mat-mdc-menu-panel mat-mdc-elevation-specific ng-trigger ng-trigger-transformMenu mat-menu-after mat-menu-below quartz-menu mat-elevation-z8 ng-star-inserted" id="mat-menu-panel-9" style="transform-origin: left top;">
+                <div class="mat-mdc-menu-content"><quartz-menu-wrapper tabindex="0">
+                        <div>
+                            <quartz-menu-section class="quartz-ribbon-menu ng-star-inserted" tabindex="0">
+                                <quartz-menu-item class="ng-star-inserted">
+                                    <div class="quartz-button quartz-menu-button" id="quartz-menu-button-1" tabindex="0">
+                                        <div class="menu-item-content"><mat-icon role="img" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="font">person</mat-icon><span class="ng-star-inserted">Profile</span></div>
+                                    </div>
+                                </quartz-menu-item>
+                                <quartz-rule class="ng-star-inserted">
+                                    <div class="horizontal"></div>
+                                </quartz-rule>
+                            </quartz-menu-section>
+                            <quartz-menu-section class="quartz-ribbon-menu ng-star-inserted" tabindex="0">
+                                <quartz-menu-item class="ng-star-inserted">
+                                    <div class="quartz-button quartz-menu-button" id="quartz-menu-button-2" tabindex="0">
+                                        <div class="menu-item-content"><mat-icon role="img" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="font">logout</mat-icon><span class="ng-star-inserted">Sign out</span></div>
+                                    </div>
+                                </quartz-menu-item>
+                            </quartz-menu-section>
+                        </div>
+                    </quartz-menu-wrapper>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="quartz-invisible cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"></div>
+    <div class="quartz-invisible cdk-global-overlay-wrapper" dir="ltr" style="justify-content: center; align-items: center;">
+
+        <div id="cdk-overlay-1" class="cdk-overlay-pane dialogContainer mat-mdc-dialog-panel" style="width: 90%; min-width: 598px; max-width: 800px; position: static;">
+            <div tabindex="0" class="cdk-visually-hidden cdk-focus-trap-anchor" aria-hidden="true"></div>
+            <mat-dialog-container tabindex="-1" class="mat-mdc-dialog-container mdc-dialog cdk-dialog-container mat-mdc-dialog-container-with-actions mdc-dialog--open" id="mat-mdc-dialog-1" role="dialog" aria-modal="true" style="--mat-dialog-transition-duration: 150ms;">
+                <div class="mdc-dialog__container">
+                    <div class="mat-mdc-dialog-surface mdc-dialog__surface"><quartz-dialog-content class="component mat-mdc-dialog-component-host ng-star-inserted">
+                            <div class="quartz-dialog">
+                                <div class="quartz-dialog-title"><quartz-icon-button mat-dialog-close="" class="closed ng-star-inserted" type="button"><button class="mat-mdc-tooltip-trigger quartz-button quartz-icon-button mdc-icon-button mat-mdc-icon-button grey-text-color mat-unthemed mat-mdc-button-base" type="" name="" value=""><span class="mat-mdc-button-persistent-ripple mdc-icon-button__ripple"></span><mat-icon role="img" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="font"> close </mat-icon><span class="quartz-invisible ng-star-inserted">closes popup window</span><span
+                                                class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span><span class="mat-ripple mat-mdc-button-ripple"></span></button></quartz-icon-button>
+                                    <div class="mat-mdc-dialog-title"><span class="icn ng-star-inserted"><span class="quartz-invisible">Information Dialog</span><mat-icon role="img" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font">info</mat-icon></span>
+                                        <h2 class="mat-mdc-dialog-title"> Lorem ipsum </h2>
+                                    </div>
+                                </div><mat-dialog-content class="mat-mdc-dialog-content mdc-dialog__content"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu vestibulum dui. Etiam eget nunc scelerisque risus fringilla pretium. Suspendisse hendrerit, leo et gravida tristique, dui sem rutrum urna, quis posuere augue ipsum eleifend sem. Morbi eget nisl at nisl lobortis fringilla nec eget nunc. Nullam tempus nulla in ipsum ornare suscipit. Aenean eget libero sed quam posuere ultrices. Etiam auctor urna sodales, dapibus lectus quis, gravida ante. Phasellus faucibus quis leo ac venenatis. Ut in mi aliquet, dictum justo ut, condimentum nisi. Donec ac sagittis tortor. Donec ut aliquam justo, nec faucibus velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacus erat, suscipit vel tristique id, aliquet non neque. Nunc in viverra tellus. Sed accumsan pharetra sodales.
+                                </mat-dialog-content><mat-dialog-actions class="mat-mdc-dialog-actions mdc-dialog__actions ng-star-inserted"><quartz-secondary-button mat-dialog-close="" _nghost-ng-c1079452757="" type="button"><button mat-button="" class="quartz-button quartz-secondary-button mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base" type="" name="" value=""><span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span><span class="mdc-button__label">Close</span><span class="mat-mdc-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span></button></quartz-secondary-button></mat-dialog-actions>
+                            </div>
+                        </quartz-dialog-content>
+                    </div>
+                </div>
+            </mat-dialog-container>
+            <div tabindex="0" class="cdk-visually-hidden cdk-focus-trap-anchor" aria-hidden="true"></div>
+        </div>
+
+
+    </div>
+</div>
+<script src="https://cra-design.github.io/portal/templates/scripts/portal.js"></script>
+</body>
+</html>
