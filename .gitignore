@@ -1,0 +1,6 @@
+_site
+.frontmatter
+.jekyll-cache
+.vscode
+frontmatter.json
+gemfile.lock
