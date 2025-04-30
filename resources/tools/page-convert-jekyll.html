@@ -79,7 +79,9 @@ noFooterMain: true
             <textarea id="sourcetext" name="content" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="23"></textarea>
             <!-- END Result textarea -->
         </div>
-<button id="cleartextbtn" class="btn btn-default mrgn-bttm-md mrgn-lft-0"><strong>Clear text</strong></button>
+<!--
+        <button id="cleartextbtn" class="btn btn-default mrgn-bttm-md mrgn-lft-0"><strong>Clear text</strong></button>
+-->
     </fieldset>
 </form>
 
@@ -266,11 +268,13 @@ noFooterMain: true
         e.preventDefault();
     });
 
+/*
     // clear text button
     document.getElementById("cleartextbtn").addEventListener("click", function () {
         document.getElementById("sourcetext").value = "";
     });
-
+*/
+    
     // Developer options ON button
     document.getElementById("dev_on").addEventListener("click", function () {
         localStorage.setItem("gitCRATemplateDevOptions", true);
