@@ -93,7 +93,7 @@ noFooterMain: true
     </li>
     <li class="btn-group"><button id="dev_clear" class="btn btn-default" type="button"><strong>Clear</strong></button></li>
 </ul>
-<p>Current status: <strong><span id="devStatus">None</span</strong>></p>
+<p>Current status: <strong><span id="devStatus">blank</span</strong></p>
 <script defer="defer">
     "use strict";
 
@@ -284,13 +284,13 @@ noFooterMain: true
     // Developer options CLEAR button
     document.getElementById("dev_clear").addEventListener("click", function (event) {
         localStorage.removeItem("gitCRATemplateDevOptions");
-        document.getElementById("devStatus").innerHTML = "None";
+        document.getElementById("devStatus").innerHTML = "blank";
     });
 
     // Initalize the developer option status on the page
     switch (localStorage.getItem("gitCRATemplateDevOptions")) {
         case "true":
-            document.getElementById("devStatus").innerHTML = "OFF";
+            document.getElementById("devStatus").innerHTML = "ON";
             break;
         case "false":
             document.getElementById("devStatus").innerHTML = "OFF";
