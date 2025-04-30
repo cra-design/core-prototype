@@ -55,6 +55,8 @@ noFooterMain: true
     </fieldset>
 </form>
 
+<br>
+
 <form id="results" role="form" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded" method="get" action="#">
     <fieldset class="legend-brdr-bttm">
         <legend class="mrgn-bttm-md">Converted result</legend>
@@ -272,7 +274,7 @@ noFooterMain: true
         let evt = document.createEvent("MouseEvents"),
             cb = document.getElementById("submitbutton");
 
-        if (page_url !== "") {
+        if (page_url !== null && page_url !== "") {
             document.getElementById("uri").value = decodeURIComponent(page_url);
             evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
             cb.dispatchEvent(evt);
