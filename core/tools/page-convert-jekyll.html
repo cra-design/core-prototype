@@ -59,9 +59,9 @@ noFooterMain: true
 
 <form id="results" role="form" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded" method="get" action="#">
     <fieldset class="legend-brdr-bttm">
-        <legend class="mrgn-bttm-md">Converted result</legend>
+        <legend class="mrgn-bttm-md">Result</legend>
         <div class="form-group">
-            <label for="sourcetext" id="contentlabel" class="control-label form-input-lg"><span class="field-name">Source:</span></label>
+            <label for="sourcetext" id="contentlabel" class="control-label form-input-lg"><span class="field-name h3">Source:</span></label>
             <!-- START Result textarea -->
             <textarea id="sourcetext" name="content" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="23"></textarea>
             <!-- END Result textarea -->
@@ -72,7 +72,7 @@ noFooterMain: true
 
 <hr>
 <h2>Developer options:</h2>
-<p>Enabling will make the developer options visible on all pages that use the Github "testing purposes only" banner</p>
+<p>Enabling will make the developer options visible on all pages that use the Github "testing purposes only" banner.</p>
 <ul class="btn-toolbar list-inline" role="toolbar">
     <li class="btn-group">
       <button id="dev_on" class="btn btn-default" type="button"><strong>On</strong></button>
@@ -190,7 +190,7 @@ noFooterMain: true
             for (let scriptElm of scriptElms) {
                 if (scriptElm.innerHTML !== "") {
                     // Gets any <script> tags outside of the <main> tag and adds them to the bottom of the content
-                    if (document.getElementById("addScripts").checked === "true") {
+                    if (document.getElementById("addScripts").checked === true) {
                         scriptData = scriptData + scriptElm.outerHTML + "\n";
                     }
                 } else if (islinkInTemplate(fileLinkArr.scriptsRegEx, scriptElm.src) === false) {
@@ -206,7 +206,7 @@ noFooterMain: true
             }
             outputVal = outputVal + "---\n\n";
             // Adds any <style> tags outside of the <main> tag and adds them to the bottom of the content
-            if (document.getElementById("addStyles").checked === "true") {
+            if (document.getElementById("addStyles").checked === true) {
                 styleElms = pageTemp.getElementsByTagName("style");
                 for (let styleElm of styleElms) {
                     outputVal = outputVal + styleElm.outerHTML + "\n";
