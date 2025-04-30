@@ -1,0 +1,24 @@
+{
+    "stylsheetsRegEx": [
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/css\\/noscript\\.min\\.css$",
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/css\\/theme\\.min\\.css$",
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2022-06-banff\\.min\\.css$",
+        "^https:\\/\\/use\\.fontawesome\\.com\\/releases\\/",
+        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2024-09-kejimkujik\\.css$"
+    ],
+    "scriptsRegEx": [
+        "^(https:)?\\/\\/ajax\\.googleapis\\.com\\/ajax\\/libs\\/jquery\\/[0-9\\.]+?\\/jquery\\.min\\.js$", 
+        "^(https:)?\\/\\/assets\\.adobedtm\\.com\\/", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\.clientlibs\\/clientlibs\\/granite\\/jquery\\.min\\.js$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\.clientlibs\\/clientlibs\\/granite\\/utils\\.min\\.js$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/cdts\\/gcweb\\/v[0-9_]+?\\/cdts\\/compiled\\/soyutils\\.js$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/cdts\\/gcweb\\/v[0-9_]+?\\/cdts\\/compiled\\/wet-en\\.js$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/clientlib-publish\\.min\\.js$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/js\\/ep-pp\\.min\\.js$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/js\\/theme\\.min\\.js$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/js\\/wet-boew\\.min\\.js$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2022-06-banff\\.min\\.js$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2024-09-kejimkujik\\.min\\.js$", 
+        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2024-09-kejimkujik\\.js$"
+    ]
+}
