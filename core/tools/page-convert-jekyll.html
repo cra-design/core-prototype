@@ -93,6 +93,7 @@ noFooterMain: true
     </li>
     <li class="btn-group"><button id="dev_clear" class="btn btn-default" type="button"><strong>Clear</strong></button></li>
 </ul>
+<p>Current status: <strong><span id="devStatus">None</span</strong>></p>
 <script defer="defer">
     "use strict";
 
@@ -271,18 +272,31 @@ noFooterMain: true
     // Developer options ON button
     document.getElementById("dev_on").addEventListener("click", function (event) {
         localStorage.setItem("gitCRATemplateDevOptions", true);
+        document.getElementById("devStatus").innerHTML = "ON";
     });
 
     // Developer options OFF button
     document.getElementById("dev_off").addEventListener("click", function (event) {
         localStorage.setItem("gitCRATemplateDevOptions", false);
+        document.getElementById("devStatus").innerHTML = "OFF";
     });
 
     // Developer options CLEAR button
     document.getElementById("dev_clear").addEventListener("click", function (event) {
         localStorage.removeItem("gitCRATemplateDevOptions");
+        document.getElementById("devStatus").innerHTML = "None";
     });
 
+    // Initalize the developer option status on the page
+    switch (localStorage.getItem("gitCRATemplateDevOptions")) {
+        case "true":
+            document.getElementById("devStatus").innerHTML = "OFF";
+            break;
+        case "false":
+            document.getElementById("devStatus").innerHTML = "OFF";
+            break;
+    }
+    
     // Initalize function once page finishes loading
     document.addEventListener('DOMContentLoaded', async function () {
         let evt = document.createEvent("MouseEvents"),
