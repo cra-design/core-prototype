@@ -93,19 +93,6 @@ noFooterMain: true
             return params[field];
         },
         page_url = getQueryEl("uri"),
-        getMetaDataVal = function (pageObj, fieldname, metafield, addQuote) {
-            // Add a Metadata value as a string
-            let encloseQuote = "",
-                metaEl = pageObj.getElementsByName(metafield);
-
-            if (addQuote === true) {
-                encloseQuote = "\"";
-            }
-            if (metaEl !== null && metaEl.length > 0 && "content" in metaEl[0] === true) {
-                return fieldname + ": " + encloseQuote + metaEl[0].content + encloseQuote + "\n";
-            }
-            return "";
-        },
         generatePage = async function (layout, pageURI) {
             // Generates the GCWeb/Jekyll page
             const parser = new DOMParser();
@@ -124,6 +111,19 @@ noFooterMain: true
                 pagelang = pageObj.getElementsByTagName("html")[0].lang,
                 breadCrumbObj = pageObj.getElementsByClassName("breadcrumb"),
                 pagedetailsEl = pageObj.getElementsByClassName("pagedetails"),
+                getMetaDataVal = function getMetaDataVal(pageObj, fieldname, metafield, addQuote) {
+                    // Add a Metadata value as a string
+                    let encloseQuote = "",
+                        metaEl = pageObj.getElementsByName(metafield);
+
+                    if (addQuote === true) {
+                        encloseQuote = "\"";
+                    }
+                    if (metaEl !== null && metaEl.length > 0 && "content" in metaEl[0] === true) {
+                        return fieldname + ": " + encloseQuote + metaEl[0].content.trim() + encloseQuote + "\n";
+                    }
+                    return "";
+                },
                 islinkInTemplate = function islinkInTemplate(linkArr, checkURL) {
                     // Checks if the <script> or <link> css file is in the JSON file to be ignored from adding to the page 
                     return linkArr.some(function (linkStr) {
@@ -139,7 +139,7 @@ noFooterMain: true
             }
             // Adds title
             if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                outputVal = outputVal + "title: \"" + pageTitleObj.content + "\"\n";
+                outputVal = outputVal + "title: \"" + pageTitleObj.content.trim() + "\"\n";
             }
             // Adds description
             outputVal = outputVal + getMetaDataVal(pageObj, "description", "dcterms.description", true);
@@ -172,7 +172,7 @@ noFooterMain: true
                         if (breadLink.textContent.toLowerCase() === "canada.ca") {
                             return;
                         }
-                        outputVal = outputVal + "  - title: \"" + breadLink.textContent + "\"\n    link: \"" + breadLink.href + "\"\n";
+                        outputVal = outputVal + "  - title: \"" + breadLink.textContent.trim() + "\"\n    link: \"" + breadLink.href + "\"\n";
                     });
                 }
             }
@@ -203,7 +203,7 @@ noFooterMain: true
                 outputVal = outputVal + "feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n";
 //                }
                 // Adds originating URL as sourceurl
-                outputVal = outputVal + "soureceurl:\n  - title: \"" + pageTitleObj.content + "\"\n    link: \"" + pageURI + "\"\n";
+                outputVal = outputVal + "soureceurl:\n  - title: \"" + pageTitleObj.content.trim() + "\"\n    link: \"" + pageURI + "\"\n";
             }
             outputVal = outputVal + "---\n\n";
             // Adds any <style> tags outside of the <main> tag and adds them to the bottom of the content
