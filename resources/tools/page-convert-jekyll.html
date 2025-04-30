@@ -251,7 +251,9 @@ noFooterMain: true
     // submit button
     document.getElementById("submitbutton").addEventListener("click", async function (e) {
         document.getElementById("sourcetext").value = "";
-        document.getElementById("sourcetext").value = await generatePage(document.getElementById("layout").value, document.getElementById("uri").value);
+        if (document.getElementById("uri").value !== "") {
+            document.getElementById("sourcetext").value = await generatePage(document.getElementById("layout").value, document.getElementById("uri").value);
+        }
         e.stopPropagation();
         e.preventDefault();
 
