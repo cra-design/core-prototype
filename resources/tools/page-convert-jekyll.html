@@ -101,6 +101,7 @@ noFooterMain: true
     "use strict";
 
     let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/data/template-links.json", 
+        pageDomain = "https://canada.ca",
         getQueryEl = function getQueryEl(field) {
             // Get a querystring value
             const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -115,7 +116,7 @@ noFooterMain: true
     document.getElementById("submitbutton").addEventListener("click", async function (e) {
         document.getElementById("sourcetext").value = "";
         if (document.getElementById("uri").value !== "") {
-            document.getElementById("sourcetext").value = await generatePage(document.getElementById("uri").value, jsonFilePath, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked);
+            document.getElementById("sourcetext").value = await generatePage(document.getElementById("uri").value, jsonFilePath, pageDomain, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked);
         }
         e.stopPropagation();
         e.preventDefault();
