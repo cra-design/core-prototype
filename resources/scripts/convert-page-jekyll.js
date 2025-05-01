@@ -1,6 +1,6 @@
     "use strict";
 
-    let generatePage = async function (pageURI, jsonFilePath, layout, includeScripts, includeStyles) {
+    var generatePage = async function (pageURI, jsonFilePath, layout, includeScripts, includeStyles) {
             // Generates the GCWeb/Jekyll page
             const parser = new DOMParser();
             let outputVal, altlangObj, breadcrumbLinks, cssLinks, styleElms, scriptElms, mainCode, headerElms, 
