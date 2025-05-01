@@ -12,7 +12,7 @@
                 data = await $.get(pageURI)
                     .fail(function (jqXHR, textStatus, errorThrown) {
                         // Handle error
-                        console.error("Error:", textStatus, errorThrown);
+                        console.log("Error: [likely cause - origin is blocked due to CORS policy: No 'Access-Control-Allow-Origin]");
                         return null; // Or handle the error and return a default value
                  }), 
 //                regexLinkData = await $.get(jsonFilePath), 
