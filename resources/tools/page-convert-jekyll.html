@@ -10,6 +10,10 @@ share: false
 noFooterContextual: true
 noFooterCorporate: true
 noFooterMain: true
+script:
+  - https://www.canada.ca/etc/designs/canada/wet-boew/js/ep-pp.min.js
+  - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2024-09-kejimkujik.js
+  - https://cra-design.github.io/core-prototype/resources/scripts/convert-page-jekyll.js
 ---
 
 <br>
@@ -96,8 +100,7 @@ noFooterMain: true
     <li class="btn-group"><button id="dev_clear" class="btn btn-default" type="button"><strong>Clear</strong></button></li>
 </ul>
 <p>Current status: <strong><span id="devStatus">blank</span></strong></p>
-<script src="https://cra-design.github.io/core-prototype/resources/scripts/convert-page-jekyll.js" defer="defer"></script>
-<script defer="defer">
+<script>
     "use strict";
 
     let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/data/template-links.json", 
