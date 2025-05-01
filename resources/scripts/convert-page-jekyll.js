@@ -2,25 +2,26 @@
 
     "use strict";
 
-    let generatePage = async function generatePage(pageURI, jsonFilePath, rootDomain, layout, includeScripts, includeStyles) {
+    let generatePage = async function generatePage(pageURIStr, jsonFilePath, layout, includeScripts, includeStyles) {
             const parser = new DOMParser();
             let outputVal, altlangObj, breadcrumbLinks, cssLinks, styleElms, scriptElms, mainCode, headerElms, 
-                scriptData = "",
+                scriptData = "", 
+                pageURI = new URL(pageURIStr), 
                 absUrlRegEx = new RegExp("((?:<[a-z]+?\\s[^>]*?)(?:(?:href|src|cite|longdesc|action|formaction|poster|icon|manifest|srcset|data(?:-[a-z\\-]+)?)=['\"]))(\\/(?:[^\\/]{1}[^\'\"]+?))(?=['\"][^>]*?>)", "giv"),
                 data = await $.get(pageURI), 
 //                regexLinkData = await $.get(jsonFilePath), 
                 fileLinkArr = await $.get(jsonFilePath), 
 //                fileLinkArr = JSON.parse(regexLinkData), 
-                result = data.replace(absUrlRegEx, "$1" + rootDomain + "$2"),
-                pageObj = parser.parseFromString(result, "text/html"),
-                pageTemp = pageObj.cloneNode(true),
-                pageTitleObj = pageObj.querySelector("meta[name=dcterms\\.title]"),
-                pagelang = pageObj.getElementsByTagName("html")[0].lang,
-                breadCrumbObj = pageObj.getElementsByClassName("breadcrumb"),
-                pagedetailsEl = pageObj.getElementsByClassName("pagedetails"),
+                result = data.replace(absUrlRegEx, "$1" + pageURI.protocol + "//" + pageURI.hostname + "$2"), 
+                pageObj = parser.parseFromString(result, "text/html"), 
+                pageTemp = pageObj.cloneNode(true), 
+                pageTitleObj = pageObj.querySelector("meta[name=dcterms\\.title]"), 
+                pagelang = pageObj.getElementsByTagName("html")[0].lang, 
+                breadCrumbObj = pageObj.getElementsByClassName("breadcrumb"), 
+                pagedetailsEl = pageObj.getElementsByClassName("pagedetails"), 
                 getMetaDataVal = function getMetaDataVal(pageObj, fieldname, metafield, addQuote) {
                     // Add a Metadata value as a string
-                    let encloseQuote = "",
+                    let encloseQuote = "", 
                         metaEl = pageObj.getElementsByName(metafield);
 
                     if (addQuote === true) {
