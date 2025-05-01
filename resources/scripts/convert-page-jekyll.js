@@ -2,11 +2,10 @@
 
     "use strict";
 
-    let generatePage = async function generatePage(pageURI, jsonFilePath, layout, includeScripts, includeStyles) {
+    let generatePage = async function generatePage(pageURI, jsonFilePath, rootDomain, layout, includeScripts, includeStyles) {
             const parser = new DOMParser();
             let outputVal, altlangObj, breadcrumbLinks, cssLinks, styleElms, scriptElms, mainCode, headerElms, 
                 scriptData = "",
-                rootDomain = "https://canada.ca",
                 absUrlRegEx = new RegExp("((?:<[a-z]+?\\s[^>]*?)(?:(?:href|src|cite|longdesc|action|formaction|poster|icon|manifest|srcset|data(?:-[a-z\\-]+)?)=['\"]))(\\/(?:[^\\/]{1}[^\'\"]+?))(?=['\"][^>]*?>)", "giv"),
                 data = await $.get(pageURI), 
 //                regexLinkData = await $.get(jsonFilePath), 
