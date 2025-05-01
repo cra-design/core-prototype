@@ -4,11 +4,17 @@
 
     let generatePage = async function generatePage(pageURIStr, jsonFilePath, layout, includeScripts, includeStyles) {
             const parser = new DOMParser();
-            let outputVal, altlangObj, breadcrumbLinks, cssLinks, styleElms, scriptElms, mainCode, headerElms, 
+            let altlangObj, breadcrumbLinks, cssLinks, styleElms, scriptElms, mainCode, headerElms, 
+                outputVal = "", 
                 scriptData = "", 
                 pageURI = new URL(pageURIStr), 
                 absUrlRegEx = new RegExp("((?:<[a-z]+?\\s[^>]*?)(?:(?:href|src|cite|longdesc|action|formaction|poster|icon|manifest|srcset|data(?:-[a-z\\-]+)?)=['\"]))(\\/(?:[^\\/]{1}[^\'\"]+?))(?=['\"][^>]*?>)", "giv"),
-                data = await $.get(pageURI), 
+                data = await $.get(pageURI)
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        // Handle error
+                        console.error("Error:", textStatus, errorThrown);
+                        return null; // Or handle the error and return a default value
+                 }), 
 //                regexLinkData = await $.get(jsonFilePath), 
                 fileLinkArr = await $.get(jsonFilePath), 
 //                fileLinkArr = JSON.parse(regexLinkData), 
@@ -40,6 +46,9 @@
                     }, checkURL);
                 };
 
+            if (data === null) {
+                return outputVal;
+            }
             outputVal = "---\n";
             // Adds layout
             if (layout !== "") {
