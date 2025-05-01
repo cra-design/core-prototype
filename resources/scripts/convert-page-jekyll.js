@@ -1,7 +1,8 @@
+// Generates the GCWeb/Jekyll page
+
     "use strict";
 
-    var generatePage = async function (pageURI, jsonFilePath, layout, includeScripts, includeStyles) {
-            // Generates the GCWeb/Jekyll page
+    let generatePage = async function generatePage(pageURI, jsonFilePath, layout, includeScripts, includeStyles) {
             const parser = new DOMParser();
             let outputVal, altlangObj, breadcrumbLinks, cssLinks, styleElms, scriptElms, mainCode, headerElms, 
                 scriptData = "",
@@ -120,6 +121,18 @@
                     outputVal = outputVal + styleElm.outerHTML + "\n";
                 }
             }
+            // Removes page details section 
+             for (var i = pagedetailsEl.length - 1; i >= 0; i = i - 1) {
+                 pagedetailsEl[i].remove();
+             }
+             // Removes <h1> if layout is not "without-h1"
+             if (pageObj.getElementsByTagName("main").length > 0) {
+                 mainCode = pageObj.getElementsByTagName("main");
+                 if (layout !== "without-h1") {
+                     headerElms = mainCode[0].getElementsByTagName("h1");
+                     if (headerElms.length > 0 && headerElms[0].parentNode.tagName.toLowerCase() === "div" && headerElms[0].parentNode.children.length === 1) {
+                         headerElms[0].parentNode.remove();
+                     } else {
                         headerElms[0].remove();
                     }
                 }
