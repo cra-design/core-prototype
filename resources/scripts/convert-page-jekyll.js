@@ -5,7 +5,9 @@
     let generatePage = async function generatePage(pageURIStr, jsonFilePath, layout, includeScripts, includeStyles) {
             const parser = new DOMParser();
             let altlangObj, breadcrumbLinks, cssLinks, styleElms, scriptElms, mainCode, headerElms, 
-                outputVal = "", 
+                yamlOutput = "", 
+                styleData = "", 
+                htmlOutput = "", 
                 scriptData = "", 
                 pageURI = new URL(pageURIStr), 
                 absUrlRegEx = new RegExp("((?:<[a-z]+?\\s[^>]*?)(?:(?:href|src|cite|longdesc|action|formaction|poster|icon|manifest|srcset|data(?:-[a-z\\-]+)?)=['\"]))(\\/(?:[^\\/]{1}[^\'\"]+?))(?=['\"][^>]*?>)", "giv"),
@@ -44,28 +46,61 @@
                         let linkRegEx = new RegExp(linkStr, "iv");
                         return linkRegEx.test(decodeURIComponent(checkURL.trim()).toLowerCase());
                     }, checkURL);
+                }, 
+                removeElmChild = function clearObjChild(pageObj, tagName) {
+                    const tagObj = pageObj.getElementsByTagName(tagName);
+
+                    if (tagObj.length > 0) {
+                        tagObj[0].innerHTML = "";
+                    }
+                }, 
+                removeElmAttr = function removeElmAttr(pageObj, tagName) {
+                    const tagObj = pageObj.getElementsByTagName(tagName);
+                    let attributes;
+
+                    if (tagObj.length > 0) {
+                        attributes = Array.from(tagObj[0].attributes);
+                        attributes.forEach(attr => tagObj[0].removeAttribute(attr.name));
+                    }
+                }, 
+                removeElmSib = function removeSiblings(pageObj, tagName) {
+                    const tagObj = pageObj.getElementsByTagName(tagName);
+                    let children, 
+                        parent = null;
+
+                    if (tagObj.length > 0) {
+                        parent = tagObj[0].parentNode;
+                    }
+
+                    if (parent !== null) {
+                        children = Array.from(parent.children);
+                        children.forEach(child => {
+                            if (child !== tagObj[0]) {
+                                child.remove();
+                            }
+                        });
+                    }
                 };
 
             if (data === null) {
-                return outputVal;
+                return yamlOutput;
             }
-            outputVal = "---\n";
             // Adds layout
             if (layout !== "") {
-                outputVal = outputVal + "layout: " + layout + "\n";
+                yamlOutput = yamlOutput + "layout: " + layout + "\n";
             }
             // Adds title
             if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                outputVal = outputVal + "title: \"" + pageTitleObj.content.trim() + "\"\n";
+                yamlOutput = yamlOutput + "title: \"" + pageTitleObj.content.trim() + "\"\n";
             }
             // Adds description
-            outputVal = outputVal + getMetaDataVal(pageObj, "description", "dcterms.description", true);
+            yamlOutput = yamlOutput + getMetaDataVal(pageObj, "description", "dcterms.description", true);
             // Adds subject
-            outputVal = outputVal + getMetaDataVal(pageObj, "subject", "dcterms.subject", true);
+            yamlOutput = yamlOutput + getMetaDataVal(pageObj, "subject", "dcterms.subject", true);
             // Adds keywords
-            outputVal = outputVal + getMetaDataVal(pageObj, "keywords", "keywords", true);
+            yamlOutput = yamlOutput + getMetaDataVal(pageObj, "keywords", "keywords", true);
             if (pageObj.getElementById("wb-so") !== null) {
-                outputVal = outputVal + "auth:\n  type: \"contextual\"\n  label: \"Sign in\"\n  labelExtended: \"CRA sign in\"\n  link: \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n";
+                yamlOutput = yamlOutput + "auth:\n  type: \"contextual\"\n  label: \"Sign in\"\n  labelExtended: \"CRA sign in\"\n  link: \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n";
             }
             // Adds alternate language link
             if (pagelang === "fr") {
@@ -74,22 +109,22 @@
                 altlangObj = pageObj.querySelector("link[rel=alternate][hreflang=fr]");
             }
             if (altlangObj !== null && typeof altlangObj !== "undefined") {
-                outputVal = outputVal + "altLangPage: \"" + altlangObj.href + "\"\n";
+                yamlOutput = yamlOutput + "altLangPage: \"" + altlangObj.href + "\"\n";
             }
             // Adds date modified
-            outputVal = outputVal + getMetaDataVal(pageObj, "dateModified", "dcterms.modified", false);
+            yamlOutput = yamlOutput + getMetaDataVal(pageObj, "dateModified", "dcterms.modified", false);
             // Adds date issued
-            outputVal = outputVal + getMetaDataVal(pageObj, "dateIssued", "dcterms.issued", false);
+            yamlOutput = yamlOutput + getMetaDataVal(pageObj, "dateIssued", "dcterms.issued", false);
             // Adds breadcrumbs
             if (typeof breadCrumbObj !== "undefined" && breadCrumbObj.length > 0) {
                 breadcrumbLinks = breadCrumbObj[0].querySelectorAll("a");
                 if (breadcrumbLinks.length > 1) {
-                    outputVal = outputVal + "breadcrumbs: # By default the Canada.ca crumbs is already set\n";
+                    yamlOutput = yamlOutput + "breadcrumbs: # By default the Canada.ca crumbs is already set\n";
                     breadcrumbLinks.forEach(function addBreadCrumb(breadLink) {
                         if (breadLink.textContent.toLowerCase() === "canada.ca") {
                             return;
                         }
-                        outputVal = outputVal + "  - title: \"" + breadLink.textContent.trim() + "\"\n    link: \"" + breadLink.href + "\"\n";
+                        yamlOutput = yamlOutput + "  - title: \"" + breadLink.textContent.trim() + "\"\n    link: \"" + breadLink.href + "\"\n";
                     });
                 }
             }
@@ -100,7 +135,7 @@
             cssLinks = pageTemp.querySelectorAll("link[rel=stylesheet]");
             for (let cssLink of cssLinks) {
                 if (islinkInTemplate(fileLinkArr.stylsheetsRegEx, cssLink.href) === false) {
-                    outputVal = outputVal + "css: \"" + cssLink.href + "\"\n";
+                    yamlOutput = yamlOutput + "css: \"" + cssLink.href + "\"\n";
                 }
             }
             // Adds links to script files
@@ -112,41 +147,45 @@
                         scriptData = scriptData + scriptElm.outerHTML + "\n";
                     }
                 } else if (islinkInTemplate(fileLinkArr.scriptsRegEx, scriptElm.src) === false) {
-                    outputVal = outputVal + "script: \"" + scriptElm.src + "\"\n";
+                    yamlOutput = yamlOutput + "script: \"" + scriptElm.src + "\"\n";
                 }
             }
             if (pageTitleObj !== null && "content" in pageTitleObj === true) {
 //                if (document.querySelector("[data-ajax-replace=/etc/designs/canada/wet-boew/assets/feedback/page-feedback-en.html]").length > 0) {
-                outputVal = outputVal + "feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n";
+                yamlOutput = yamlOutput + "feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n";
 //                }
                 // Adds originating URL as sourceurl
-                outputVal = outputVal + "soureceurl:\n  - title: \"" + pageTitleObj.content.trim() + "\"\n    link: \"" + pageURI + "\"\n";
+                yamlOutput = yamlOutput + "soureceurl:\n  - title: \"" + pageTitleObj.content.trim() + "\"\n    link: \"" + pageURI + "\"\n";
             }
-            outputVal = outputVal + "---\n\n";
             // Adds any <style> tags outside of the <main> tag and adds them to the bottom of the content
             if (includeStyles === true) {
                 styleElms = pageTemp.getElementsByTagName("style");
                 for (let styleElm of styleElms) {
-                    outputVal = outputVal + styleElm.outerHTML + "\n";
+                    styleData = styleData + styleElm.outerHTML + "\n";
                 }
             }
             // Removes page details section 
-             for (var i = pagedetailsEl.length - 1; i >= 0; i = i - 1) {
-                 pagedetailsEl[i].remove();
-             }
-             // Removes <h1> if layout is not "without-h1"
-             if (pageObj.getElementsByTagName("main").length > 0) {
-                 mainCode = pageObj.getElementsByTagName("main");
-                 if (layout !== "without-h1") {
-                     headerElms = mainCode[0].getElementsByTagName("h1");
-                     if (headerElms.length > 0 && headerElms[0].parentNode.tagName.toLowerCase() === "div" && headerElms[0].parentNode.children.length === 1) {
-                         headerElms[0].parentNode.remove();
-                     } else {
+            for (var i = pagedetailsEl.length - 1; i >= 0; i = i - 1) {
+                pagedetailsEl[i].remove();
+            }
+            // Removes <h1> if layout is not "without-h1"
+            mainCode = pageObj.getElementsByTagName("main");
+            if (mainCode.length > 0) {
+                if (layout !== "without-h1") {
+                    headerElms = mainCode[0].getElementsByTagName("h1");
+                    if (headerElms.length > 0 && headerElms[0].parentNode.tagName.toLowerCase() === "div" && headerElms[0].parentNode.children.length === 1) {
+                        headerElms[0].parentNode.remove();
+                    } else {
                         headerElms[0].remove();
                     }
                 }
-                outputVal = outputVal + mainCode[0].innerHTML.trim() + "\n";
+                removeElmAttr(pageObj, "html");
+                removeElmAttr(pageObj, "head");
+                removeElmChild(pageObj, "head");
+                removeElmAttr(pageObj, "body");
+                removeElmAttr(pageObj, "main");
+                removeElmSib(pageObj, "main");
+                htmlOutput = mainCode[0].innerHTML.trim() + "\n";
             }
-            outputVal = outputVal + scriptData;
-            return outputVal;
+            return { "yamlCode": yamlOutput, "htmlCode": htmlOutput, "cssCode": styleData, "scriptCode": scriptData};
         };
