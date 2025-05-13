@@ -20,6 +20,13 @@ script:
 ---
 
 <br>
+<section class="alert alert-info">
+    <h2>Note:</h2>
+    <ul>
+        <li>Pages with <strong>subways</strong> normally use a <strong>layout</strong> of <code>without-h1</code> </li>
+        <li>Pages with <strong>most requested section</strong> should use a <strong>layout</strong> of <code>no-container</code></li>
+    </ul>
+</section>
 <section>
     <details>
         <summary class="h4">Creating a bookmarklet to launch the convert page to GCWeb/Jekyll page tool</summary>
@@ -130,7 +137,7 @@ script:
         if (document.getElementById("uri").value !== "") {
             pageData = convert(await getPageObject(document.getElementById("uri").value), await getFileLinkList(jsonFilePath), document.getElementById("uri").value, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked);
             if (document.getElementById("usePrettier").checked === true) {
-                htmlMain = await prettier.format(pageData.htmlCode, {
+                htmlMain = await prettier.format(pageData.cssCode + pageData.htmlCode + "\n" + pageData.scriptCode, {
                     "parser": "html",
                     "plugins": [prettierPlugins.estree, prettierPlugins.html],
                     "arrowParens": "always",
@@ -152,10 +159,10 @@ script:
                     "vueIndentScriptAndStyle": true
                 });
             } else {
-                htmlMain = pageData.htmlCode;
+                htmlMain = pageData.cssCode + pageData.htmlCode + "\n" + pageData.scriptCode;
             }
              
-            document.getElementById("sourcetext").value = "---\n" + pageData.yamlCode + "---\n\n" + pageData.cssCode + htmlMain + "\n" + pageData.scriptCode;
+            document.getElementById("sourcetext").value = "---\n" + pageData.yamlCode + "---\n\n" + htmlMain;
         }
         e.stopPropagation();
         e.preventDefault();
