@@ -13,7 +13,7 @@ noFooterMain: true
 script:
   - https://www.canada.ca/etc/designs/canada/wet-boew/js/ep-pp.min.js
   - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2024-09-kejimkujik.js
-  - https://cra-design.github.io/core-prototype/resources/scripts/convert-page-jekyll.js
+  - https://cra-design.github.io/core-prototype/resources/scripts/page-convert-jekyll.js
   - https://unpkg.com/prettier@3.5.3/standalone.js
   - https://unpkg.com/prettier@3.5.3/plugins/estree.js
   - https://unpkg.com/prettier@3.5.3/plugins/html.js
@@ -131,11 +131,13 @@ script:
     // submit button
     document.getElementById("submitbutton").addEventListener("click", async function (e) {
         let htmlMain, 
-            pageData = "";
+            pageData = "", 
+            convertObj = await outputPage.getPageObject(document.getElementById("uri").value), 
+            fileLinkList = await outputPage.getFileLinkList(jsonFilePath);
 
         document.getElementById("sourcetext").value = "";
         if (document.getElementById("uri").value !== "") {
-            pageData = convert(await getPageObject(document.getElementById("uri").value), await getFileLinkList(jsonFilePath), document.getElementById("uri").value, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked);
+            pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("uri").value, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked).pagedata();
             if (document.getElementById("usePrettier").checked === true) {
                 htmlMain = await prettier.format(pageData.cssCode + pageData.htmlCode + "\n" + pageData.scriptCode, {
                     "parser": "html",
