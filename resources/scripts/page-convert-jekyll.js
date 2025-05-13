@@ -22,9 +22,9 @@ let outputPage = (function outputPage() {
             return parser.parseFromString(result, "text/html");
         }, 
         "getFileLinkList": async function getFileLinkList(jsonFilePath) {
-            let regexLinkData = await $.get(jsonFilePath), 
-                fileLinkArr = JSON.parse(regexLinkData);
-           // let fileLinkArr = await $.get(jsonFilePath);
+           // let regexLinkData = await $.get(jsonFilePath), 
+               // fileLinkArr = JSON.parse(regexLinkData);
+            let fileLinkArr = await $.get(jsonFilePath);
 
             return  fileLinkArr;
         }, 
