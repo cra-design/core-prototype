@@ -72,9 +72,9 @@
                                 headerElms[0].remove();
                             }
                         }
-                        return mainCode[0].outerHTML.trim();
+                        return mainCode[0].innerHTML.trim();
                     }
-                    return cleanObj.outerHTML.trim();
+                    return cleanObj.innerHTML.trim();
                 };
 
             if (noMainPageObj.getElementsByTagName("main").length > 0) {
