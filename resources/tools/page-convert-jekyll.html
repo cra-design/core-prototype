@@ -155,7 +155,7 @@ script:
                 htmlMain = pageData.htmlCode;
             }
              
-            document.getElementById("sourcetext").value = "---\n" + pageCode.yamlCode + "---\n\n" + pageCode.cssCode + htmlMain + "\n" + pageCode.scriptCode;
+            document.getElementById("sourcetext").value = "---\n" + pageData.yamlCode + "---\n\n" + pageData.cssCode + htmlMain + "\n" + pageData.scriptCode;
         }
         e.stopPropagation();
         e.preventDefault();
