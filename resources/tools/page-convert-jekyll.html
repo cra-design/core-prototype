@@ -15,10 +15,8 @@ script:
   - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2024-09-kejimkujik.js
   - https://cra-design.github.io/core-prototype/resources/scripts/convert-page-jekyll.js
   - https://unpkg.com/prettier@3.5.3/standalone.js
-  - https://unpkg.com/prettier@3.5.3/plugins/babel.js
   - https://unpkg.com/prettier@3.5.3/plugins/estree.js
   - https://unpkg.com/prettier@3.5.3/plugins/html.js
-
 ---
 
 <br>
@@ -62,7 +60,7 @@ script:
                         <input id="addScripts" type="checkbox" checked="checked" value="true">
                         <label for="addScripts">Include all inline <code>&lt;script&gt;</code> tags</label>
                     </li>
-                    <li class="wb-inv checkbox mrgn-lft-md">
+                    <li class="checkbox mrgn-lft-md">
                         <input id="usePrettier" type="checkbox" checked="checked" value="true">
                         <label for="usePrettier">format HTML (Prettier)</label>
                     </li>
@@ -125,14 +123,39 @@ script:
 
     // submit button
     document.getElementById("submitbutton").addEventListener("click", async function (e) {
-        let pageCode = "";
+        let htmlMain, 
+            pageData = "";
 
         document.getElementById("sourcetext").value = "";
         if (document.getElementById("uri").value !== "") {
-            pageCode = await generatePage(document.getElementById("uri").value, jsonFilePath, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked);
-//          if (document.getElementById("usePrettier").checked === true) {
-//          }
-            document.getElementById("sourcetext").value = "---\n" + pageCode.yamlCode + "---\n\n" + pageCode.cssCode + pageCode.htmlCode + "\n" + pageCode.scriptCode;
+            pageData = convert(await getPageObject(document.getElementById("uri").value), await getFileLinkList(jsonFilePath), document.getElementById("uri").value, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked);
+            if (document.getElementById("usePrettier").checked === true) {
+                htmlMain = await prettier.format(pageData.htmlCode, {
+                    "parser": "html",
+                    "plugins": [prettierPlugins.estree, prettierPlugins.html],
+                    "arrowParens": "always",
+                    "bracketSameLine": false,
+                    "bracketSpacing": false, 
+                    "embeddedLanguageFormatting": "auto", 
+                    "endOfLine": "crlf", 
+                    "htmlWhitespaceSensitivity": "css",
+                    "jsxSingleQuote": false,
+                    "objectWrap": "collapse",
+                    "printWidth": Infinity,
+                    "ProseWrap": "never", 
+                    "quoteProps": "consistent",
+                    "singleAttributePerLine": false,
+                    "singleQuote": false,
+                    "tabWidth": 4,
+                    "trailingComma": "none",
+                    "useTabs": false,
+                    "vueIndentScriptAndStyle": true
+                });
+            } else {
+                htmlMain = pageData.htmlCode;
+            }
+             
+            document.getElementById("sourcetext").value = "---\n" + pageCode.yamlCode + "---\n\n" + pageCode.cssCode + htmlMain + "\n" + pageCode.scriptCode;
         }
         e.stopPropagation();
         e.preventDefault();
