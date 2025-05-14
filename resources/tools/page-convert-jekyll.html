@@ -165,6 +165,9 @@ script:
             }
              
             document.getElementById("sourcetext").value = "---\n" + pageData.yamlCode + "---\n\n" + htmlMain;
+            document.getElementById("sourcetext").focus();
+            document.getElementById("sourcetext").selectionStart = 0;
+            document.getElementById("sourcetext").selectionEnd = 0;
         }
         e.stopPropagation();
         e.preventDefault();
