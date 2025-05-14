@@ -13,7 +13,7 @@ noFooterMain: true
 script:
   - https://www.canada.ca/etc/designs/canada/wet-boew/js/ep-pp.min.js
   - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2024-09-kejimkujik.js
-  - https://cra-design.github.io/core-prototype/resources/scripts/page-convert-jekyll.js
+  - https://cra-design.github.io/core-prototype/resources/tools/jekyll-converter/scripts/page-convert-jekyll.js
   - https://unpkg.com/prettier@3.5.3/standalone.js
   - https://unpkg.com/prettier@3.5.3/plugins/estree.js
   - https://unpkg.com/prettier@3.5.3/plugins/html.js
@@ -120,7 +120,7 @@ script:
 <script>
     "use strict";
 
-    let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/data/template-links.json", 
+    let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/jekyll-converter/data/template-links.json", 
         getQueryEl = function getQueryEl(field) {
             // Get a querystring value
             const params = new Proxy(new URLSearchParams(window.location.search), {
