@@ -132,10 +132,11 @@ script:
     document.getElementById("submitbutton").addEventListener("click", async function (e) {
         let htmlMain, 
             pageData = "", 
+            resultArea = document.getElementById("sourcetext"), 
             convertObj = await outputPage.getPageObject(document.getElementById("uri").value), 
             fileLinkList = await outputPage.getFileLinkList(jsonFilePath);
 
-        document.getElementById("sourcetext").value = "";
+        resultArea.value = "";
         if (document.getElementById("uri").value !== "") {
             pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("uri").value, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked).pagedata();
             if (document.getElementById("usePrettier").checked === true) {
@@ -164,10 +165,11 @@ script:
                 htmlMain = pageData.cssCode + pageData.htmlCode + "\n" + pageData.scriptCode;
             }
              
-            document.getElementById("sourcetext").value = "---\n" + pageData.yamlCode + "---\n\n" + htmlMain;
-            document.getElementById("sourcetext").focus();
-            document.getElementById("sourcetext").selectionStart = 0;
-            document.getElementById("sourcetext").selectionEnd = 0;
+            resultArea.value = "---\n" + pageData.yamlCode + "---\n\n" + htmlMain;
+            resultArea.focus();
+            resultArea.scrollTop = 0;
+            resultArea.selectionStart = 0;
+            resultArea.selectionEnd = 0;
         }
         e.stopPropagation();
         e.preventDefault();
