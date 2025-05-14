@@ -1,12 +1,18 @@
 {
     "stylsheetsRegEx": [
-        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/css\\/noscript\\.min\\.css$",
-        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/css\\/theme\\.min\\.css$",
-        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2022-06-banff\\.min\\.css$",
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/css\\/noscript\\.min\\.css$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/css\\/theme\\.min\\.css$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2022-06-banff\\.min\\.css$", 
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2023-10-mount-revelstoke\\.min\\.css$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2024-09-kejimkujik\\.min\\.css$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2025-04-nahanni\\.min\\.css$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2025-12-mille-iles\\.min\\.css$", 
         "^https:\\/\\/use\\.fontawesome\\.com\\/releases\\/", 
+        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2022-06-banff\\.css$", 
+        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2023-10-mount-revelstoke\\.css$", 
         "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2024-09-kejimkujik\\.css$", 
-        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2025-04-nahanni\\.css$"
+        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2025-04-nahanni\\.css$", 
+        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2025-12-mille-iles\\.css$"
     ],
     "scriptsRegEx": [
         "^(https:)?\\/\\/ajax\\.googleapis\\.com\\/ajax\\/libs\\/jquery\\/[0-9\\.]+?\\/jquery\\.min\\.js$", 
@@ -23,6 +29,11 @@
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2023-10-mount-revelstoke\\.min\\.js$", 
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2024-09-kejimkujik\\.min\\.js$", 
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2025-04-nahanni\\.min\\.js$", 
-        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2024-09-kejimkujik\\.js$"
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2025-12-mille-iles\\.min\\.js$", 
+        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2022-06-banff\\.js$", 
+        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2023-10-mount-revelstoke\\.js$", 
+        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2024-09-kejimkujik\\.js$", 
+        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2025-04-nahanni\\.js$", 
+        "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2025-12-mille-iles\\.js$"
     ]
 }
