@@ -234,7 +234,7 @@ let outputPage = (function outputPage() {
                     return {
                         "yamlCode": this.yaml(), 
                         "htmlCode": this.html(), 
-                        "cssCode": this.css(), 
+                        "cssCode": this.style(), 
                         "scriptCode": this.script().inline
                     };
                 }, 
