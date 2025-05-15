@@ -22,6 +22,8 @@ script:
 <br>
 <section class="alert alert-info">
     <h2>Note:</h2>
+    <p>This tool reads most of the data it uses to populate the YAML section of the template from the <code>&lt;meta&gt;</code> section of the page so if there are none or limited <code>&lt;meta&gt;</code> then some content may not be generated.</p>
+  <p>Also:</p>
     <ul>
         <li>Pages with <strong>subways</strong> normally use a <strong>layout</strong> of <code>without-h1</code> </li>
         <li>Pages with <strong>most requested section</strong> should use a <strong>layout</strong> of <code>no-container</code></li>
@@ -94,10 +96,13 @@ script:
         <div class="form-group">
             <label for="sourcetext" id="contentlabel" class="control-label form-input-lg"><span class="field-name h3">Source:</span></label>
             <!-- START Result textarea -->
-            <textarea id="sourcetext" name="content" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="20"></textarea>
+            <textarea id="sourcetext" name="content" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="19"></textarea>
             <br>
             <label for="scripttext" id="scriptlabel" class="control-label form-input-lg"><span class="field-name h3">Inline <code>&lt;scripts&gt;</code> tags:</span></label>
             <textarea id="scripttext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="10"></textarea>
+            <br>
+            <label for="redirectfiletext" id="redirectfilelabel" class="control-label form-input-lg"><span class="field-name h3">JSON code for redirect file:</span></label>
+            <textarea id="redirectfiletext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="4"></textarea>
             <!-- END Result textarea -->
         </div>
 <!--
@@ -174,6 +179,7 @@ script:
             resultArea.selectionStart = 0;
             resultArea.selectionEnd = 0;
             document.getElementById("scripttext").value = pageData.scriptCode;
+            document.getElementById("redirectfiletext").value = "    {\n      \"origin\": \"" + document.getElementById("uri").value + "\", \n      \"destination\": \"Github_URL\"\n    }, ";
         }
         e.stopPropagation();
         e.preventDefault();
