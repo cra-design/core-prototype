@@ -11,12 +11,12 @@ noFooterContextual: true
 noFooterCorporate: true
 noFooterMain: true
 script:
-  - https://www.canada.ca/etc/designs/canada/wet-boew/js/ep-pp.min.js
   - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2024-09-kejimkujik.js
   - https://cra-design.github.io/core-prototype/resources/tools/jekyll-converter/scripts/page-convert-jekyll.js
   - https://unpkg.com/prettier@3.5.3/standalone.js
   - https://unpkg.com/prettier@3.5.3/plugins/estree.js
   - https://unpkg.com/prettier@3.5.3/plugins/html.js
+#  - https://www.canada.ca/etc/designs/canada/wet-boew/js/ep-pp.min.js
 ---
 
 <br>
@@ -99,10 +99,10 @@ script:
             <textarea id="sourcetext" name="content" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="19"></textarea>
             <br>
             <label for="scripttext" id="scriptlabel" class="control-label form-input-lg"><span class="field-name h3">Inline <code>&lt;scripts&gt;</code> tags:</span></label>
-            <textarea id="scripttext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="10"></textarea>
+            <textarea id="scripttext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="8"></textarea>
             <br>
             <label for="redirectfiletext" id="redirectfilelabel" class="control-label form-input-lg"><span class="field-name h3">JSON code for redirect file:</span></label>
-            <textarea id="redirectfiletext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="4"></textarea>
+            <textarea id="redirectfiletext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="5"></textarea>
             <!-- END Result textarea -->
         </div>
 <!--
@@ -179,7 +179,7 @@ script:
             resultArea.selectionStart = 0;
             resultArea.selectionEnd = 0;
             document.getElementById("scripttext").value = pageData.scriptCode;
-            document.getElementById("redirectfiletext").value = "    {\n      \"origin\": \"" + document.getElementById("uri").value + "\", \n      \"destination\": \"Github_URL\"\n    }, ";
+            document.getElementById("redirectfiletext").value = "    {\n      \"origin\": \"" + document.getElementById("uri").value + "\", \n      \"destination\": \"Github_URL\"\n    }, \n";
         }
         e.stopPropagation();
         e.preventDefault();
