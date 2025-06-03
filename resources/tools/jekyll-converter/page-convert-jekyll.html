@@ -122,6 +122,11 @@ script:
     <li class="btn-group"><button id="dev_clear" class="btn btn-default" type="button"><strong>Clear</strong></button></li>
 </ul>
 <p>Current status: <strong><span id="devStatus">blank</span></strong></p>
+<br>
+<p>The following button will clear all localStorage for this domain.  This will clear the developer otions as well as any page edit you may have saved within this domain.</p>
+<ul class="btn-toolbar list-inline" role="toolbar">
+    <li class="btn-group"><button id="dev_clearall" class="btn btn-default" type="button"><strong>Clear domain</strong></button></li>
+</ul>
 <script>
     "use strict";
 
@@ -218,7 +223,12 @@ script:
         document.getElementById("devStatus").innerHTML = "blank";
     });
 
-    // Initalize the developer option status on the page
+    // Developer options CLEAR button
+    document.getElementById("dev_clearall").addEventListener("click", function () {
+        localStorage.clear();
+    });
+
+  // Initalize the developer option status on the page
     switch (localStorage.getItem("gitCRATemplateDevOptions")) {
         case "true":
             document.getElementById("devStatus").innerHTML = "ON";
