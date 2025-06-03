@@ -146,6 +146,7 @@ script:
         let htmlMain, 
             pageData = "", 
             resultArea = document.getElementById("sourcetext"), 
+            targetURL = new URL(document.getElementById("uri").value), 
             convertObj = await outputPage.getPageObject(document.getElementById("uri").value), 
             fileLinkList = await outputPage.getFileLinkList(jsonFilePath);
 
@@ -184,7 +185,7 @@ script:
             resultArea.selectionStart = 0;
             resultArea.selectionEnd = 0;
             document.getElementById("scripttext").value = pageData.scriptCode;
-            document.getElementById("redirectfiletext").value = "    {\n      \"origin\": \"" + document.getElementById("uri").value + "\", \n      \"destination\": \"Github_URL\"\n    }, \n";
+            document.getElementById("redirectfiletext").value = "    {\n      \"origin\": \"" + targetURL.origin + targetURL.pathname + "\", \n      \"destination\": \"Github_URL\"\n    }, \n";
         }
         e.stopPropagation();
         e.preventDefault();
