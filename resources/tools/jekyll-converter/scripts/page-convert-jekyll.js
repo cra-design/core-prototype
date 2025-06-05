@@ -205,8 +205,10 @@ let outputPage = (function outputPage() {
                 }, 
                 "sourceurl": function soureceurl() {
                     // Adds originating URL as sourceurl
+                    let pageURI = new URL(pageURIStr);
+                    
                     if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                        return "soureceurl:\n  - title: \"" + pageTitleObj.content.trim() + "\"\n    link: \"" + pageURIStr + "\"\n";
+                        return "soureceurl:\n  - title: \"" + pageTitleObj.content.trim() + "\"\n    link: \"" + pageURI.origin + pageURI.pathname + "\"\n";
                     }
                     return "";
                 }, 
