@@ -116,6 +116,7 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                         plugins: "accordion advlist anchor autolink autoresize charmap code codesample fullscreen help image importcss link lists media nonbreaking pagebreak quickbars searchreplace table visualblocks visualchars save", 
                         toolbar: "undo redo | searchreplace | blocks styles removeformat | bold code | bullist numlist table | link unlink anchor | outdent indent alignnone | hr nonbreaking charmap | visualblocks visualchars | help", 
                         inline: true, 
+                        language: "en", 
                         quickbars_image_toolbar: false, 
                         quickbars_selection_toolbar: true, 
                         quickbars_insert_toolbar: false, 
