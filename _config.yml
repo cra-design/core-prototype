@@ -20,7 +20,17 @@ assets: https://wet-boew.github.io/themes-dist
 creator:
   en: "Canada Revenue Agency"
   fr: "Agence du revenu du Canada"
-  
+
+# Custom settings
+developerOptions: false
+devOptionsLocStore: "gitCRATemplateDevOptions"
+exitByURL: false
+exitPage: "/gst-hst-business/exit-intent-e.html"
+externalOrigin: "https://www.canada.ca"
+modifiedLinkList: "/core-prototype/source/data/link-excludes.json"
+relativeExternalLinks: false
+testBanner: true
+
 # Page front matter defaults
 defaults:
   - scope:
@@ -43,13 +53,15 @@ defaults:
         links:
          - text: "Contact the CRA"
            url: "https://www.canada.ca/en/revenue-agency/corporate/contact-information.html"
+         - text: "Update your information"
+           url: "https://www.canada.ca/en/revenue-agency/services/update-information-cra.html"
          - text: "About the CRA"
            url: "https://www.canada.ca/en/revenue-agency/corporate/about-canada-revenue-agency-cra.html"
-         - text: "Compliance and enforcement"
-           url: "https://www.canada.ca/en/revenue-agency/programs/about-canada-revenue-agency-cra/compliance.html"
       css: 
         - https://use.fontawesome.com/releases/v5.15.4/css/all.css
-        - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2024-09-kejimkujik.css
+        - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2025-12-mille-iles.css
+        - /core-prototype/source/css/testing-banner.css
       script: 
-        - https://www.canada.ca/etc/designs/canada/wet-boew/js/ep-pp.min.js
-        - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2024-09-kejimkujik.js
+        - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2025-12-mille-iles.js
+        - /core-prototype/source/scripts/external-link-detour.js
+        
