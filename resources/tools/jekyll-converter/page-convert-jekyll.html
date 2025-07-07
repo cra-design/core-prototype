@@ -59,6 +59,17 @@ script:
 -->
                 </select>
             </div>
+            <fieldset class="gc-chckbxrdio form-inline mrgn-lft-md mrgn-bttm-md">
+                <legend>Front Matter type:</legend>
+                    <div class="radio label-inline">
+                        <input type="radio" name="frontmatter" id="yaml" value="yaml" checked="checked">
+                        <label for="yaml">YAML</label>
+                    </div>
+                    <div class="radio label-inline">
+                        <input type="radio" name="frontmatter" value="json" id="json">
+                        <label for="json">JSON</label>
+                    </div>
+            </fieldset>
             <fieldset class="gc-chckbxrdio">
                 <ul class="list-unstyled form-inline lst-spcd-2">
                     <li class="checkbox mrgn-lft-md">
@@ -143,16 +154,16 @@ script:
 
     // submit button
     document.getElementById("submitbutton").addEventListener("click", async function (e) {
-        let htmlMain, 
+        let htmlMain, targetURL, 
             pageData = "", 
             resultArea = document.getElementById("sourcetext"), 
-            targetURL = new URL(document.getElementById("uri").value), 
             convertObj = await outputPage.getPageObject(document.getElementById("uri").value), 
             fileLinkList = await outputPage.getFileLinkList(jsonFilePath);
 
         resultArea.value = "";
         if (document.getElementById("uri").value !== "") {
-            pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("uri").value, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked).pagedata();
+            targetURL = new URL(document.getElementById("uri").value);
+            pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("uri").value, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked, document.querySelector("input[type=radio][name=frontmatter]:checked").value).pagedata();
             if (document.getElementById("usePrettier").checked === true) {
                 htmlMain = await prettier.format(pageData.cssCode + pageData.htmlCode, {
                     "parser": "html",
