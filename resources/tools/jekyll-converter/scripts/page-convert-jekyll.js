@@ -6,20 +6,24 @@ let outputPage = (function outputPage() {
     return {
         "getPageObject": async function getPageObject(pageURIStr) {
             const parser = new DOMParser();
-            let pageURI = new URL(pageURIStr), 
+            let pageURI, data, result, 
+                absUrlRegEx = new RegExp("((?:<[a-z]+?\\s[^>]*?)(?:(?:href|src|cite|longdesc|action|formaction|poster|icon|manifest|srcset|data(?:-[a-z\\-]+)?)=['\"]))(\\/(?:[^\\/]{1}[^\'\"]+?))(?=['\"][^>]*?>)", "giv");
+
+            if (pageURIStr !== "") {
+                pageURI = new URL(pageURIStr);
                 data = await $.get(pageURI)
                     .fail(function (jqXHR, textStatus, errorThrown) {
                         // Handle error
                         console.log("Error: [likely cause - origin is blocked due to CORS policy: No 'Access-Control-Allow-Origin]");
                         return null; // Or handle the error and return a default value
-                    }), 
-                absUrlRegEx = new RegExp("((?:<[a-z]+?\\s[^>]*?)(?:(?:href|src|cite|longdesc|action|formaction|poster|icon|manifest|srcset|data(?:-[a-z\\-]+)?)=['\"]))(\\/(?:[^\\/]{1}[^\'\"]+?))(?=['\"][^>]*?>)", "giv"), 
+                    });
                 result = data.replace(absUrlRegEx, "$1" + pageURI.protocol + "//" + pageURI.hostname + "$2");
-
-            if (data === null) {
-                return "";
+                if (data === null) {
+                    return "";
+                }
+                return parser.parseFromString(result, "text/html");
             }
-            return parser.parseFromString(result, "text/html");
+            return null;
         }, 
         "getFileLinkList": async function getFileLinkList(jsonFilePath) {
            // let regexLinkData = await $.get(jsonFilePath), 
@@ -28,7 +32,9 @@ let outputPage = (function outputPage() {
 
             return  fileLinkArr;
         }, 
-        "convert": function convert(pageObj, fileLinkArr, pageURIStr, pageLayout, includeScripts, includeStyles) {
+        "convert": function convert(pageObj, fileLinkArr, pageURIStr, pageLayout, includeScripts, includeStyles, frontMatterType) {
+            const isYAML = "yaml";
+
             let pageTitleObj = pageObj.querySelector("meta[name=dcterms\\.title]"), 
                 getMetaDataContent = function getMetaDataContent(pageObj, fieldname, metafield, addQuote) {
                     // Add a Metadata value as a string
@@ -39,7 +45,11 @@ let outputPage = (function outputPage() {
                         encloseQuote = "\"";
                     }
                     if (metaEl !== null && metaEl.length > 0 && "content" in metaEl[0] === true) {
-                        return fieldname + ": " + encloseQuote + metaEl[0].content.trim() + encloseQuote + "\n";
+                        if (frontMatterType === isYAML) {
+                            return fieldname + ": " + encloseQuote + metaEl[0].content.trim() + encloseQuote + "\n";
+                        } else {
+                            return "\"" + fieldname + "\": \"" + metaEl[0].content.trim() + "\"";
+                        }
                     }
                     return "";
                 }, 
@@ -79,14 +89,22 @@ let outputPage = (function outputPage() {
                 "layout": function layout() {
                     // Adds layout
                     if (pageLayout !== "") {
-                        return "layout: " + pageLayout + "\n";
+                        if (frontMatterType === isYAML) {
+                            return "layout: " + pageLayout + "\n";
+                        } else {
+                            return "\"layout\": \"" + pageLayout + "\"";
+                        }
                     }
                     return "";
                 }, 
                 "title": function title() {
                     // Adds title
                     if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                        return "title: \"" + pageTitleObj.content.trim() + "\"\n";
+                        if (frontMatterType === isYAML) {
+                            return "title: \"" + pageTitleObj.content.trim() + "\"\n";
+                        } else {
+                            return "\"title\": \"" + pageTitleObj.content.trim() + "\"";
+                        }
                     }
                     return "";
                 }, 
@@ -105,7 +123,11 @@ let outputPage = (function outputPage() {
                 "login": function login() {
                     // generates CRA sign in button
                     if (pageObj.getElementById("wb-so") !== null) {
-                        return "auth:\n  type: \"contextual\"\n  label: \"Sign in\"\n  labelExtended: \"CRA sign in\"\n  link: \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n";
+                        if (frontMatterType === isYAML) {
+                            return "auth:\n  type: \"contextual\"\n  label: \"Sign in\"\n  labelExtended: \"CRA sign in\"\n  link: \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n";
+                        } else {
+                            return "\"auth\": [\n\"type\": \"contextual\", \n\"label\": \"Sign in\", \n\"labelExtended\": \"CRA sign in\", \n\"link\": \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n]";
+                        }
                     }
                     return "";
                 }, 
@@ -120,7 +142,11 @@ let outputPage = (function outputPage() {
                         altlangObj = pageObj.querySelector("link[rel=alternate][hreflang=fr]");
                     }
                     if (altlangObj !== null && typeof altlangObj !== "undefined") {
-                        return "altLangPage: \"" + altlangObj.href + "\"\n";
+                        if (frontMatterType === isYAML) {
+                            return "altLangPage: \"" + altlangObj.href + "\"\n";
+                        } else {
+                            return "\"altLangPage\": \"" + altlangObj.href + "\"";
+                        }
                     }
                     return "";
                 }, 
@@ -141,16 +167,31 @@ let outputPage = (function outputPage() {
                     if (typeof breadCrumbObj !== "undefined" && breadCrumbObj.length > 0) {
                         breadcrumbLinks = breadCrumbObj[0].querySelectorAll("a");
                         if (breadcrumbLinks.length > 1) {
-                            breadcrumbOutput = "breadcrumbs: # By default the Canada.ca crumbs is already set\n";
-                            breadcrumbLinks.forEach(function addBreadCrumb(breadLink) {
+                            if (frontMatterType === isYAML) {
+                                breadcrumbOutput = "breadcrumbs: # By default the Canada.ca crumbs is already set\n";
+                            } else {
+                                breadcrumbOutput = "\"breadcrumbs\": [";
+                            }
+      breadcrumbLinks.forEach(function addBreadCrumb(breadLink) {
                                 if (breadLink.textContent.toLowerCase() === "canada.ca") {
                                     return;
                                 }
-                                breadcrumbOutput = breadcrumbOutput + "  - title: \"" + breadLink.textContent.trim() + "\"\n    link: \"" + breadLink.href + "\"\n";
+                                if (frontMatterType === isYAML) {
+                                    breadcrumbOutput = breadcrumbOutput + "  - title: \"" + breadLink.textContent.trim() + "\"\n    link: \"" + breadLink.href + "\"\n";
+                                } else {
+                                    if (breadcrumbOutput.length > 17) {
+                                        breadcrumbOutput = breadcrumbOutput + ", ";
+                                    }
+                                    breadcrumbOutput = breadcrumbOutput + "\n{\n\"title\": \"" + breadLink.textContent.trim() + "\", \n\"link\": \"" + breadLink.href + "\"\n}";
+                                }
                             });
                         }
+                    } 
+                    if (breadcrumbOutput === "" || frontMatterType === isYAML) {
+                        return breadcrumbOutput;
+                    } else {
+                        return breadcrumbOutput + "\n]";
                     }
-                    return breadcrumbOutput;
                 }, 
                 "css": function css() {
                     // Adds links to CSS files
@@ -165,10 +206,23 @@ let outputPage = (function outputPage() {
                     cssLinks = noMainPageObj.querySelectorAll("link[rel=stylesheet]");
                     for (let cssLink of cssLinks) {
                         if (islinkInTemplate(fileLinkArr.stylsheetsRegEx, cssLink.href) === false) {
-                            cssOutput = cssOutput + "css: \"" + cssLink.href + "\"\n";
+                            if (frontMatterType === isYAML) {
+                                cssOutput = cssOutput + "css: \"" + cssLink.href + "\"\n";
+                            }else {
+                                if (cssOutput === "") {
+                                    cssOutput = "\"css\": [\n";
+                                } else {
+                                    cssOutput = cssOutput + ", ";
+                                }
+                                cssOutput = cssOutput + "\"" + cssLink.href + "\"\n";
+                            }
                         }
                     }
-                    return cssOutput;
+                    if (cssOutput === "" || frontMatterType === isYAML) {
+                        return cssOutput;
+                    } else {
+                        return cssOutput + "]";
+                    }
                 }, 
                 "script": function script() {
                     // Adds links to script files
@@ -188,18 +242,38 @@ let outputPage = (function outputPage() {
                                 scriptData = scriptData + scriptElm.outerHTML + "\n";
                             }
                         } else if (islinkInTemplate(fileLinkArr.scriptsRegEx, scriptElm.src) === false) {
-                            scriptOutput = scriptOutput + "script: \"" + scriptElm.src + "\"\n";
+                            if (frontMatterType === isYAML) {
+                                scriptOutput = scriptOutput + "script: \"" + scriptElm.src + "\"\n";
+                            } else {
+                                if (scriptOutput === "") {
+                                    scriptOutput = "\"script\": [\n";
+                                } else {
+                                    scriptOutput = scriptOutput + ", ";
+                                }
+                                scriptOutput = scriptOutput + "\"" + scriptElm.src + "\"\n";
+                            }
                         }
                     }
-                    return {
-                        "value": scriptOutput, 
-                        "inline": scriptData
-                    };
+                    if (scriptOutput === "" || frontMatterType === isYAML) {
+                        return {
+                            "value": scriptOutput, 
+                            "inline": scriptData
+                        };
+                    } else {
+                        return {
+                            "value": scriptOutput + "]", 
+                            "inline": scriptData
+                        };
+                    }
                 }, 
                 "feedbackdata": function feedbackdata() {
                     // Sets feedback box
                     if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                        return "feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n";
+                        if (frontMatterType === isYAML) {
+                            return "feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n";
+                        } else {
+                            return "\"feedbackData\": [\n\"section\": \"" + pageTitleObj.content + "\"\n]";
+                        }
                     }
                     return "";
                 }, 
@@ -208,7 +282,12 @@ let outputPage = (function outputPage() {
                     let pageURI = new URL(pageURIStr);
                     
                     if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                        return "soureceurl:\n  - title: \"" + pageTitleObj.content.trim() + "\"\n    link: \"" + pageURI.origin + pageURI.pathname + "\"\n";
+                        if (frontMatterType === isYAML) {
+
+                            return "soureceurl:\n  - title: \"" + pageTitleObj.content.trim() + "\"\n    link: \"" + pageURI.origin + pageURI.pathname + "\"\n";
+                        } else {
+                            return "\"soureceurl\": [\n\"title\": \"" + pageTitleObj.content.trim() + "\", \n\"link\": \"" + pageURI.origin + pageURI.pathname + "\"\n]";
+                        }
                     }
                     return "";
                 }, 
@@ -230,7 +309,13 @@ let outputPage = (function outputPage() {
                     return styleOutput;
                 }, 
                 "yaml": function yaml() {
-                    return "".concat(this.layout(), this.title(), this.description(), this.subject(), this.keywords(), this.login(), this.altlangpage(), this.datemodified(), this.dateissued(), this.breadcrumbs(), this.css(), this.script().value, this.feedbackdata(), this.sourceurl());
+                    let outputData = [this.layout(), this.title(), this.description(), this.subject(), this.keywords(), this.login(), this.altlangpage(), this.datemodified(), this.dateissued(), this.breadcrumbs(), this.css(), this.script().value, this.feedbackdata(), this.sourceurl()];
+
+                    if (frontMatterType === isYAML) {
+                        return outputData.join();
+                    } else {
+                        return outputData.filter(Boolean).join(", \n");
+                    }
                 }, 
                 "pagedata": function pagedata() {
                     return {
