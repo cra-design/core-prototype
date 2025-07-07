@@ -312,7 +312,7 @@ let outputPage = (function outputPage() {
                     let outputData = [this.layout(), this.title(), this.description(), this.subject(), this.keywords(), this.login(), this.altlangpage(), this.datemodified(), this.dateissued(), this.breadcrumbs(), this.css(), this.script().value, this.feedbackdata(), this.sourceurl()];
 
                     if (frontMatterType === isYAML) {
-                        return outputData.join();
+                        return outputData.join("");
                     } else {
                         return outputData.filter(Boolean).join(", \n");
                     }
