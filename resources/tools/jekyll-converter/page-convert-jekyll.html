@@ -145,16 +145,16 @@ script:
         getQueryEl = function getQueryEl(field) {
             // Get a querystring value
             const params = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
+                get: (searchParams, prop) => searchParams.get(prop), 
             });
 
             return params[field];
-        },
+        }, 
         page_url = getQueryEl("uri");
 
     // submit button
     document.getElementById("submitbutton").addEventListener("click", async function (e) {
-        let htmlMain, targetURL, 
+        let htmlMain, targetURL, frontMatterType, 
             pageData = "", 
             resultArea = document.getElementById("sourcetext"), 
             convertObj = await outputPage.getPageObject(document.getElementById("uri").value), 
@@ -163,34 +163,38 @@ script:
         resultArea.value = "";
         if (document.getElementById("uri").value !== "") {
             targetURL = new URL(document.getElementById("uri").value);
-            pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("uri").value, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked, document.querySelector("input[type=radio][name=frontmatter]:checked").value).pagedata();
+            frontMatterType = document.querySelector("input[type=radio][name=frontmatter]:checked").value;
+            pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("uri").value, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked, frontMatterType).pagedata();
             if (document.getElementById("usePrettier").checked === true) {
                 htmlMain = await prettier.format(pageData.cssCode + pageData.htmlCode, {
-                    "parser": "html",
-                    "plugins": [prettierPlugins.estree, prettierPlugins.html],
-                    "arrowParens": "always",
-                    "bracketSameLine": false,
+                    "parser": "html", 
+                    "plugins": [prettierPlugins.estree, prettierPlugins.html], 
+                    "arrowParens": "always", 
+                    "bracketSameLine": false, 
                     "bracketSpacing": false, 
                     "embeddedLanguageFormatting": "auto", 
                     "endOfLine": "crlf", 
-                    "htmlWhitespaceSensitivity": "css",
-                    "jsxSingleQuote": false,
-                    "objectWrap": "collapse",
-                    "printWidth": Infinity,
+                    "htmlWhitespaceSensitivity": "css", 
+                    "jsxSingleQuote": false, 
+                    "objectWrap": "collapse", 
+                    "printWidth": Infinity, 
                     "ProseWrap": "never", 
-                    "quoteProps": "consistent",
-                    "singleAttributePerLine": false,
-                    "singleQuote": false,
-                    "tabWidth": 4,
-                    "trailingComma": "none",
-                    "useTabs": false,
+                    "quoteProps": "consistent", 
+                    "singleAttributePerLine": false, 
+                    "singleQuote": false, 
+                    "tabWidth": 4, 
+                    "trailingComma": "none", 
+                    "useTabs": false, 
                     "vueIndentScriptAndStyle": true
                 });
             } else {
                 htmlMain = pageData.cssCode + pageData.htmlCode;
             }
-             
-            resultArea.value = "---\n" + pageData.yamlCode + "---\n\n" + htmlMain;
+            if (frontMatterType === "yaml") {
+                resultArea.value = "---\n" + pageData.yamlCode + "---\n\n" + htmlMain;
+            } else {
+                resultArea.value = "---\n{\n" + pageData.yamlCode + "\n}\n---\n\n" + htmlMain;
+            }
             resultArea.focus();
             resultArea.scrollTop = 0;
             resultArea.selectionStart = 0;
