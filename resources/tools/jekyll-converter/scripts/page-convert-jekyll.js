@@ -86,7 +86,6 @@ let outputPage = (function outputPage() {
                     return cleanObj;
                 };
 
-
             if (pageObj === "") {
                 return { "yamlCode": "", "htmlCode": "", "cssCode": "", "scriptCode": ""};
             } else {
@@ -171,7 +170,7 @@ let outputPage = (function outputPage() {
                                     }
                                 });
                             }
-                         }
+                        }
                         if (breadcrumbOutput === "" || frontMatterType === isYAML) {
                             return breadcrumbOutput;
                         } else {
@@ -192,7 +191,7 @@ let outputPage = (function outputPage() {
                             if (islinkInTemplate(fileLinkArr.stylsheetsRegEx, cssLink.href) === false) {
                                 if (frontMatterType === isYAML) {
                                     cssOutput = cssOutput + "css: \"" + cssLink.href + "\"\n";
-                                }else {
+                                } else {
                                     if (cssOutput === "") {
                                         cssOutput = "\"css\": [\n";
                                     } else {
@@ -251,14 +250,14 @@ let outputPage = (function outputPage() {
                         }
                     }, 
                     "feedbackdata": function feedbackdata() {
-                         // Sets feedback box
+                        // Sets feedback box
                         if (pageTitleObj !== null && "content" in pageTitleObj === true) {
                             return formatOutputType("feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n", "\"feedbackData\": [\n\"section\": \"" + pageTitleObj.content + "\"\n]");
                         }
                         return "";
                     }, 
                     "sourceurl": function soureceurl() {
-                         // Adds originating URL as sourceurl
+                        // Adds originating URL as sourceurl
                         let pageURI = new URL(pageURIStr);
 
                         if (pageTitleObj !== null && "content" in pageTitleObj === true) {
@@ -268,13 +267,13 @@ let outputPage = (function outputPage() {
                     }, 
                     "style": function style() {
                         // Adds any <style> tags outside of the <main> tag and adds them to the bottom of the content
-                    let styleElms, 
+                        let styleElms, 
                             styleOutput = "", 
                             noMainPageObj = pageObj.cloneNode(true);
 
                         if (includeStyles === true) {
                             if (noMainPageObj.getElementsByTagName("main").length > 0) {
-                                 noMainPageObj.getElementsByTagName("main")[0].remove();
+                                noMainPageObj.getElementsByTagName("main")[0].remove();
                             }
                             styleElms = noMainPageObj.getElementsByTagName("style");
                             for (let styleElm of styleElms) {
@@ -292,8 +291,8 @@ let outputPage = (function outputPage() {
                         return {
                             "yamlCode": this.yaml(), 
                             "htmlCode": this.html(), 
-                             "cssCode": this.style(), 
-                             "scriptCode": this.script().inline
+                            "cssCode": this.style(), 
+                            "scriptCode": this.script().inline
                         };
                     }, 
                     "htmldoc": function htmldoc() {
