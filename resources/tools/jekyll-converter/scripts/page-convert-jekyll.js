@@ -11,17 +11,23 @@ let outputPage = (function outputPage() {
 
             if (pageURIStr !== "") {
                 pageURI = new URL(pageURIStr);
-                data = await $.get(pageURI).fail(function (jqXHR, textStatus, errorThrown) {
-                    // Handle error
-                    console.log("Error: [likely cause - origin is blocked due to CORS policy: No 'Access-Control-Allow-Origin]");
-                    return null; // Or handle the error and return a default value
-                });
-                result = data.replace(absUrlRegEx, "$1" + pageURI.protocol + "//" + pageURI.hostname + "$2");
-                if (data === null) {
-                    return "";
+                try {
+                    data = await $.get(pageURI).fail(function (jqXHR, textStatus, errorThrown) {
+                        // Handle error
+                        console.error("Error: [likely cause - origin is blocked due to CORS policy: No 'Access-Control-Allow-Origin]");
+                    });
+                    if (data === null) {
+                        return null;
+                    }
+                    result = data.replace(absUrlRegEx, "$1" + pageURI.protocol + "//" + pageURI.hostname + "$2");
+                    return parser.parseFromString(result, "text/html");
+                } catch (error) {
+                    // Handle the error here
+                    console.error("Failed to fetch data");
+                    return null;
                 }
-                return parser.parseFromString(result, "text/html");
             }
+                        return null; // Or handle the error and return a default value
             return null;
         }, 
         "getFileLinkList": async function getFileLinkList(jsonFilePath) {
@@ -54,7 +60,7 @@ let outputPage = (function outputPage() {
                         encloseQuote = "\"";
                     }
                     if (metaEl !== null && metaEl.length > 0 && "content" in metaEl[0] === true) {
-                        return formatOutputType(fieldname + ": " + encloseQuote + metaEl[0].content.trim() + encloseQuote + "\n", "\"" + fieldname + "\": \"" + metaEl[0].content.trim() + "\"");;
+                        return formatOutputType(fieldname + ": " + encloseQuote + metaEl[0].content.trim() + encloseQuote + "\n", "\"" + fieldname + "\": \"" + metaEl[0].content.trim() + "\"");
                     }
                     return "";
                 }, 
