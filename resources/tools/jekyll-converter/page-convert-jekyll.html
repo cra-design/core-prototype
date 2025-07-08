@@ -161,6 +161,8 @@ script:
             fileLinkList = await outputPage.getFileLinkList(jsonFilePath);
 
         resultArea.value = "";
+        document.getElementById("scripttext").value = "";
+        document.getElementById("redirectfiletext").value = "";
         if (document.getElementById("uri").value !== "") {
             targetURL = new URL(document.getElementById("uri").value);
             frontMatterType = document.querySelector("input[type=radio][name=frontmatter]:checked").value;
@@ -220,7 +222,7 @@ script:
         document.getElementById("sourcetext").value = "";
     });
 */
-    
+
     // Developer options ON button
     document.getElementById("dev_on").addEventListener("click", function () {
         localStorage.setItem("gitCRATemplateDevOptions", true);
@@ -253,10 +255,10 @@ script:
             document.getElementById("devStatus").innerHTML = "OFF";
             break;
     }
-    
+
     // Initalize function once page finishes loading
     document.addEventListener('DOMContentLoaded', async function () {
-        let evt = document.createEvent("MouseEvents"),
+        let evt = document.createEvent("MouseEvents"), 
             cb = document.getElementById("submitbutton");
 
         if (page_url !== null && page_url !== "") {
