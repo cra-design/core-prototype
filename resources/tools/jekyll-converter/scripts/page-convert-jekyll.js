@@ -24,10 +24,9 @@ let outputPage = (function outputPage() {
                 } catch (error) {
                     // Handle the error here
                     console.error("Failed to fetch data");
-                    return null;
+                    return null; // Or handle the error and return a default value
                 }
             }
-                        return null; // Or handle the error and return a default value
             return null;
         }, 
         "getFileLinkList": async function getFileLinkList(jsonFilePath) {
