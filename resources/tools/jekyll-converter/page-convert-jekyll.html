@@ -216,6 +216,10 @@ script:
         e.preventDefault();
     });
 
+    document.getElementById("uri").addEventListener("focus", function () {
+        this.select();
+    });
+
 /*
     // clear text button
     document.getElementById("cleartextbtn").addEventListener("click", function () {
