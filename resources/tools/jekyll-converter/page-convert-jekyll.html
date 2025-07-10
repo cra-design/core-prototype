@@ -119,7 +119,7 @@ script:
             <label for="scripttext" id="scriptlabel" class="control-label h5 mrgn-tp-md"><span class="field-name">Inline <code>&lt;scripts&gt;</code> tags:</span></label>
             <textarea id="scripttext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="10"></textarea>
             <br>
-            <label for="redirectfiletext" id="redirectfilelabel" class="control-label h5 mrgn-tp-md"><span class="field-name">JSON code for redirect file:</span></label>
+            <label for="redirectfiletext" id="redirectfilelabel" class="control-label h5 mrgn-tp-md"><span class="field-name">JSON for redirect file:</span></label>
             <textarea id="redirectfiletext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="5"></textarea>
             <!-- END Result textarea -->
         </div>
@@ -202,8 +202,8 @@ script:
             resultArea.selectionStart = 0;
             resultArea.selectionEnd = 0;
             document.getElementById("scripttext").value = pageData.scriptCode;
-            if (document.getElementById("githubPath").value !== "") {
-                githubPath = document.getElementById("githubPath").value;
+            if (document.getElementById("github_path").value !== "") {
+                githubPath = document.getElementById("github_path").value;
                 if (githubPath.charAt(githubPath.length - 1) !== "/") {
                     githubPath = githubPath + "/";
                 }
