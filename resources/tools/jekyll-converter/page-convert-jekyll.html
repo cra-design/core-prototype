@@ -23,7 +23,7 @@ script:
 <section class="alert alert-info">
     <h2>Note:</h2>
     <p>This tool reads most of the data it uses to populate the YAML section of the template from the <code>&lt;meta&gt;</code> section of the page so if there are none or limited <code>&lt;meta&gt;</code> then some content may not be generated.</p>
-  <p>Also:</p>
+    <p>Also:</p>
     <ul>
         <li>Pages with <strong>subways</strong> normally use a <strong>layout</strong> of <code>without-h1</code> </li>
         <li>Pages with <strong>most requested section</strong> should use a <strong>layout</strong> of <code>no-container</code></li>
@@ -43,11 +43,11 @@ script:
 
 <form id="convertform" action="#" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded" method="get">
     <fieldset>
-        <legend class="mrgn-bttm-md">Page information</legend>
+        <legend class="mrgn-tp-sm h2">Page information</legend>
         <div class="row">
-             <div class="form-group">
-                <div class="mrgn-lft-md mrgn-tp-lg">
-                    <label for="layout"><span class="field-name h3">Layout</span></label>
+            <div class="form-group">
+                <div class="mrgn-lft-md">
+                    <label for="layout" class="h5 mrgn-tp-md"><span class="field-name">Layout</span></label>
                 </div>
                 <select id="layout" name="layout" class="form-control input-lg mrgn-lft-md">
                     <option selected="selected" value="">default</option>
@@ -59,15 +59,22 @@ script:
 -->
                 </select>
             </div>
-            <fieldset class="gc-chckbxrdio form-inline mrgn-lft-md mrgn-bttm-md">
+            <div class="form-group">
+                <div class="col-xs-5">
+                    <label for="github_path" class="h5 mrgn-tp-sm">GitHub repository destination path:</label>
+                    <input placeholder="Enter the GitHub repository destination path" class="form-control full-width input-lg mrgn-bttm-md" name="github_path" id="github_path" type="url">
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <fieldset class="gc-chckbxrdio form-inline mrgn-lft-md mrgn-bttm-lg">
                 <legend>Front Matter code:</legend>
                     <div class="radio label-inline">
-                        <input type="radio" name="frontmatter" id="yaml" value="yaml" checked="checked">
-                        <label for="yaml">YAML</label>
+                        <input type="radio" name="frontmatter" value="json" id="json" checked="checked">
+                        <label for="json">JSON</label>
                     </div>
                     <div class="radio label-inline">
-                        <input type="radio" name="frontmatter" value="json" id="json">
-                        <label for="json">JSON</label>
+                        <input type="radio" name="frontmatter" id="yaml" value="yaml">
+                        <label for="yaml">YAML</label>
                     </div>
             </fieldset>
             <fieldset class="gc-chckbxrdio">
@@ -87,7 +94,7 @@ script:
                 </ul>
             </fieldset>
             <div class="col-lg-12">
-                <label class="required control-label mrgn-lft-sm form-input-lg" for="uri">URL <strong class="required">(required)</strong></label>
+                <label class="required control-label mrgn-lft-sm h5 mrgn-tp-sm" for="uri">URL <strong class="required">(required)</strong></label>
                 <div class="input-group">
                     <input type="url" id="uri" name="uri" class="form-control input-md mrgn-bttm-md full-width" placeholder="Enter a URL" autofocus="autofocus" aria-labelledby="uri" required="required">
                     <span class="input-group-btn">
@@ -103,16 +110,16 @@ script:
 
 <form id="results" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded" method="get" action="#">
     <fieldset class="legend-brdr-bttm">
-        <legend class="mrgn-bttm-md">Result</legend>
+        <legend class="mrgn-tp-md mrgn-bttm-md h2">Result</legend>
         <div class="form-group">
-            <label for="sourcetext" id="contentlabel" class="control-label form-input-lg"><span class="field-name h3">Source:</span></label>
+            <label for="sourcetext" id="contentlabel" class="control-label h5 mrgn-tp-sm"><span class="field-name">Source:</span></label>
             <!-- START Result textarea -->
             <textarea id="sourcetext" name="content" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="19"></textarea>
             <br>
-            <label for="scripttext" id="scriptlabel" class="control-label form-input-lg"><span class="field-name h3">Inline <code>&lt;scripts&gt;</code> tags:</span></label>
+            <label for="scripttext" id="scriptlabel" class="control-label h5 mrgn-tp-md"><span class="field-name">Inline <code>&lt;scripts&gt;</code> tags:</span></label>
             <textarea id="scripttext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="10"></textarea>
             <br>
-            <label for="redirectfiletext" id="redirectfilelabel" class="control-label form-input-lg"><span class="field-name h3">JSON code for redirect file:</span></label>
+            <label for="redirectfiletext" id="redirectfilelabel" class="control-label h5 mrgn-tp-md"><span class="field-name">JSON code for redirect file:</span></label>
             <textarea id="redirectfiletext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="5"></textarea>
             <!-- END Result textarea -->
         </div>
@@ -133,12 +140,22 @@ script:
 
             return params[field];
         }, 
+        getFilenameFromUrl = function getFilenameFromUrl(uri) {
+            const lastSlashIndex = uri.lastIndexOf("/");
+
+            if (lastSlashIndex !== -1) {
+                return uri.substring(lastSlashIndex + 1);
+            }
+            return "";
+        }, 
+        githubPath_qrystr = getQueryEl("github_path"), 
         page_url = getQueryEl("uri");
 
     // submit button
     document.getElementById("submitbutton").addEventListener("click", async function (e) {
         let htmlMain, targetURL, frontMatterType, 
             pageData = "", 
+            githubPath = "", 
             resultArea = document.getElementById("sourcetext"), 
             convertObj = await outputPage.getPageObject(document.getElementById("uri").value), 
             fileLinkList = await outputPage.getFileLinkList(jsonFilePath);
@@ -146,7 +163,7 @@ script:
         resultArea.value = "";
         document.getElementById("scripttext").value = "";
         document.getElementById("redirectfiletext").value = "";
-        if (document.getElementById("uri").value !== "") {
+        if (document.getElementById("uri").value !== "" && convertObj !== null) {
             targetURL = new URL(document.getElementById("uri").value);
             frontMatterType = document.querySelector("input[type=radio][name=frontmatter]:checked").value;
             pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("uri").value, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked, frontMatterType).pagedata();
@@ -185,7 +202,13 @@ script:
             resultArea.selectionStart = 0;
             resultArea.selectionEnd = 0;
             document.getElementById("scripttext").value = pageData.scriptCode;
-            document.getElementById("redirectfiletext").value = "    {\n      \"origin\": \"" + targetURL.origin + targetURL.pathname + "\", \n      \"destination\": \"Github_URL\"\n    }, \n";
+            if (document.getElementById("githubPath").value !== "") {
+                githubPath = document.getElementById("githubPath").value;
+                if (githubPath.charAt(githubPath.length - 1) !== "/") {
+                    githubPath = githubPath + "/";
+                }
+            }
+            document.getElementById("redirectfiletext").value = "    {\n      \"origin\": \"" + targetURL.origin + targetURL.pathname + "\", \n      \"destination\": \"" + githubPath + getFilenameFromUrl(targetURL.pathname) + "\"\n    }, \n";
         }
         e.stopPropagation();
         e.preventDefault();
@@ -204,9 +227,13 @@ script:
     });
 
     // Initalize function once page finishes loading
-    document.addEventListener('DOMContentLoaded', async function () {
+    document.addEventListener("DOMContentLoaded", async function () {
         let evt = document.createEvent("MouseEvents"), 
             cb = document.getElementById("submitbutton");
+
+        if (githubPath_qrystr !== null && githubPath_qrystr !== "") {
+            document.getElementById("github_path").value = decodeURIComponent(githubPath_qrystr);
+        }
 
         if (page_url !== null && page_url !== "") {
             document.getElementById("uri").value = decodeURIComponent(page_url);

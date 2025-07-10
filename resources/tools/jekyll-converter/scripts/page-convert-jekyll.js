@@ -261,12 +261,12 @@ let outputPage = (function outputPage() {
                         }
                         return "";
                     }, 
-                    "sourceurl": function soureceurl() {
+                    "sourceurl": function sourceurl() {
                         // Adds originating URL as sourceurl
                         let pageURI = new URL(pageURIStr);
 
                         if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                            return formatOutputType("soureceurl:\n  - title: \"" + pageTitleObj.content.trim() + "\"\n    link: \"" + pageURI.origin + pageURI.pathname + "\"\n", "\"soureceurl\": [\n\"title\": \"" + pageTitleObj.content.trim() + "\", \n\"link\": \"" + pageURI.origin + pageURI.pathname + "\"\n]");
+                            return formatOutputType("sourceurl:\n  - title: \"" + pageTitleObj.content.trim() + "\"\n    link: \"" + pageURI.origin + pageURI.pathname + "\"\n", "\"sourceurl\": [\n{\n\"title\": \"" + pageTitleObj.content.trim() + "\", \n\"link\": \"" + pageURI.origin + pageURI.pathname + "\"\n}\n]");
                         }
                         return "";
                     }, 
