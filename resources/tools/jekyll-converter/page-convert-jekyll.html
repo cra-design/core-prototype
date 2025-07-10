@@ -226,6 +226,10 @@ script:
         this.select();
     });
 
+    document.getElementById("redirectfiletext").addEventListener("focus", function () {
+        this.select();
+    });
+
     // Initalize function once page finishes loading
     document.addEventListener("DOMContentLoaded", async function () {
         let evt = document.createEvent("MouseEvents"), 
