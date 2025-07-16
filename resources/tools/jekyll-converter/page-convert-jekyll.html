@@ -62,18 +62,18 @@ script:
             <div class="form-group">
                 <div class="col-xs-12 col-sm-7 col-md-6 col-lg-5">
                     <label for="github_path" class="h5 mrgn-tp-sm">GitHub repository destination path:</label>
-                    <input placeholder="Enter path" class="form-control full-width input-lg mrgn-bttm-md" name="github_path" id="github_path" type="url">
+                    <input id="github_path" type="url" name="github_path" class="form-control full-width input-lg mrgn-bttm-md" placeholder="Enter path">
                 </div>
             </div>
             <div class="clearfix"></div>
             <fieldset class="gc-chckbxrdio form-inline mrgn-lft-md mrgn-bttm-lg">
                 <legend>Front Matter code:</legend>
                     <div class="radio label-inline">
-                        <input type="radio" name="frontmatter" value="json" id="json" checked="checked">
+                        <input id="json" type="radio" name="frontmatter" value="json" checked="checked">
                         <label for="json">JSON</label>
                     </div>
                     <div class="radio label-inline">
-                        <input type="radio" name="frontmatter" id="yaml" value="yaml">
+                        <input id="yaml" type="radio" name="frontmatter" value="yaml">
                         <label for="yaml">YAML</label>
                     </div>
             </fieldset>
@@ -148,7 +148,6 @@ script:
             }
             return "";
         }, 
-        githubPath_qrystr = getQueryEl("github_path"), 
         page_url = getQueryEl("uri");
 
     // submit button
@@ -232,12 +231,44 @@ script:
 
     // Initalize function once page finishes loading
     document.addEventListener("DOMContentLoaded", async function () {
-        let evt = document.createEvent("MouseEvents"), 
-            cb = document.getElementById("submitbutton");
+        let githubPath_qrystr = getQueryEl("github_path"), 
+            page_layout = getQueryEl("layout"), 
+            front_Matter = getQueryEl("frontmatter"), 
+            evt = document.createEvent("MouseEvents"), 
+            cb = document.getElementById("submitbutton"), 
+            setCheckbox = function setCheckbox(qryFldName, inputName) {
+                let boolValue, 
+                    querystringVal = getQueryEl(qryFldName);
+  
+                if (querystringVal !== null && querystringVal !== "") {
+                    boolValue = (querystringVal.toLowerCase() === "true");
+                    if (boolValue === true) {
+                        document.getElementById(inputName).checked = true;
+                    } else if (boolValue === false) {
+                        document.getElementById(inputName).checked = false;
+                    }
+                }
+           };
 
+        if (page_layout !== null && page_layout !== "") {
+            document.getElementById("layout").value = decodeURIComponent(page_layout);
+        }
+  
         if (githubPath_qrystr !== null && githubPath_qrystr !== "") {
             document.getElementById("github_path").value = decodeURIComponent(githubPath_qrystr);
         }
+
+        if (front_Matter !== null && front_Matter !== "") {
+            document.querySelectorAll("input[type='radio'][name='frontmatter']").forEach(radio, function () {
+                if (radio.value === decodeURIComponent(front_Matter)) {
+                    radio.checked = true;
+                }
+            });
+        }
+
+        setCheckbox("style", "addStyles");
+        setCheckbox("script", "addScripts");
+        setCheckbox("prettier", "usePrettier");
 
         if (page_url !== null && page_url !== "") {
             document.getElementById("uri").value = decodeURIComponent(page_url);
