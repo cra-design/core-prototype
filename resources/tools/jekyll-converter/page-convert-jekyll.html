@@ -116,6 +116,8 @@ script:
             <!-- START Result textarea -->
             <textarea id="sourcetext" name="content" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="19"></textarea>
             <br>
+            <button id="githubsave" class="btn btn-default">Save page</button>
+            <br>
             <label for="scripttext" id="scriptlabel" class="control-label h5 mrgn-tp-md"><span class="field-name">Inline <code>&lt;script&gt;</code> tags:</span></label>
             <textarea id="scripttext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="10"></textarea>
             <br>
@@ -132,6 +134,8 @@ script:
     "use strict";
 
     let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/jekyll-converter/data/template-links.json", 
+        fileName = "", 
+        resultArea = document.getElementById("sourcetext"), 
         getQueryEl = function getQueryEl(field) {
             // Get a querystring value
             const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -155,10 +159,10 @@ script:
         let htmlMain, targetURL, frontMatterType, 
             pageData = "", 
             githubPath = "", 
-            resultArea = document.getElementById("sourcetext"), 
             convertObj = await outputPage.getPageObject(document.getElementById("uri").value), 
             fileLinkList = await outputPage.getFileLinkList(jsonFilePath);
 
+        fileName = "";
         resultArea.value = "";
         document.getElementById("scripttext").value = "";
         document.getElementById("redirectfiletext").value = "";
@@ -207,7 +211,8 @@ script:
                     githubPath = githubPath + "/";
                 }
             }
-            document.getElementById("redirectfiletext").value = "    {\n      \"origin\": \"" + targetURL.origin + targetURL.pathname + "\", \n      \"destination\": \"" + githubPath + getFilenameFromUrl(targetURL.pathname) + "\"\n    }, \n";
+            fileName = getFilenameFromUrl(targetURL.pathname);
+            document.getElementById("redirectfiletext").value = "    {\n      \"origin\": \"" + targetURL.origin + targetURL.pathname + "\", \n      \"destination\": \"" + githubPath + fileName + "\"\n    }, \n";
         }
         e.stopPropagation();
         e.preventDefault();
@@ -276,6 +281,40 @@ script:
             cb.dispatchEvent(evt);
         }
     }, false);
+
+    document.getElementById("githubsave").addEventListener("click", function (e) {
+        let saveTextAsFile = function saveTextAsFile() {
+            let textToWrite = document.getElementById("sourcetext").value,
+                textFileAsBlob = new Blob([textToWrite], {
+                    type: "text/plain"
+                }),
+                downloadLink = document.createElement("a");
+
+            downloadLink.download = fileName;
+            downloadLink.innerHTML = "Download File";
+
+            if (window.webkitURL != null) {
+                // Chrome allows the link to be clicked without being added to the document
+                downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+            } else {
+                // Firefox requires the link to be added to the document
+                downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                downloadLink.onclick = destroyClickedElement;
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+            }
+            downloadLink.click();
+        }, 
+        destroyClickedElement = function destroyClickedElement(event) {
+            document.body.removeChild(event.target);
+        };
+
+        if (fileName !== "" && resultArea.value !== "") {
+            saveTextAsFile();
+        }
+        e.stopPropagation();
+        e.preventDefault();
+    });
 
 /*
     // clear text button
