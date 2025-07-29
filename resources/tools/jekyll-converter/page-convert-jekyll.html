@@ -59,13 +59,6 @@ script:
 -->
                 </select>
             </div>
-            <div class="form-group">
-                <div class="col-xs-12 col-sm-7 col-md-6 col-lg-5">
-                    <label for="github_path" class="h5 mrgn-tp-sm">GitHub repository destination path:</label>
-                    <input id="github_path" type="url" name="github_path" class="form-control full-width input-lg mrgn-bttm-md" placeholder="Enter path">
-                </div>
-            </div>
-            <div class="clearfix"></div>
             <fieldset class="gc-chckbxrdio form-inline mrgn-lft-md mrgn-bttm-lg">
                 <legend>Front Matter code:</legend>
                     <div class="radio label-inline">
@@ -77,6 +70,16 @@ script:
                         <label for="yaml">YAML</label>
                     </div>
             </fieldset>
+            <div class="col-lg-12">
+                <label class="required control-label mrgn-lft-sm h5 mrgn-tp-sm" for="uri">URL <strong class="required">(required)</strong></label>
+                <div class="input-group">
+                    <input type="url" id="uri" name="uri" class="form-control input-md mrgn-bttm-md full-width" placeholder="Enter a URL" autofocus="autofocus" autocomplete="on" aria-labelledby="uri" required="required">
+                    <span class="input-group-btn">
+                        <input id="submitbutton" class="btn btn-primary" type="submit" value="Submit">
+                    </span>
+                </div>
+            </div>
+            <hr>
             <fieldset class="gc-chckbxrdio">
                 <ul class="list-unstyled form-inline lst-spcd-2">
                     <li class="checkbox mrgn-lft-md">
@@ -93,14 +96,29 @@ script:
                     </li>
                 </ul>
             </fieldset>
-            <div class="col-lg-12">
-                <label class="required control-label mrgn-lft-sm h5 mrgn-tp-sm" for="uri">URL <strong class="required">(required)</strong></label>
-                <div class="input-group">
-                    <input type="url" id="uri" name="uri" class="form-control input-md mrgn-bttm-md full-width" placeholder="Enter a URL" autofocus="autofocus" autocomplete="on" aria-labelledby="uri" required="required">
-                    <span class="input-group-btn">
-                        <input id="submitbutton" class="btn btn-primary" type="submit" value="Submit">
-                    </span>
+            <div id="advcntrls">
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-7 col-md-6 col-lg-5">
+                        <label for="github_path" class="h5 mrgn-tp-sm">GitHub repository destination path:</label>
+                        <input id="github_path" type="url" name="github_path" class="form-control full-width input-lg mrgn-bttm-md" placeholder="Enter path">
+                    </div>
                 </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="noted_page_array" class="h5 mrgn-tp-sm">Noted page link JSON array:</label><a href="#notedpagehelp" aria-controls="notedpagehelp" class="wb-lbx mrgn-lft-sm" title="Noted page link JSON array information"><span class="glyphicon glyphicon-question-sign" role="button"></span><span class="wb-inv">Noted page link JSON array information</span></a>
+
+                        <textarea id="noted_page_array" class="form-control" rows="3" cols="47"></textarea>
+                    </div>
+                </div>
+                <section id="notedpagehelp" class="mfp-hide modal-dialog modal-content overlay-def">
+                    <header class="modal-header">
+                        <h2 class="modal-title">Noted page link JSON array information</h2>
+                    </header>
+                    <div class="modal-body">
+                        <p><strong>JSON array format</strong>: <code>[{"title": "Page title 1", "link": "page url"}, {"title": "Page title 2", "link": "page url"}]</code></p>
+                    </div>
+                </section>
             </div>
         </div>
     </fieldset>
@@ -169,7 +187,7 @@ script:
         if (document.getElementById("uri").value !== "" && convertObj !== null) {
             targetURL = new URL(document.getElementById("uri").value);
             frontMatterType = document.querySelector("input[type=radio][name=frontmatter]:checked").value;
-            pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("uri").value, document.getElementById("layout").value, document.getElementById("addScripts").checked, document.getElementById("addStyles").checked, frontMatterType).pagedata();
+            pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("layout").value, frontMatterType, document.getElementById("uri").value, document.getElementById("noted_page_array").value, document.getElementById("addStyles").checked, document.getElementById("addScripts").checked).pagedata();
             if (document.getElementById("usePrettier").checked === true) {
                 htmlMain = await prettier.format(pageData.cssCode + pageData.htmlCode, {
                     "parser": "html", 
@@ -195,6 +213,7 @@ script:
             } else {
                 htmlMain = pageData.cssCode + pageData.htmlCode;
             }
+
             if (frontMatterType === "yaml") {
                 resultArea.value = "---\n" + pageData.yamlCode + "---\n\n" + htmlMain;
             } else {
@@ -239,12 +258,13 @@ script:
         let githubPath_qrystr = getQueryEl("github_path"), 
             page_layout = getQueryEl("layout"), 
             front_Matter = getQueryEl("frontmatter"), 
+            noted_page_Arr = getQueryEl("noted_page_array"), 
             evt = document.createEvent("MouseEvents"), 
             cb = document.getElementById("submitbutton"), 
             setCheckbox = function setCheckbox(qryFldName, inputName) {
                 let boolValue, 
                     querystringVal = getQueryEl(qryFldName);
-  
+
                 if (querystringVal !== null && querystringVal !== "") {
                     boolValue = (querystringVal.toLowerCase() === "true");
                     if (boolValue === true) {
@@ -253,14 +273,18 @@ script:
                         document.getElementById(inputName).checked = false;
                     }
                 }
-           };
+            };
 
         if (page_layout !== null && page_layout !== "") {
             document.getElementById("layout").value = decodeURIComponent(page_layout);
         }
-  
+
         if (githubPath_qrystr !== null && githubPath_qrystr !== "") {
             document.getElementById("github_path").value = decodeURIComponent(githubPath_qrystr);
+        }
+
+        if (noted_page_Arr !== null && noted_page_Arr !== "") {
+            document.getElementById("noted_page_Arr").value = decodeURIComponent(noted_page_Arr);
         }
 
         if (front_Matter !== null && front_Matter !== "") {
@@ -284,10 +308,10 @@ script:
 
     document.getElementById("githubsave").addEventListener("click", function (e) {
         let saveTextAsFile = function saveTextAsFile() {
-            let textToWrite = document.getElementById("sourcetext").value,
+            let textToWrite = document.getElementById("sourcetext").value, 
                 textFileAsBlob = new Blob([textToWrite], {
                     type: "text/plain"
-                }),
+                }), 
                 downloadLink = document.createElement("a");
 
             downloadLink.download = fileName;
