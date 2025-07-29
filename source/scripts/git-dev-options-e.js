@@ -9,10 +9,10 @@
 
 let devOptions = document.getElementById("devoptions");
 let keywords = document.getElementById("pageKeywords");
-let sourceUrlList = document.getElementById("sourceurl");
+let notedLinksList = document.getElementById("notedlinks");
 let insertId = "test-banner";
 
-let sourceUrlArr, pageOrigin, 
+let notedLinksArr, pageOrigin, 
     pageKey = location.pathname.replaceAll("/","").replaceAll(":","").replaceAll("-","").split(".").slice(0, -1).join(".").toLowerCase(), 
     pageStorage = localStorage.getItem(pageKey), 
     getGithubURL = function (pageURL) {
@@ -139,12 +139,12 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                 }
                 pageInfo = pageInfo + "\" title=\"Remove edits\" href=\"#\"><span class=\"far fa-trash-alt mrgn-tp-sm\"></span><span class=\"wb-inv\">Remove edits</span></a>";
                 pageInfo = pageInfo + "</li>\n";
-                if (sourceUrlList !== null && sourceUrlList.value !== "") {
-                    sourceUrlArr = JSON.parse(sourceUrlList.value);
-                    if ((sourceUrlArr.length === 1 && sourceUrlArr[0].sourcetitle.trim() !== "") || sourceUrlArr.length > 1) {
+                if (notedLinksList !== null && notedLinksList.value !== "") {
+                    notedLinksArr = JSON.parse(notedLinksList.value);
+                    if ((notedLinksArr.length === 1 && notedLinksArr[0].sourcetitle.trim() !== "") || notedLinksArr.length > 1) {
                         sourceLinkInfo = "<h3 class=\"mrgn-tp-sm\">Pertinent links</h3>\n<ol id=\"testpage-source\" class=\"list-inline mrgn-bttm-0\">\n";
-                        sourceUrlArr.forEach(function addSourceLinks(sourceUrlData) {
-                           sourceLinkInfo = sourceLinkInfo + "<li><span class=\"glyphicon glyphicon-link mrgn-rght-sm\"></span><a data-exit=\"false\" href=\"" + sourceUrlData.sourcelink + "\" target=\"_blank\">" + sourceUrlData.sourcetitle + "</a></li>\n";
+                        notedLinksArr.forEach(function addSourceLinks(notedLinksData) {
+                           sourceLinkInfo = sourceLinkInfo + "<li><span class=\"glyphicon glyphicon-link mrgn-rght-sm\"></span><a data-exit=\"false\" href=\"" + notedLinksData.sourcelink + "\" target=\"_blank\">" + notedLinksData.sourcetitle + "</a></li>\n";
                         });
                         sourceLinkInfo = sourceLinkInfo + "</ol>\n";
                     }
