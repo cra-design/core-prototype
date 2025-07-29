@@ -36,7 +36,7 @@ let outputPage = (function outputPage() {
 
             return fileLinkArr;
         }, 
-        "convert": function convert(pageObj, fileLinkArr, pageLayout, pageURIStr, notedPagesJSONStr, frontMatterType, includeStyles, includeScripts) {
+        "convert": function convert(pageObj, fileLinkArr, pageLayout, frontMatterType, pageURIStr, notedPagesJSONStr, includeStyles, includeScripts) {
             const isYAML = "yaml";
 
             let pageTitleObj = pageObj.querySelector("meta[name=dcterms\\.title]"), 
