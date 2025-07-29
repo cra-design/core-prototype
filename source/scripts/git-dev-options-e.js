@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                 if (notedLinksList !== null && notedLinksList.value !== "") {
                     notedLinksArr = JSON.parse(notedLinksList.value);
                     if ((notedLinksArr.length === 1 && notedLinksArr[0].sourcetitle.trim() !== "") || notedLinksArr.length > 1) {
-                        sourceLinkInfo = "<h3 class=\"mrgn-tp-sm\">Pertinent links</h3>\n<ol id=\"testpage-source\" class=\"list-inline mrgn-bttm-0\">\n";
+                        sourceLinkInfo = "<h3 class=\"mrgn-tp-sm\">Noted links for this page</h3>\n<ol id=\"testpage-source\" class=\"list-inline mrgn-bttm-0\">\n";
                         notedLinksArr.forEach(function addSourceLinks(notedLinksData) {
                            sourceLinkInfo = sourceLinkInfo + "<li><span class=\"glyphicon glyphicon-link mrgn-rght-sm\"></span><a data-exit=\"false\" href=\"" + notedLinksData.sourcelink + "\" target=\"_blank\">" + notedLinksData.sourcetitle + "</a></li>\n";
                         });
