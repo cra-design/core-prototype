@@ -36,7 +36,7 @@ let outputPage = (function outputPage() {
 
             return fileLinkArr;
         }, 
-        "convert": function convert(pageObj, fileLinkArr, pageURIStr, pageLayout, includeScripts, includeStyles, frontMatterType) {
+        "convert": function convert(pageObj, fileLinkArr, pageLayout, pageURIStr, notedPagesJSONStr, frontMatterType, includeStyles, includeScripts) {
             const isYAML = "yaml";
 
             let pageTitleObj = pageObj.querySelector("meta[name=dcterms\\.title]"), 
@@ -166,12 +166,12 @@ let outputPage = (function outputPage() {
                                         return;
                                     }
                                     if (frontMatterType === isYAML) {
-                                        breadcrumbOutput = breadcrumbOutput + "  - title: \"" + breadLink.textContent.trim() + "\"\n    link: \"" + breadLink.href + "\"\n";
+                                        breadcrumbOutput += "  - title: \"" + breadLink.textContent.trim() + "\"\n    link: \"" + breadLink.href + "\"\n";
                                     } else {
                                         if (breadcrumbOutput.length > 17) {
-                                            breadcrumbOutput = breadcrumbOutput + ", ";
+                                            breadcrumbOutput += ", ";
                                         }
-                                        breadcrumbOutput = breadcrumbOutput + "\n{\n\"title\": \"" + breadLink.textContent.trim() + "\", \n\"link\": \"" + breadLink.href + "\"\n}";
+                                        breadcrumbOutput += "\n{\n\"title\": \"" + breadLink.textContent.trim() + "\", \n\"link\": \"" + breadLink.href + "\"\n}";
                                     }
                                 });
                             }
@@ -195,14 +195,14 @@ let outputPage = (function outputPage() {
                         for (let cssLink of cssLinks) {
                             if (islinkInTemplate(fileLinkArr.stylsheetsRegEx, cssLink.href) === false) {
                                 if (frontMatterType === isYAML) {
-                                    cssOutput = cssOutput + "css: \"" + cssLink.href + "\"\n";
+                                    cssOutput += "css: \"" + cssLink.href + "\"\n";
                                 } else {
                                     if (cssOutput === "") {
                                         cssOutput = "\"css\": [\n";
                                     } else {
-                                        cssOutput = cssOutput + ", ";
+                                        cssOutput += ", ";
                                     }
-                                    cssOutput = cssOutput + "\"" + cssLink.href + "\"\n";
+                                    cssOutput += "\"" + cssLink.href + "\"\n";
                                 }
                             }
                         }
@@ -227,18 +227,18 @@ let outputPage = (function outputPage() {
                             if (scriptElm.innerHTML !== "") {
                                 // Gets any <script> tags outside of the <main> tag and adds them to the bottom of the content
                                 if (includeScripts === true) {
-                                    scriptData = scriptData + scriptElm.outerHTML + "\n";
+                                    scriptData += scriptElm.outerHTML + "\n";
                                 }
                             } else if (islinkInTemplate(fileLinkArr.scriptsRegEx, scriptElm.src) === false) {
                                 if (frontMatterType === isYAML) {
-                                    scriptOutput = scriptOutput + "script: \"" + scriptElm.src + "\"\n";
+                                    scriptOutput += "script: \"" + scriptElm.src + "\"\n";
                                 } else {
                                     if (scriptOutput === "") {
                                         scriptOutput = "\"script\": [\n";
                                     } else {
-                                        scriptOutput = scriptOutput + ", ";
+                                        scriptOutput += ", ";
                                     }
-                                    scriptOutput = scriptOutput + "\"" + scriptElm.src + "\"\n";
+                                    scriptOutput += "\"" + scriptElm.src + "\"\n";
                                 }
                             }
                         }
@@ -261,12 +261,45 @@ let outputPage = (function outputPage() {
                         }
                         return "";
                     }, 
-                    "sourceurl": function sourceurl() {
-                        // Adds originating URL as sourceurl
-                        let pageURI = new URL(pageURIStr);
+                    "notedlinks": function notedlinks() {
+                        // Adds URLs as noted page links
+                        let notedPageArr, 
+                            linkRef = "",
+                            createNoteLink = function createNoteLink(refURIStr, linkText) {
+                                let pageURI = new URL(refURIStr);
+
+                                return formatOutputType("\n  - title: \"" + linkText + "\"\n    link: \"" + pageURI.origin + pageURI.pathname + "\"", "\n{\n\"title\": \"" + linkText + "\", \n\"link\": \"" + pageURI.origin + pageURI.pathname + "\"\n}");
+                            }, 
+                            getJSONArr = function getJSONArr(jsonStr) {
+                                let arr;
+
+                                if (jsonStr !== "") {
+                                    try {
+                                        arr = JSON.parse(decodeURIComponent(jsonStr));
+                                        return arr;
+                                    } catch (e) {
+                                        return null;
+                                    }
+                                }
+                                return null;
+                            };
 
                         if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                            return formatOutputType("sourceurl:\n  - title: \"" + pageTitleObj.content.trim() + "\"\n    link: \"" + pageURI.origin + pageURI.pathname + "\"\n", "\"sourceurl\": [\n{\n\"title\": \"" + pageTitleObj.content.trim() + "\", \n\"link\": \"" + pageURI.origin + pageURI.pathname + "\"\n}\n]");
+                            linkRef = createNoteLink(pageURIStr, pageTitleObj.content.trim());
+                        }
+                        notedPageArr = getJSONArr(notedPagesJSONStr);
+                        if (notedPageArr !== null) {
+                            notedPageArr.forEach(function addNotedPage(notedPage) {
+                                if ("link" in notedPage && "title" in notedPage) {
+                                    if (linkRef !== "") {
+                                        linkRef += ", ";
+                                    }
+                                    linkRef += createNoteLink(notedPage.link, notedPage.title);
+                                }
+                            });
+                        }
+                        if (linkRef !== "") {
+                            return formatOutputType("notedlinks:" + linkRef + "\n", "\"notedlinks\": [" + linkRef + "\n]");
                         }
                         return "";
                     }, 
@@ -282,13 +315,13 @@ let outputPage = (function outputPage() {
                             }
                             styleElms = noMainPageObj.getElementsByTagName("style");
                             for (let styleElm of styleElms) {
-                                styleOutput = styleOutput + styleElm.outerHTML + "\n";
+                                styleOutput += styleElm.outerHTML + "\n";
                             }
                         }
                         return styleOutput;
                     }, 
                     "yaml": function yaml() {
-                        let outputData = [this.layout(), this.title(), this.description(), this.subject(), this.keywords(), this.login(), this.altlangpage(), this.datemodified(), this.dateissued(), this.breadcrumbs(), this.css(), this.script().value, this.feedbackdata(), this.sourceurl()];
+                        let outputData = [this.layout(), this.title(), this.description(), this.subject(), this.keywords(), this.login(), this.altlangpage(), this.datemodified(), this.dateissued(), this.breadcrumbs(), this.css(), this.script().value, this.feedbackdata(), this.notedlinks()];
 
                         return formatOutputType(outputData.join(""), outputData.filter(Boolean).join(", \n"));
                     }, 
