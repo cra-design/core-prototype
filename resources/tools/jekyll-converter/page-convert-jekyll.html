@@ -290,7 +290,7 @@ script:
         }
 
         if (front_Matter !== null && front_Matter !== "") {
-            document.querySelectorAll("input[type='radio'][name='frontmatter']").forEach(radio, function () {
+            document.querySelectorAll("input[type='radio'][name='frontmatter']").forEach(function (radio) {
                 if (radio.value === decodeURIComponent(front_Matter)) {
                     radio.checked = true;
                 }
