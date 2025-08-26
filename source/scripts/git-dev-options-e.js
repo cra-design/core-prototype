@@ -272,6 +272,7 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                 document.getElementById("resolutionBtn").addEventListener("click", function() {
                     let generateResolutionPage = function generateResolutionPage(pageURL) {
                         let header, resPage, pgtitle, iframe, 
+                            defaultFrameHeight = "505px", 
                             resArr = [{ width: "480px", label: "Extra small devices (<768px)" }, 
  { width: "991px", label: "Small devices (<992px)" }, { width: "1199px", label: "Medium devices (<1200px)" }], 
                             getFilenameFromUrlSplit = function(pageURL) {
@@ -311,7 +312,7 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                                 iframe.sandbox = "allow-scripts";
                                 iframe.style.width = sizedata.width;
                                 iframe.style.border = "2px solid black";
-                                iframe.style.height = "505px";
+                                iframe.style.height = defaultFrameHeight;
                                 iframe.draggable = "true";
                                 frameContainer.appendChild(iframe);
                                 resPage.body.appendChild(frameContainer);
