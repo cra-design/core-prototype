@@ -1,0 +1,39 @@
+---
+name: Super-Linter
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+
+permissions: {}
+env:
+  LINTER_RULES_PATH: .github/linters
+  
+jobs:
+  build:
+    name: Lint [Validation]
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # super-linter needs the full git history to get the
+          # list of files that changed across commits
+          fetch-depth: 0
+
+      - name: Super-linter
+        uses: super-linter/super-linter@v8.0.0 # x-release-please-version
+        env:
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CREATE_LOG_FILE: true
+          SAVE_SUPER_LINTER_OUTPUT: true
+          SAVE_SUPER_LINTER_SUMMARY: true
+          DEFAULT_BRANCH: main
+          FILTER_REGEX_EXCLUDE: (_includes\/.+?\.html|resources\/tools\/tinymce\/.+?)

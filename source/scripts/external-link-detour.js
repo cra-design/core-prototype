@@ -1,7 +1,7 @@
 /*
-* Github only script
+* GitHub only script
 *
-* Replaces all external links with a link to exit intent page or replaces links with designated replace link found in JSON file 
+* Replaces all external links with a link to exit intent page or replaces links with designated replace link found in JSON file
 *
 */
 
@@ -11,8 +11,8 @@
 //  exitPage.dataset.exitByUrl = "false",
 //  exitPage.dataset.modLinkFile = "https://cra-design.github.io/gst-hst-business/templates/data/link_excludes.json", 
 //  relExternalLnk.value = "false",
-//  relExternalLnk.dataset.origin = "https://www.canada.ca",
-  
+//  relExternalLnk.dataset.origin = "https://www.canada.ca", 
+
 let exitPage = document.getElementById("exitpage");
 let relExternalLnk = document.getElementById("relextlnk");
 let inlineStyleText1, inlineStyleText2, 
@@ -143,7 +143,7 @@ let inlineStyleText1, inlineStyleText2,
         adjustLinks(elm, "a[href^='http']a:not([href^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript), area[href^='http']area:not([href^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", "form[action^='http']form:not([action^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", "input[formaction^='http']input:not([formaction^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript), button[formaction^='http']button:not([formaction^='" + rootDomain + "'], [formaction^='/'], [data-exit='false'], .wb-exitscript)", "");
         if ((relExternalLnk && relExternalLnk.dataset.origin !== "") && (relExternalLnk.value.toLowerCase() === "true" || isAjaxed === true)) {
             adjustLinks(elm, "a[href^='/']a:not([data-exit='false'], .wb-exitscript), area[href^='/']area:not([data-exit='false'], .wb-exitscript)", "form[action^='/']form:not([data-exit='false'], .wb-exitscript)", "input[formaction^='/']input:not([data-exit='false'], .wb-exitscript), button[formaction^='/']button:not([data-exit='false'], .wb-exitscript)", relExternalLnk.dataset.origin);
-        }        
+        }
     };
 
 //load link exclude json file
@@ -156,7 +156,7 @@ if ("modLinkFile" in exitPage.dataset && exitPage.dataset.modLinkFile !== "") {
 //Remove visited link highlighting from links to exit page
 if (exitPage !== null) {
     inlineStyleText1 = "Not to be copied to Canada.ca";
-    inlineStyleText2 = "CSS for github specific elements";
+    inlineStyleText2 = "CSS for GitHub specific elements";
     if (document.documentElement.lang === "fr") {
         inlineStyleText1 = "Ne pas copier sur Canada.ca";
         inlineStyleText2 = "CSS pour les éléments spécifiques à GitHub";

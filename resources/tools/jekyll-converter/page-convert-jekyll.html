@@ -95,6 +95,10 @@ script:
                             <input id="usePrettier" type="checkbox" checked="checked" value="true">
                             <label for="usePrettier">Format HTML (Prettier)</label>
                         </li>
+                        <li class="checkbox mrgn-lft-md">
+                            <input id="removeMWSTags" type="checkbox" checked="checked" value="true">
+                            <label for="removeMWSTags">Remove Managed Web Service (MWS) class <code>div</code> tags</label>
+                        </li>
                     </ul>
                 </fieldset>
             </div>
@@ -189,7 +193,7 @@ script:
         if (document.getElementById("uri").value !== "" && convertObj !== null) {
             targetURL = new URL(document.getElementById("uri").value);
             frontMatterType = document.querySelector("input[type=radio][name=frontmatter]:checked").value;
-            pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("layout").value, frontMatterType, document.getElementById("uri").value, document.getElementById("noted_page_array").value, document.getElementById("addStyles").checked, document.getElementById("addScripts").checked).pagedata();
+            pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("layout").value, frontMatterType, document.getElementById("uri").value, document.getElementById("noted_page_array").value, document.getElementById("addStyles").checked, document.getElementById("addScripts").checked, document.getElementById("removeMWSTags").checked).pagedata();
             if (document.getElementById("usePrettier").checked === true) {
                 htmlMain = await prettier.format(pageData.cssCode + pageData.htmlCode, {
                     "parser": "html", 
@@ -300,6 +304,7 @@ script:
         setCheckbox("style", "addStyles");
         setCheckbox("script", "addScripts");
         setCheckbox("prettier", "usePrettier");
+        setCheckbox("mwsclassdivs", "removeMWSTags");
 
         if (page_url !== null && page_url !== "") {
             document.getElementById("uri").value = decodeURIComponent(page_url);

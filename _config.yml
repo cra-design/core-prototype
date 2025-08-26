@@ -25,7 +25,7 @@ creator:
 developerOptions: false
 devOptionsLocStore: "gitCRATemplateDevOptions"
 exitByURL: false
-exitPage: 
+exitPage:
   en: "/core-prototype/exit-intent-e.html"
   fr: "/core-prototype/exit-intent-f.html"
 externalOrigin: "https://www.canada.ca"
@@ -60,11 +60,10 @@ defaults:
            url: "https://www.canada.ca/en/revenue-agency/services/update-information-cra.html"
          - text: "About the CRA"
            url: "https://www.canada.ca/en/revenue-agency/corporate/about-canada-revenue-agency-cra.html"
-      css: 
+      css:
         - https://use.fontawesome.com/releases/v5.15.4/css/all.css
         - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2025-12-mille-iles.css
         - /core-prototype/source/css/testing-banner.css
-      script: 
+      script:
         - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2025-12-mille-iles.js
         - /core-prototype/source/scripts/external-link-detour.js
-        

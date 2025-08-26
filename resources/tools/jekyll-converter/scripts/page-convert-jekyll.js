@@ -36,7 +36,7 @@ let outputPage = (function outputPage() {
 
             return fileLinkArr;
         }, 
-        "convert": function convert(pageObj, fileLinkArr, pageLayout, frontMatterType, pageURIStr, notedPagesJSONStr, includeStyles, includeScripts) {
+        "convert": function convert(pageObj, fileLinkArr, pageLayout, frontMatterType, pageURIStr, notedPagesJSONStr, includeStyles, includeScripts, removeMWSdivs) {
             const isYAML = "yaml";
 
             let pageTitleObj = pageObj.querySelector("meta[name=dcterms\\.title]"), 
@@ -87,6 +87,11 @@ let outputPage = (function outputPage() {
                         } else {
                             headerElms[0].remove();
                         }
+                    }
+
+                    // If option selected removes Managed Web Service (MWS) class DIVs 
+                    if (removeMWSdivs === true) {
+                        
                     }
                     return cleanObj;
                 };

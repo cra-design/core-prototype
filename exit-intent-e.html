@@ -24,7 +24,7 @@ noFooterMain: true
 </ul>
 <script>
     "use strict";
-    
+
     let exitOrigin, pagetitle, 
         devOptionsLocStore = null, 
         pageURL = window.location, 
@@ -72,7 +72,7 @@ noFooterMain: true
             });
             document.getElementById("exitLink").classList.remove("hidden");
         }
-    
+
         //remove exit script button if no value sent
         if (getQueryEl("exturl") !== null || devOptionsLocStore === "true" || (devOptions.value.toLowerCase() === "true" && devOptionsLocStore !== "false")) {
             document.getElementById("exitWETLink").classList.remove("hidden");
