@@ -1,3 +1,4 @@
+---
 # standard jekyll configuration
 content_editable: true
 baseurl: /core-prototype
@@ -10,10 +11,10 @@ remote_theme: wet-boew/gcweb-jekyll
 
 # Files excluded from Jekyll builds
 exclude:
-- README.md
-- Gemfile
-- Gemfile.lock
-- gcweb-jekyll.gemspec
+ - README.md
+ - Gemfile
+ - Gemfile.lock
+ - gcweb-jekyll.gemspec
 
 # Site settings
 assets: https://wet-boew.github.io/themes-dist
@@ -54,12 +55,12 @@ defaults:
       contextualFooter:
         title: "Canada Revenue Agency (CRA)"
         links:
-         - text: "Contact the CRA"
-           url: "https://www.canada.ca/en/revenue-agency/corporate/contact-information.html"
-         - text: "Update your information"
-           url: "https://www.canada.ca/en/revenue-agency/services/update-information-cra.html"
-         - text: "About the CRA"
-           url: "https://www.canada.ca/en/revenue-agency/corporate/about-canada-revenue-agency-cra.html"
+          - text: "Contact the CRA"
+            url: "https://www.canada.ca/en/revenue-agency/corporate/contact-information.html"
+          - text: "Update your information"
+            url: "https://www.canada.ca/en/revenue-agency/services/update-information-cra.html"
+          - text: "About the CRA"
+            url: "https://www.canada.ca/en/revenue-agency/corporate/about-canada-revenue-agency-cra.html"
       css:
         - https://use.fontawesome.com/releases/v5.15.4/css/all.css
         - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2025-12-mille-iles.css
