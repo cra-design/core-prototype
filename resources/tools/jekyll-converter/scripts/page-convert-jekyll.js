@@ -71,7 +71,7 @@ let outputPage = (function outputPage() {
                     }, checkURL);
                 }, 
                 cleanMain = function cleanMain(mainPageObj, pageLayout) {
-                    let headerElms, 
+                    let headerElms, mwsElms, 
                         cleanObj = mainPageObj.cloneNode(true), 
                         pagedetailsEl = cleanObj.getElementsByClassName("pagedetails");
 
@@ -89,9 +89,12 @@ let outputPage = (function outputPage() {
                         }
                     }
 
-                    // If option selected removes Managed Web Service (MWS) class DIVs 
+                    // If option selected removes Managed Web Service (MWS) class parent DIVs 
                     if (removeMWSdivs === true) {
-                        
+                        mwsElms = cleanObj.querySelectorAll("div.mwsaccordion-html, div.mwsadaptiveimage, div.mwsalerts, div.mwsblockquote, div.mwsbodytext, div.mwsbuttons, div.mwscalendar-html, div.mwscarousel, div.mwschart-hf, div.mwschildnodetable, div.mwscolumns, div.mwscorporateinformation, div.mwsdoormat-links, div.mwsdoormat-links-container, div.mwsfeatureimage, div.mwsfollowus, div.mwsform-html, div.mwsfootnotes-html, div.mwsgeomap, div.mwsgeneric-base-html, div.mwshorizontalrule, div.mwsinpagetoc, div.mwslatestnews, div.mwslink-box, div.mwsmediaplayer, div.mwsmulti-list, div.mwspagination, div.mwspanel, div.mwsportfolioministers, div.mwsstepbysteptoc, div.mwstabbed-interface-html, div.mwstemplate-html, div.mwstext, div.mwstitle, div.mwswhatdoing-html, div.advancedlist, div.contentfragment, div.mwsdoormat-links-container");
+                        mwsElms.forEach(function removeParentNode(parentElm) {
+                            parentElm.replaceWith(...parentElm.childNodes);
+                        });
                     }
                     return cleanObj;
                 };

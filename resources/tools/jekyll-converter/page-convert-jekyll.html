@@ -62,11 +62,11 @@ script:
             <fieldset class="gc-chckbxrdio form-inline mrgn-lft-md mrgn-bttm-lg">
                 <legend>Front Matter code:</legend>
                     <div class="radio label-inline">
-                        <input id="json" type="radio" name="frontmatter" value="json" checked="checked">
+                        <input id="json" type="radio" name="frontmatter" value="json">
                         <label for="json">JSON</label>
                     </div>
                     <div class="radio label-inline">
-                        <input id="yaml" type="radio" name="frontmatter" value="yaml">
+                        <input id="yaml" type="radio" name="frontmatter" value="yaml" checked="checked">
                         <label for="yaml">YAML</label>
                     </div>
             </fieldset>
@@ -97,7 +97,7 @@ script:
                         </li>
                         <li class="checkbox mrgn-lft-md">
                             <input id="removeMWSTags" type="checkbox" checked="checked" value="true">
-                            <label for="removeMWSTags">Remove all <abbr title="Managed Web Service">MWS</abbr> class <code>div</code> tags</label>
+                            <label for="removeMWSTags">Remove all <abbr title="Managed Web Service">MWS</abbr> class parent <code>&lt;div&gt;</code> tags</label>
                         </li>
                     </ul>
                 </fieldset>
