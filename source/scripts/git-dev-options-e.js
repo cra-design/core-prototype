@@ -270,13 +270,13 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
 
                 // resize page width button
                 document.getElementById("resolutionBtn").addEventListener("click", function() {
-                    let defaultFrameHeight = 505,
-                        frameWidthXS = 480,
-                        frameWidthSM = 991,
-                        frameWidthMD = 1199,
-                        frameWidthXSmax = 767,
-                        frameWidthSMmax = 991,
-                        frameWidthMDmax = 1199,
+                    let defaultFrameHeight = 505, 
+                        frameWidthXS = 480, 
+                        frameWidthSM = 991, 
+                        frameWidthMD = 1199, 
+                        frameWidthXSmax = 767, 
+                        frameWidthSMmax = 991, 
+                        frameWidthMDmax = 1199, 
                         generateResolutionPage = function generateResolutionPage(pageURL) {
                             let header, resPage, pgtitle, iframe, 
                                 resArr = [
