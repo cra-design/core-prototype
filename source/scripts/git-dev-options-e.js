@@ -1,7 +1,7 @@
 /*
 * GitHub only script
 *
-* Creates developer buttons - go to GitHub source version annd contenEditable page edit buttons
+* Creates developer buttons - go to GitHub source version and contenEditable page edit buttons
 *
 */
 
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                         init_instance_callback: function (ed) {
                             pageOrigin = document.querySelector("main").innerHTML;
 
-                            // Load modied page content if it exists from local Storage
+                            // Load modifed page content if it exists from local Storage
                             if (localStorage.getItem(pageKey)) {
                                 document.querySelector("main").innerHTML = localStorage.getItem(pageKey);
                             }
@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
 
             if (document.getElementById("devtoolbar") !== null) {
 
-                // Initalize Edit button
+                // Initialize Edit button
                 if (document.getElementById("editBtn") !== null) {
                     document.getElementById("editBtn").addEventListener("click", function (event) {
                         let currentContent, 
@@ -359,7 +359,7 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                     generateResolutionPage(window.location.origin + window.location.pathname);
                 });
 
-                // Initalize GitHub button
+                // Initialize GitHub button
                 if (gitURL !== "") {
                     if (document.getElementById("githubBtn") !== null) {
                         document.getElementById("githubBtn").href = gitURL;

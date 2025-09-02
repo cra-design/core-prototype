@@ -149,7 +149,7 @@ let inlineStyleText1, inlineStyleText2,
         }
     };
 
-//load link exclude json file
+//load link exclude JSON file
 if ("modLinkFile" in exitPage.dataset && exitPage.dataset.modLinkFile !== "") {
     $.getJSON(exitPage.dataset.modLinkFile, function(data) {
         linkExcludes = data;
@@ -181,7 +181,7 @@ $(".gcweb-menu").on("wb-ready.gcweb-menu", function () {
     }
 });
 
-// changes all ajaxed external site links and forms to go to destination link
+// changes all AJAXed external site links and forms to go to destination link
 $("[data-ajax-after], [data-ajax-append], [data-ajax-before], [data-ajax-prepend], [data-ajax-replace]").on("wb-contentupdated", function () {
     defaultadjustLinks(this, true, relExternalLnk);
 });
