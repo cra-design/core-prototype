@@ -316,7 +316,6 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                                     subhead.style.background = "black";
                                     subhead.style.color = "white";
                                     subhead.style.padding = "10px 20px";
-                                    // frameContainer.style.width = sizedata.width;
                                     frameContainer.appendChild(subhead);
                                     iframe.src = pageURL;
                                     iframe.sandbox = "allow-scripts";
