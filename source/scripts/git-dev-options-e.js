@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                         init_instance_callback: function (ed) {
                             pageOrigin = document.querySelector("main").innerHTML;
 
-                            // Load modifed page content if it exists from local Storage
+                            // Load modified page content if it exists from local Storage
                             if (localStorage.getItem(pageKey)) {
                                 document.querySelector("main").innerHTML = localStorage.getItem(pageKey);
                             }
