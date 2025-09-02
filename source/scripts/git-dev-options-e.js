@@ -270,58 +270,93 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
 
                 // resize page width button
                 document.getElementById("resolutionBtn").addEventListener("click", function() {
-                    let generateResolutionPage = function generateResolutionPage(pageURL) {
-                        let header, resPage, pgtitle, iframe, 
-                            defaultFrameHeight = "505px", 
-                            resArr = [{ width: "480px", label: "Extra small devices (<768px)" }, 
- { width: "991px", label: "Small devices (<992px)" }, { width: "1199px", label: "Medium devices (<1200px)" }], 
-                            getFilenameFromUrlSplit = function(pageURL) {
-                                let filenameWithParams, questionMarkIndex;
+                    let defaultFrameHeight = 505,
+                        frameWidthXS = 480,
+                        frameWidthSM = 991,
+                        frameWidthMD = 1199,
+                        frameWidthXSmax = 767,
+                        frameWidthSMmax = 991,
+                        frameWidthMDmax = 1199,
+                        generateResolutionPage = function generateResolutionPage(pageURL) {
+                            let header, resPage, pgtitle, iframe, 
+                                resArr = [
+                                    { width: frameWidthXS, label: "Extra small devices (<768px)" },
+                                    { width: frameWidthSM, label: "Small devices (<992px)" },
+                                    { width: frameWidthMD, label: "Medium devices (<1200px)" },
+                                ], 
+                                getFilenameFromUrlSplit = function (pageURL) {
+                                    let filenameWithParams, questionMarkIndex;
 
-                                if (pageURL) {
-                                    filenameWithParams = pageURL.split("/").pop();
-                                    questionMarkIndex = filenameWithParams.indexOf("?");
-                                    if (questionMarkIndex !== -1) {
-                                        return filenameWithParams.substring(0, questionMarkIndex);
+                                    if (pageURL) {
+                                        filenameWithParams = pageURL.split("/").pop();
+                                        questionMarkIndex = filenameWithParams.indexOf("?");
+                                        if (questionMarkIndex !== -1) {
+                                            return filenameWithParams.substring(0, questionMarkIndex);
+                                        }
+                                        return filenameWithParams;
                                     }
-                                    return filenameWithParams;
-                                }
-                                return "";
-                            };
+                                    return "";
+                                };
 
-                        resPage = window.open("", "_blank").document;
-                        if (resPage !== null || resPage.closed === false) {
-                            header = resPage.createElement("h1");
-                            header.textContent = pageURL;
-                            resPage.body.appendChild(header);
-                            resArr.forEach(function (sizedata) {
-                                let subhead = resPage.createElement("h2"), 
-                                    sp = resPage.createElement("span"), 
-                                    frameContainer = resPage.createElement("div");
+                            resPage = window.open("", "_blank").document;
+                            if (resPage !== null || resPage.closed === false) {
+                                header = resPage.createElement("h1");
+                                header.textContent = pageURL;
+                                resPage.body.appendChild(header);
+                                resArr.forEach(function (sizedata) {
+                                    let subhead = resPage.createElement("h2"),
+                                        sp = resPage.createElement("span"),
+                                        frameContainer = resPage.createElement("div");
 
-                                iframe = resPage.createElement("iframe");
-                                subhead.textContent = sizedata.label + " ";
-                                sp.style.color = "palegoldenrod";
-                                sp.textContent = sizedata.width;
-                                subhead.appendChild(sp);
-                                subhead.style.background = "black";
-                                subhead.style.color = "white";
-                                subhead.style.padding = "10px 20px";
-                                frameContainer.appendChild(subhead);
-                                iframe.src = pageURL;
-                                iframe.sandbox = "allow-scripts";
-                                iframe.style.width = sizedata.width;
-                                iframe.style.border = "2px solid black";
-                                iframe.style.height = defaultFrameHeight;
-                                iframe.draggable = "true";
-                                frameContainer.appendChild(iframe);
-                                resPage.body.appendChild(frameContainer);
-                            }, resPage);
-                            pgtitle = resPage.createElement("title");
-                            pgtitle.textContent = "WET page widths [" + getFilenameFromUrlSplit(pageURL) + "]";
-                            resPage.head.appendChild(pgtitle);
-                        }
-                    };
+                                    iframe = resPage.createElement("iframe");
+                                    subhead.textContent = sizedata.label + " ";
+                                    sp.style.color = "palegoldenrod";
+                                    sp.textContent = sizedata.width + "px";
+                                    subhead.appendChild(sp);
+                                    subhead.style.background = "black";
+                                    subhead.style.color = "white";
+                                    subhead.style.padding = "10px 20px";
+                                    // frameContainer.style.width = sizedata.width;
+                                    frameContainer.appendChild(subhead);
+                                    iframe.src = pageURL;
+                                    iframe.sandbox = "allow-scripts";
+                                    iframe.style.width = sizedata.width + "px";
+                                    iframe.style.border = "2px solid black";
+                                    iframe.style.height = defaultFrameHeight + "px";
+                                    iframe.draggable = "true";
+                                    frameContainer.appendChild(iframe);
+                                    resPage.body.appendChild(frameContainer);
+                                }, resPage);
+                                pgtitle = resPage.createElement("title");
+                                pgtitle.textContent = "WET page widths [" + getFilenameFromUrlSplit(pageURL) + "]";
+                                resPage.head.appendChild(pgtitle);
+                            }
+                        }, 
+                        getQueryEl = function getQueryEl(field, val) {
+                            // Get a querystring value
+                            const params = new Proxy(new URLSearchParams(window.location.search), {
+                                get: (searchParams, prop) => searchParams.get(prop),
+                            });
+
+                            if (params[field] !== null) {
+                                return params[field];
+                            }
+                            return val;
+                        }, 
+                        getFrameWidth = function getFrameWidth(widthval, queryVal, minwidth, maxwidth) {
+                            widthval = getQueryEl(queryVal, widthval);
+                            if (widthval > maxwidth) {
+                                return widthval = maxwidth;
+                            } else if (widthval < minwidth) {
+                                return (widthval = minwidth);
+                            }
+                            return widthval;
+                        };
+
+                    defaultFrameHeight = getQueryEl("ifheight", defaultFrameHeight);
+                    frameWidthXS = getFrameWidth(frameWidthXS, "ifwidthxs", 0, frameWidthXSmax)
+                    frameWidthSM = getFrameWidth(frameWidthSM, "ifwidthsm", frameWidthXSmax + 1, frameWidthSMmax);
+                    frameWidthMD = getFrameWidth(frameWidthMD, "ifwidthmd", frameWidthSMmax + 1, frameWidthMDmax);
                     generateResolutionPage(window.location.origin + window.location.pathname);
                 });
 

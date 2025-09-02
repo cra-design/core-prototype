@@ -97,14 +97,14 @@ script:
                         </li>
                         <li class="checkbox mrgn-lft-md">
                             <input id="removeMWSTags" type="checkbox" checked="checked" value="true">
-                            <label for="removeMWSTags">Remove all <abbr title="Managed Web Service">MWS</abbr> class parent <code>&lt;div&gt;</code> tags</label>
+                            <label for="removeMWSTags">Remove all parent <code>&lt;div&gt;</code> tags with <abbr title="Managed Web Service">MWS</abbr> class</label>
                         </li>
                     </ul>
                 </fieldset>
             </div>
             <div id="advcntrls">
                 <div class="form-group">
-                    <div class="col-xs-12 col-sm-7 col-md-6 col-lg-5">
+                    <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8">
                         <label for="github_path" class="h5 mrgn-tp-sm">GitHub repository destination path:</label>
                         <input id="github_path" type="url" name="github_path" class="form-control full-width input-lg mrgn-bttm-md" placeholder="Enter path">
                     </div>
@@ -142,9 +142,11 @@ script:
             <br>
             <button id="githubsave" type="button" class="btn btn-default">Save page</button>
             <br>
-            <label for="scripttext" id="scriptlabel" class="control-label h5 mrgn-tp-md"><span class="field-name">Inline <code>&lt;script&gt;</code> tags:</span></label>
-            <textarea id="scripttext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="10"></textarea>
-            <br>
+            <div id="scriptresults">
+                <label for="scripttext" id="scriptlabel" class="control-label h5 mrgn-tp-md"><span class="field-name">Inline <code>&lt;script&gt;</code> tags:</span></label>
+                <textarea id="scripttext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="10"></textarea>
+                <br>
+            </div>
             <label for="redirectfiletext" id="redirectfilelabel" class="control-label h5 mrgn-tp-md"><span class="field-name">JSON for redirect file:</span></label>
             <textarea id="redirectfiletext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="5"></textarea>
             <!-- END Result textarea -->
