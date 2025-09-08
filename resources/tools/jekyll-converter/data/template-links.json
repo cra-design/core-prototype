@@ -31,6 +31,7 @@
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2024-09-kejimkujik(\\.min)?\\.js$", 
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2025-04-nahanni(\\.min)?\\.js$", 
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2025-12-mille-iles(\\.min)?\\.js$", 
+        "^https:\\/\\/cra-design\\.github\\.io\\/core-prototype\\/resources\\/tools\\/jekyll-converter\\/scripts\\/page-convert-jekyll\\.js$", 
         "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2022-06-banff(\\.min)?\\.js$", 
         "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2023-10-mount-revelstoke(\\.min)?\\.js$", 
         "^https:\\/\\/wet-boew\\.github\\.io\\/themes-dist\\/GCWeb\\/GCWeb\\/méli-mélo\\/2024-09-kejimkujik(\\.min)?\\.js$", 
