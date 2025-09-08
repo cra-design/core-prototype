@@ -222,9 +222,9 @@ script:
             }
 
             if (frontMatterType === "yaml") {
-                resultArea.value = "---\n" + pageData.yamlCode + "---\n\n" + htmlMain;
+                resultArea.value = "---\n" + pageData.fmCode + "---\n\n" + htmlMain;
             } else {
-                resultArea.value = "---\n{\n" + pageData.yamlCode + "\n}\n---\n\n" + htmlMain;
+                resultArea.value = "---\n{\n" + pageData.fmCode + "\n}\n---\n\n" + htmlMain;
             }
             resultArea.focus();
             resultArea.scrollTop = 0;
