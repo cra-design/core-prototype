@@ -103,7 +103,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                 };
 
             if (pageObj === null || pageObj === "") {
-                return { "yamlCode": "", "htmlCode": "", "cssCode": "", "scriptCode": ""};
+                return { "fmCode": "", "htmlCode": "", "cssCode": "", "scriptCode": ""};
             } else {
                 return {
                     "layout": function layout() {
@@ -331,25 +331,21 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                         }
                         return styleOutput;
                     }, 
-                    "yaml": function yaml() {
+                    "frontmatter": function frontmatter() {
                         let outputData = [this.layout(), this.title(), this.description(), this.subject(), this.keywords(), this.login(), this.altlangpage(), this.datemodified(), this.dateissued(), this.breadcrumbs(), this.css(), this.script().value, this.feedbackdata(), this.notedlinks()];
 
                         return formatOutputType(outputData.join(""), outputData.filter(Boolean).join(", \n"));
                     }, 
                     "pagedata": function pagedata() {
                         return {
-                            "yamlCode": this.yaml(), 
+                            "fmCode": this.frontmatter(), 
                             "htmlCode": this.html(), 
                             "cssCode": this.style(), 
                             "scriptCode": this.script().inline
                         };
                     }, 
                     "pagecode": function pagecode() {
-                        if (frontMatterType === isYAML) {
-                            return "---\n" + this.yaml() + "---\n\n" + this.style() + this.html();
-                        } else {
-                            return "---\n{\n" + this.yaml() + "\n}\n---\n\n" + this.style() + this.html();
-                        }
+                        return formatOutputType("---\n" + this.frontmatter() + "---\n\n" + this.style() + this.html(), "---\n{\n" + this.frontmatter() + "\n}\n---\n\n" + this.style() + this.html());
                     }, 
                     "htmldoc": function htmldoc() {
                         let mainPageObj = pageObj.cloneNode(true), 
