@@ -159,8 +159,7 @@ script:
 <script>
     "use strict";
 
-    let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/jekyll-converter/data/template-links.json", 
-        fileName = "", 
+    let fileName = "", 
         resultArea = document.getElementById("sourcetext"), 
         getQueryEl = function getQueryEl(field) {
             // Get a querystring value
@@ -185,17 +184,17 @@ script:
         let htmlMain, targetURL, frontMatterType, 
             pageData = "", 
             githubPath = "", 
-            convertObj = await outputPage.getPageObject(document.getElementById("uri").value), 
-            fileLinkList = await outputPage.getFileLinkList(jsonFilePath);
+            convertObj = "";
 
         fileName = "";
         resultArea.value = "";
         document.getElementById("scripttext").value = "";
         document.getElementById("redirectfiletext").value = "";
-        if (document.getElementById("uri").value !== "" && convertObj !== null) {
+        if (document.getElementById("uri").value !== "") {
             targetURL = new URL(document.getElementById("uri").value);
             frontMatterType = document.querySelector("input[type=radio][name=frontmatter]:checked").value;
-            pageData = outputPage.convert(convertObj, fileLinkList, document.getElementById("layout").value, frontMatterType, document.getElementById("uri").value, document.getElementById("noted_page_array").value, document.getElementById("addStyles").checked, document.getElementById("addScripts").checked, document.getElementById("removeMWSTags").checked).pagedata();
+            convertObj = await outputPage.convert(document.getElementById("layout").value, frontMatterType, document.getElementById("uri").value, document.getElementById("noted_page_array").value, document.getElementById("addStyles").checked, document.getElementById("addScripts").checked, document.getElementById("removeMWSTags").checked);
+            pageData = convertObj.pagedata();
             if (document.getElementById("usePrettier").checked === true) {
                 htmlMain = await prettier.format(pageData.cssCode + pageData.htmlCode, {
                     "parser": "html", 

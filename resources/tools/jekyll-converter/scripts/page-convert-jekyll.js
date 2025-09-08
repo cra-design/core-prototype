@@ -1,6 +1,7 @@
 // Generates the GCWeb/Jekyll page
 
-let outputPage = (function outputPage() {
+let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/jekyll-converter/data/template-links.json", 
+    outputPage = (function outputPage() {
     "use strict";
 
     return {
@@ -36,10 +37,12 @@ let outputPage = (function outputPage() {
 
             return fileLinkArr;
         }, 
-        "convert": function convert(pageObj, fileLinkArr, pageLayout, frontMatterType, pageURIStr, notedPagesJSONStr, includeStyles, includeScripts, removeMWSdivs) {
+        "convert": async function convert(pageLayout, frontMatterType, pageURIStr, notedPagesJSONStr, includeStyles, includeScripts, removeMWSdivs) {
             const isYAML = "yaml";
 
-            let pageTitleObj = pageObj.querySelector("meta[name=dcterms\\.title]"), 
+            let pageObj = await this.getPageObject(pageURIStr), 
+                fileLinkArr = await this.getFileLinkList(jsonFilePath), 
+                pageTitleObj = pageObj.querySelector("meta[name=dcterms\\.title]"), 
                 formatOutputType = function (yamlOutput, jsonOutput) {
                     switch (frontMatterType) {
                         case isYAML:
@@ -99,7 +102,7 @@ let outputPage = (function outputPage() {
                     return cleanObj;
                 };
 
-            if (pageObj === "") {
+            if (pageObj === null || pageObj === "") {
                 return { "yamlCode": "", "htmlCode": "", "cssCode": "", "scriptCode": ""};
             } else {
                 return {
@@ -272,7 +275,7 @@ let outputPage = (function outputPage() {
                     "notedlinks": function notedlinks() {
                         // Adds URLs as noted page links
                         let notedPageArr, 
-                            linkRef = "",
+                            linkRef = "", 
                             createNoteLink = function createNoteLink(refURIStr, linkText) {
                                 let pageURI = new URL(refURIStr);
 
@@ -340,6 +343,13 @@ let outputPage = (function outputPage() {
                             "cssCode": this.style(), 
                             "scriptCode": this.script().inline
                         };
+                    }, 
+                    "pagecode": function pagecode() {
+                        if (frontMatterType === isYAML) {
+                            return "---\n" + this.yaml() + "---\n\n" + this.style() + this.html();
+                        } else {
+                            return "---\n{\n" + this.yaml() + "\n}\n---\n\n" + this.style() + this.html();
+                        }
                     }, 
                     "htmldoc": function htmldoc() {
                         let mainPageObj = pageObj.cloneNode(true), 
