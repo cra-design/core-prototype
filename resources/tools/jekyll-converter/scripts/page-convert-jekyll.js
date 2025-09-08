@@ -37,7 +37,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
 
             return fileLinkArr;
         }, 
-        formatOutputType = function (frontMatterType, yamlOutput, jsonOutput) {
+        "formatOutputType": function (frontMatterType, yamlOutput, jsonOutput) {
             switch (frontMatterType) {
                 case "yaml":
                     return yamlOutput;
