@@ -62,7 +62,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                         encloseQuote = "\"";
                     }
                     if (metaEl !== null && metaEl.length > 0 && "content" in metaEl[0] === true) {
-                        return outputPage.formatOutputType(frontMatterType, fieldname + ": " + encloseQuote + metaEl[0].content.trim() + encloseQuote + "\n", "\"" + fieldname + "\": \"" + metaEl[0].content.trim() + "\"");
+                        return outputPage().formatOutputType(frontMatterType, fieldname + ": " + encloseQuote + metaEl[0].content.trim() + encloseQuote + "\n", "\"" + fieldname + "\": \"" + metaEl[0].content.trim() + "\"");
                     }
                     return "";
                 }, 
@@ -109,14 +109,14 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                     "layout": function layout() {
                         // Adds layout
                         if (pageLayout !== "") {
-                            return outputPage.formatOutputType(frontMatterType, "layout: " + pageLayout + "\n", "\"layout\": \"" + pageLayout + "\"");
+                            return outputPage().formatOutputType(frontMatterType, "layout: " + pageLayout + "\n", "\"layout\": \"" + pageLayout + "\"");
                         }
                         return "";
                     }, 
                     "title": function title() {
                         // Adds title
                         if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                            return outputPage.formatOutputType(frontMatterType, "title: \"" + pageTitleObj.content.trim() + "\"\n",  "\"title\": \"" + pageTitleObj.content.trim() + "\"");
+                            return outputPage().formatOutputType(frontMatterType, "title: \"" + pageTitleObj.content.trim() + "\"\n",  "\"title\": \"" + pageTitleObj.content.trim() + "\"");
                         }
                         return "";
                     }, 
@@ -135,7 +135,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                     "login": function login() {
                         // generates CRA sign in button
                         if (pageObj.getElementById("wb-so") !== null) {
-                            return outputPage.formatOutputType(frontMatterType, "auth:\n  type: \"contextual\"\n  label: \"Sign in\"\n  labelExtended: \"CRA sign in\"\n  link: \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n", "\"auth\": [\n\"type\": \"contextual\", \n\"label\": \"Sign in\", \n\"labelExtended\": \"CRA sign in\", \n\"link\": \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n]");
+                            return outputPage().formatOutputType(frontMatterType, "auth:\n  type: \"contextual\"\n  label: \"Sign in\"\n  labelExtended: \"CRA sign in\"\n  link: \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n", "\"auth\": [\n\"type\": \"contextual\", \n\"label\": \"Sign in\", \n\"labelExtended\": \"CRA sign in\", \n\"link\": \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n]");
                         }
                         return "";
                     }, 
@@ -150,7 +150,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                             altlangObj = pageObj.querySelector("link[rel=alternate][hreflang=fr]");
                         }
                         if (altlangObj !== null && typeof altlangObj !== "undefined") {
-                            return outputPage.formatOutputType(frontMatterType, "altLangPage: \"" + altlangObj.href + "\"\n", "\"altLangPage\": \"" + altlangObj.href + "\"");
+                            return outputPage().formatOutputType(frontMatterType, "altLangPage: \"" + altlangObj.href + "\"\n", "\"altLangPage\": \"" + altlangObj.href + "\"");
                         }
                         return "";
                     }, 
@@ -171,7 +171,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                         if (typeof breadCrumbObj !== "undefined" && breadCrumbObj.length > 0) {
                             breadcrumbLinks = breadCrumbObj[0].querySelectorAll("a");
                             if (breadcrumbLinks.length > 1) {
-                                breadcrumbOutput = outputPage.formatOutputType(frontMatterType, "breadcrumbs: # By default the Canada.ca crumbs is already set\n", "\"breadcrumbs\": [");
+                                breadcrumbOutput = outputPage().formatOutputType(frontMatterType, "breadcrumbs: # By default the Canada.ca crumbs is already set\n", "\"breadcrumbs\": [");
                                 breadcrumbLinks.forEach(function addBreadCrumb(breadLink) {
                                     if (breadLink.textContent.toLowerCase() === "canada.ca") {
                                         return;
@@ -268,7 +268,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                     "feedbackdata": function feedbackdata() {
                         // Sets feedback box
                         if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                            return outputPage.formatOutputType(frontMatterType, "feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n", "\"feedbackData\": [\n\"section\": \"" + pageTitleObj.content + "\"\n]");
+                            return outputPage().formatOutputType(frontMatterType, "feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n", "\"feedbackData\": [\n\"section\": \"" + pageTitleObj.content + "\"\n]");
                         }
                         return "";
                     }, 
@@ -279,7 +279,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                             createNoteLink = function createNoteLink(refURIStr, linkText) {
                                 let pageURI = new URL(refURIStr);
 
-                                return outputPage.formatOutputType(frontMatterType, "\n  - title: \"" + linkText + "\"\n    link: \"" + pageURI.origin + pageURI.pathname + "\"", "\n{\n\"title\": \"" + linkText + "\", \n\"link\": \"" + pageURI.origin + pageURI.pathname + "\"\n}");
+                                return outputPage().formatOutputType(frontMatterType, "\n  - title: \"" + linkText + "\"\n    link: \"" + pageURI.origin + pageURI.pathname + "\"", "\n{\n\"title\": \"" + linkText + "\", \n\"link\": \"" + pageURI.origin + pageURI.pathname + "\"\n}");
                             }, 
                             getJSONArr = function getJSONArr(jsonStr) {
                                 let arr;
@@ -310,7 +310,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                             });
                         }
                         if (linkRef !== "") {
-                            return outputPage.formatOutputType(frontMatterType, "notedlinks:" + linkRef + "\n", "\"notedlinks\": [" + linkRef + "\n]");
+                            return outputPage().formatOutputType(frontMatterType, "notedlinks:" + linkRef + "\n", "\"notedlinks\": [" + linkRef + "\n]");
                         }
                         return "";
                     }, 
@@ -334,7 +334,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                     "frontmatter": function frontmatter() {
                         let outputData = [this.layout(), this.title(), this.description(), this.subject(), this.keywords(), this.login(), this.altlangpage(), this.datemodified(), this.dateissued(), this.breadcrumbs(), this.css(), this.script().value, this.feedbackdata(), this.notedlinks()];
 
-                        return outputPage.formatOutputType(frontMatterType, outputData.join(""), outputData.filter(Boolean).join(", \n"));
+                        return outputPage().formatOutputType(frontMatterType, outputData.join(""), outputData.filter(Boolean).join(", \n"));
                     }, 
                     "pagedata": function pagedata() {
                         return {
@@ -345,7 +345,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                         };
                     }, 
                     "pagecode": function pagecode() {
-                        return outputPage.formatOutputType(frontMatterType, "---\n" + this.frontmatter() + "---\n\n" + this.style() + this.html(), "---\n{\n" + this.frontmatter() + "\n}\n---\n\n" + this.style() + this.html());
+                        return outputPage().formatOutputType(frontMatterType, "---\n" + this.frontmatter() + "---\n\n" + this.style() + this.html(), "---\n{\n" + this.frontmatter() + "\n}\n---\n\n" + this.style() + this.html());
                     }, 
                     "htmldoc": function htmldoc() {
                         let mainPageObj = pageObj.cloneNode(true), 
