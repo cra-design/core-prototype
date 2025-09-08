@@ -30,7 +30,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
             }
             return null;
         }, 
-        "getFileLinkList": async function getFileLinkList() {
+        "getFileLinkList": async function getFileLinkList(jsonFilePath) {
            // let regexLinkData = await $.get(jsonFilePath), 
                // fileLinkArr = JSON.parse(regexLinkData);
             let fileLinkArr = await $.get(jsonFilePath);
@@ -41,7 +41,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
             const isYAML = "yaml";
 
             let pageObj = await this.getPageObject(pageURIStr), 
-                fileLinkArr = await this.getFileLinkList(), 
+                fileLinkArr = await this.getFileLinkList(jsonFilePath), 
                 pageTitleObj = pageObj.querySelector("meta[name=dcterms\\.title]"), 
                 formatOutputType = function (yamlOutput, jsonOutput) {
                     switch (frontMatterType) {
