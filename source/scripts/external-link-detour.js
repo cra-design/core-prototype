@@ -164,7 +164,7 @@ if (exitPage !== null) {
         inlineStyleText1 = "Ne pas copier sur Canada.ca";
         inlineStyleText2 = "CSS pour les éléments spécifiques à GitHub";
     }
-    visitedLinkStyle.innerHTML = "/*\n*** " + inlineStyleText1 + " ***\n\n" + inlineStyleText2 + "\n*//\n\n a[href*='" + exitPage.value + "']:visited{ color:inherit; }\n.btn-primary[href*='" + exitPage.value + "']:visited, .btn-success[href*='" + exitPage.value + "']:visited, .btn-info[href*='" + exitPage.value + "']:visited, .btn-danger[href*='" + exitPage.value + "']:visited { color: #fff; }\n .btn-default[href*='" + exitPage.value + "']:visited { color: #335075; }\n .btn-warning[href*='" + exitPage.value + "']:visited { color: #000; } ";
+    visitedLinkStyle.innerHTML = "/*\n*** " + inlineStyleText1 + " ***\n\n" + inlineStyleText2 + "\n*//\n\n a[href*='" + exitPage.value + "']:visited { color:inherit; }\n.btn-primary[href*='" + exitPage.value + "']:visited, .btn-success[href*='" + exitPage.value + "']:visited, .btn-info[href*='" + exitPage.value + "']:visited, .btn-danger[href*='" + exitPage.value + "']:visited { color: #fff; }\n.btn-default[href*='" + exitPage.value + "']:visited { color: #335075; }\n.btn-warning[href*='" + exitPage.value + "']:visited { color: #000; }\n";
     $("head").append(visitedLinkStyle);
 }
 
