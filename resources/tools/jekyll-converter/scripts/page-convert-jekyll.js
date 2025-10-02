@@ -66,11 +66,15 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                     }
                     return "";
                 }, 
-                islinkInTemplate = function islinkInTemplate(linkArr, checkURL) {
+                islinkInTemplate = function islinkInTemplate(linkArr, checkURL, regExFlag, isDecoded) {
                     // Checks if the <script> or <link> css file is in the JSON file to be ignored from adding to the page
                     return linkArr.some(function (linkStr) {
-                        let linkRegEx = new RegExp(linkStr, "iv");
-                        return linkRegEx.test(decodeURIComponent(checkURL.trim()).toLowerCase());
+                        let linkRegEx = new RegExp(linkStr, regExFlag);
+                        if (isDecoded === true) {
+                            return linkRegEx.test(decodeURIComponent(checkURL.trim()).toLowerCase());
+                        } else {
+                            return linkRegEx.test(checkURL.trim().toLowerCase());
+                        }
                     }, checkURL);
                 }, 
                 cleanMain = function cleanMain(mainPageObj, pageLayout) {
@@ -204,7 +208,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                         }
                         cssLinks = noMainPageObj.querySelectorAll("link[rel=stylesheet]");
                         for (let cssLink of cssLinks) {
-                            if (islinkInTemplate(fileLinkArr.stylsheetsRegEx, cssLink.href) === false) {
+                            if (islinkInTemplate(fileLinkArr.stylsheetsRegEx, cssLink.href, "iv", true) === false) {
                                 if (frontMatterType === isYAML) {
                                     cssOutput += "css: \"" + cssLink.href + "\"\n";
                                 } else {
@@ -238,10 +242,10 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                             if (scriptElm.innerHTML !== "") {
  
                                 // Gets any <script> tags outside of the <main> tag and adds them to the bottom of the content
-                                if (includeScripts === true && islinkInTemplate(fileLinkArr.inlineScript, scriptElm.textContent.replace(/[\r\n\s]+/g, "").toLowerCase()) === false) {
+                                if (includeScripts === true && islinkInTemplate(fileLinkArr.inlineScript, scriptElm.textContent.replace(/[\r\n\s]+/g, "").toLowerCase(), "iv", false) === false) {
                                     scriptData += scriptElm.outerHTML + "\n";
                                 }
-                            } else if (islinkInTemplate(fileLinkArr.scriptsRegEx, scriptElm.src) === false) {
+                            } else if (islinkInTemplate(fileLinkArr.scriptsRegEx, scriptElm.src, "iv", true) === false) {
                                 if (frontMatterType === isYAML) {
                                     scriptOutput += "script: \"" + scriptElm.src + "\"\n";
                                 } else {
