@@ -238,7 +238,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                             if (scriptElm.innerHTML !== "") {
  
                                 // Gets any <script> tags outside of the <main> tag and adds them to the bottom of the content
-                                if (includeScripts === true && islinkInTemplate(fileLinkArr.inlineScript, scriptElm.replace(/[\r\n\s]+/g, "").toLowerCase()) === false) {
+                                if (includeScripts === true && islinkInTemplate(fileLinkArr.inlineScript, scriptElm.textContent.replace(/[\r\n\s]+/g, "").toLowerCase()) === false) {
                                     scriptData += scriptElm.outerHTML + "\n";
                                 }
                             } else if (islinkInTemplate(fileLinkArr.scriptsRegEx, scriptElm.src) === false) {
