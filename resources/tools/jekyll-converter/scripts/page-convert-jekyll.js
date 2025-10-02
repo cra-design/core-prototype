@@ -307,7 +307,7 @@ let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/
                         if (notedPageArr !== null) {
                             notedPageArr.forEach(function addNotedPage(notedPage) {
                                 if ("link" in notedPage && "title" in notedPage) {
-                                    if (linkRef !== "") {
+                                    if (linkRef !== "" && frontMatterType !== isYAML) {
                                         linkRef += ", ";
                                     }
                                     linkRef += createNoteLink(notedPage.link, notedPage.title);
