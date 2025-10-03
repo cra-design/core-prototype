@@ -24,6 +24,7 @@
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/cdts\\/gcweb\\/v[0-9_]+?\\/cdts\\/compiled\\/wet-en\\.js$", 
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/clientlib-publish(\\.min)?\\.js$", 
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/js\\/ep-pp(\\.min)?\\.js$", 
+        "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/js\\/gcdsloader(\\.min)?\\.js$", 
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/js\\/theme(\\.min)?\\.js$", 
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/js\\/wet-boew(\\.min)?\\.js$", 
         "^https:\\/\\/(www\\.)?canada\\.ca\\/etc\\/designs\\/canada\\/wet-boew\\/méli-mélo\\/2022-06-banff(\\.min)?\\.js$", 
