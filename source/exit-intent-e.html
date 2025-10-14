@@ -74,7 +74,7 @@ noFooterMain: true
         }
 
         //remove exit script button if no value sent
-        if (getQueryEl("exturl") !== null || devOptionsLocStore === "true" || (devOptions.value.toLowerCase() === "true" && devOptionsLocStore !== "false")) {
+        if (getQueryEl("exturl") !== null && (devOptionsLocStore === "true" || (devOptions.value.toLowerCase() === "true" && devOptionsLocStore !== "false"))) {
             document.getElementById("exitWETLink").classList.remove("hidden");
 //            $("#exitWETLink").trigger("wb-init.wb-exitscript");
         }
