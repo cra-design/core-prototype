@@ -54,7 +54,7 @@ let inlineStyleText1, inlineStyleText2,
                 $(elm).find(hrefSelector).each(function updateExitHref() {
                     const maxURILength = 2048;
                     let urlObj, queryHash, 
-                        pagetitle = encodeURIComponent(this.innerText),
+                        pagetitle = encodeURIComponent(this.innerText), 
                         exitPageURI = exitPage.value, 
                         destURI = adjustHref(this.href, destStartPath), 
                         currentURI = this.protocol + "//" + this.hostname + this.pathname, 
@@ -100,7 +100,7 @@ let inlineStyleText1, inlineStyleText2,
 
             if (actionSelector !== "") {
                 $(elm).find(actionSelector).each(function updateExitAction() {
-                    let queryHash,
+                    let queryHash, 
                         exitPageURI = exitPage.value, 
                         currentURI = this.protocol + "//" + this.hostname + this.pathname, 
                         lnkExclIdx = linkExcludeIndex(currentURI);
@@ -119,7 +119,7 @@ let inlineStyleText1, inlineStyleText2,
                 $(elm).find(formActionSelector).each(function updateExitForm() {
                     let queryHash, 
                         exitPageURI = exitPage.value, 
-                        currentURI = this.protocol + "//" + this.hostname + this.pathname,
+                        currentURI = this.protocol + "//" + this.hostname + this.pathname, 
                         lnkExclIdx = linkExcludeIndex(currentURI);
 
                     if (lnkExclIdx === -1) {
@@ -133,7 +133,7 @@ let inlineStyleText1, inlineStyleText2,
         }
     }, 
     getDomain = function (url) {
-        let pattern = new RegExp("^(https?:\/\/[^\/]+\/[^\/]*\/?)"),
+        let pattern = new RegExp("^(https?:\/\/[^\/]+\/[^\/]*\/?)"), 
             domains = pattern.exec(url);
 
         if (domains !== null) {
