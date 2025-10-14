@@ -186,7 +186,7 @@ $("[data-ajax-after], [data-ajax-append], [data-ajax-before], [data-ajax-prepend
     if (relExternalLnk && relExternalLnk.value.toLowerCase() === "true" && relExternalLnk.dataset.origin !== "") {
         $(this).find("[icon^='/'], [poster^='/'], [src^='/'], [srcset^='/'], [data^='/']").each(function updateAjaxLinks() {
             let elm = this, 
-                attrType = ["data", "icon", "poster", "src", "srcset"]";
+                attrType = ["data", "icon", "poster", "src", "srcset"];
 
             attrType.forEach(function checkAttr (attrItem) {
                 let attrValue;
