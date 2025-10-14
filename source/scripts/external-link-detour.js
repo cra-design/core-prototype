@@ -194,7 +194,7 @@ $("[data-ajax-after], [data-ajax-append], [data-ajax-before], [data-ajax-prepend
                 if (elm.hasAttribute(attrItem) === true) {
                     attrValue = elm.getAttribute(attrItem);
                     if (attrValue.startsWith("/") === true) {
-                        elm.setAttribute(attrItem) = relExternalLnk.dataset.origin + attrValue;
+                        elm.setAttribute(attrItem, relExternalLnk.dataset.origin + attrValue);
                         return;
                     }
                 }
