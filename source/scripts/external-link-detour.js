@@ -7,10 +7,10 @@
 
 "use strict";
 
-//  exitPage.value = "https://cra-design.github.io/gst-hst-business/exit-intent.html",
-//  exitPage.dataset.exitByUrl = "false",
+//  exitPage.value = "https://cra-design.github.io/gst-hst-business/exit-intent.html", 
+//  exitPage.dataset.exitByUrl = "false", 
 //  exitPage.dataset.modLinkFile = "https://cra-design.github.io/gst-hst-business/templates/data/link_excludes.json", 
-//  relExternalLnk.value = "false",
+//  relExternalLnk.value = "false", 
 //  relExternalLnk.dataset.origin = "https://www.canada.ca", 
 
 let exitPage = document.getElementById("exitpage");
