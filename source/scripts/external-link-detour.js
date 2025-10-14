@@ -191,7 +191,7 @@ $("[data-ajax-after], [data-ajax-append], [data-ajax-before], [data-ajax-prepend
             attrType.forEach(function checkAttr (attrItem) {
                 let attrValue;
     
-                if (elm.hasAttribute(arrItem) === true) {
+                if (elm.hasAttribute(attrItem) === true) {
                     attrValue = elm.getAttribute(attrItem);
                     if (attrValue.startsWith("/") === true) {
                         elm.setAttribute(attrItem) = relExternalLnk.dataset.origin + attrValue;
