@@ -183,7 +183,7 @@ $(".gcweb-menu").on("wb-ready.gcweb-menu", function () {
 
 // changes all AJAXed external site links and forms to go to destination link
 $("[data-ajax-after], [data-ajax-append], [data-ajax-before], [data-ajax-prepend], [data-ajax-replace]").on("wb-contentupdated", function () {
-    if (relExternalLnk && relExternalLnk.value.toLowerCase() === "true" && relExternalLnk.dataset.origin !== "") {
+    if (relExternalLnk && relExternalLnk.dataset.origin !== "") {
         $(this).find("[icon^='/'], [poster^='/'], [src^='/'], [srcset^='/'], [data^='/']").each(function updateAjaxLinks() {
             let elm = this, 
                 attrType = ["data", "icon", "poster", "src", "srcset"];
