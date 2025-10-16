@@ -1,8 +1,8 @@
 // Generates the GCWeb/Jekyll page
 
-let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/jekyll-converter/data/template-links.json", 
-    outputPage = (function outputPage() {
+let outputPage = (function outputPage() {
     "use strict";
+    let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/jekyll-converter/data/template-links.json";
 
     return {
         "getPageObject": async function getPageObject(pageURIStr) {
