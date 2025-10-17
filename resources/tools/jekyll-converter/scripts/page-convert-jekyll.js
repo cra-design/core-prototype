@@ -377,3 +377,5 @@ let outputPage = (function outputPage() {
         }
     };
 }());
+
+export default outputPage;

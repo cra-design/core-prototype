@@ -10,13 +10,6 @@ share: false
 noFooterContextual: true
 noFooterCorporate: true
 noFooterMain: true
-script:
-  - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2024-09-kejimkujik.js
-  - https://cra-design.github.io/core-prototype/resources/tools/jekyll-converter/scripts/page-convert-jekyll.js
-  - https://unpkg.com/prettier@3.5.3/standalone.js
-  - https://unpkg.com/prettier@3.5.3/plugins/estree.js
-  - https://unpkg.com/prettier@3.5.3/plugins/html.js
-#  - https://www.canada.ca/etc/designs/canada/wet-boew/js/ep-pp.min.js
 ---
 
 <br>
@@ -156,7 +149,12 @@ script:
 -->
     </fieldset>
 </form>
-<script>
+<script type="module">
+    import * as prettier from "https://unpkg.com/prettier@3.6.2/standalone.mjs";
+    import * as prettierPluginEstree from "https://unpkg.com/prettier@3.6.2/plugins/estree.mjs";
+    import * as prettierPluginHtml from "https://unpkg.com/prettier@3.6.2/plugins/html.mjs";    
+    import outputPage from "./scripts/convert-page-jekyll_F.js";
+
     "use strict";
 
     let fileName = "", 
@@ -198,7 +196,7 @@ script:
             if (document.getElementById("usePrettier").checked === true) {
                 htmlMain = await prettier.format(pageData.cssCode + pageData.htmlCode, {
                     "parser": "html", 
-                    "plugins": [prettierPlugins.estree, prettierPlugins.html], 
+                    "plugins": [prettierPluginEstree, prettierPluginHtml], 
                     "arrowParens": "always", 
                     "bracketSameLine": false, 
                     "bracketSpacing": false, 
