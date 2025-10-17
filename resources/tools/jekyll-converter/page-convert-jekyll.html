@@ -220,9 +220,9 @@ noFooterMain: true
             }
 
             if (frontMatterType === "yaml") {
-                resultArea.value = "---\n" + pageData.fmCode.replace(new RegExp("(?:[\r\n]\s+)(>)","gm"), "$1") + "---\n\n" + htmlMain;
+                resultArea.value = "---\n" + pageData.fmCode + "---\n\n" + htmlMain.replace(new RegExp("(?:[\r\n]\s+)(>)","gm"), "$1");
             } else {
-                resultArea.value = "---\n{\n" + pageData.fmCode.replace(new RegExp("(?:[\r\n]\s+)(>)","gm"), "$1") + "\n}\n---\n\n" + htmlMain;
+                resultArea.value = "---\n{\n" + pageData.fmCode + "\n}\n---\n\n" + htmlMain.replace(new RegExp("(?:[\r\n]\s+)(>)","gm"), "$1");
             }
             resultArea.focus();
             resultArea.scrollTop = 0;
