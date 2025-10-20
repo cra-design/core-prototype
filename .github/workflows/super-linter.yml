@@ -35,5 +35,10 @@ jobs:
           CREATE_LOG_FILE: true
           SAVE_SUPER_LINTER_OUTPUT: true
           SAVE_SUPER_LINTER_SUMMARY: true
+          FIX_CSS_PRETTIER: false
+          FIX_JAVASCRIPT_PRETTIER: false
+          FIX_MARKDOWN_PRETTIER: false
+          FIX_YAML_PRETTIER: false
           DEFAULT_BRANCH: main
           FILTER_REGEX_EXCLUDE: (_includes\/.+?\.html|resources\/tools\/tinymce\/.+?)
+
