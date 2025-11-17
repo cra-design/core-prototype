@@ -273,7 +273,7 @@ let outputPage = (function outputPage() {
                     "feedbackdata": function feedbackdata() {
                         // Sets feedback box
                         if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                            return outputPage().formatOutputType(frontMatterType, "feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n", "\"feedbackData\": [\n\{\n"section\": \"" + pageTitleObj.content + "\"\n}\n]");
+                            return outputPage().formatOutputType(frontMatterType, "feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n", "\"feedbackData\": [\n{\n\"section\": \"" + pageTitleObj.content + "\"\n}\n]");
                         }
                         return "";
                     }, 
