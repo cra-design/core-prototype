@@ -1,6 +1,6 @@
 ---
 testBanner: false
-title: "Convert page to GCWeb/Jekyll page tool"
+title: "Export URL into Jekyll/CDTS page template"
 dateModified: 2025-04-30
 dateIssued: 2025-04-30
 nomenu: true
@@ -10,41 +10,56 @@ share: false
 noFooterContextual: true
 noFooterCorporate: true
 noFooterMain: true
+script: https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2025-12-mille-iles.js
 ---
 
 <br>
 <section class="alert alert-info">
     <h2>Note:</h2>
-    <p>This tool reads most of the data it uses to populate the YAML section of the template from the <code>&lt;meta&gt;</code> section of the page so if there are none or limited <code>&lt;meta&gt;</code> then some content may not be generated.</p>
-    <p>Also:</p>
+    <p>This tool reads most of the data used to populate the <strong>Front Matter</strong> section of the generated template from the <code>&lt;meta&gt;</code> tag section of the page so if there is none or limited <code>&lt;meta&gt;</code> tags then some data may not be generated.</p>
+    <p>Also in relation to <strong>layout</strong> choices:</p>
     <ul>
         <li>Pages with <strong>subways</strong> normally use a <strong>layout</strong> of <code>without-h1</code> </li>
         <li>Pages with <strong>most requested section</strong> should use a <strong>layout</strong> of <code>no-container</code></li>
-    </ul>
+        <li>The <abbr title="Centrally Deployed Templates Solution">CDTS</abbr> template type is not configured to support the <code>no-container</code> and <code>gcds</code> <strong>layout</strong> options</li>
 </section>
-<section>
+<div>
     <details>
-        <summary class="h4">Creating a bookmarklet to launch the convert page to GCWeb/Jekyll page tool</summary>
-        <p>This bookmarklet works like a bookmark but will launch the <strong>Convert page to GCWeb/Jekyll page tool</strong> for the current page you are viewing.</p>
-        <p>To create a bookmarklet for the <strong>Convert page to GCWeb/Jekyll page tool</strong> right-click the following link and select <strong>Add to favorites…</strong> or drag the link to your favorites or favorites bar.</p>
+        <summary class="h4">Creating a bookmarklet to launch the Export URL into Jekyll/CDTS page template tool</summary>
+        <p>This bookmarklet works like a bookmark but will launch the <strong>Export URL into Jekyll/<abbr title="Centrally Deployed Templates Solution">CDTS</abbr> page template tool</strong> for the current page you are viewing.</p>
+        <p>To create a bookmarklet for the <strong>Export URL into Jekyll/<abbr title="Centrally Deployed Templates Solution">CDTS</abbr> page template tool</strong> right-click the following link and select <strong>Add to favorites…</strong> or drag the link to your favorites or favorites bar.</p>
         <ul class="mrgn-tp-md list-unstyled">
-            <li><a id="jekyllCnvrtBmrklt" href="#">Convert page to GCWeb/Jekyll page tool</a></li>
+            <li><a id="jekyllCnvrtBmrklt" href="#">Export URL into Jekyll/CDTS page template tool</a></li>
         </ul>
     </details>
-</section>
+</div>
 <div class="clearfix"></div>
 
+<div class="wb-frmvld">
 <form id="convertform" action="#" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded" method="get">
     <fieldset>
         <legend class="mrgn-tp-sm h2">Page information</legend>
+        <div class="clearfix"></div>
         <div class="row">
-            <div class="form-group">
+            <fieldset id="tmpltType" class="gc-chckbxrdio form-inline mrgn-lft-md mrgn-bttm-md">
+                <legend>Template type:</legend>
+                <div class="radio label-inline">
+                    <input id="jekyll" type="radio" name="template" value="" checked="checked">
+                    <label for="jekyll">Jekyll</label>
+                </div>
+                <div class="radio label-inline">
+                    <input id="cdts" type="radio" name="template" value="/core-prototype/resources/tools/jekyll-converter/data/cdts-export-template-e.txt">
+                    <label for="cdts"><abbr title="Centrally Deployed Templates Solution">CDTS</abbr></label>
+                </div>
+            </fieldset>
+            <div id="layoutSelect" class="form-group">
                 <div class="mrgn-lft-md">
-                    <label for="layout" class="h5 mrgn-tp-md"><span class="field-name">Layout</span></label>
+                    <label for="layout" class="h5 mrgn-tp-sm"><span class="field-name">Layout</span></label>
                 </div>
                 <select id="layout" name="layout" class="form-control input-lg mrgn-lft-md">
                     <option selected="selected" value="">default</option>
                     <option value="fluid">fluid</option>
+                    <option value="gcds">gcds</option>
                     <option value="no-container">no-container</option>
                     <option value="without-h1">without-h1</option>
 <!--
@@ -52,16 +67,16 @@ noFooterMain: true
 -->
                 </select>
             </div>
-            <fieldset class="gc-chckbxrdio form-inline mrgn-lft-md mrgn-bttm-lg">
+            <fieldset id="fmRadiobox" class="gc-chckbxrdio form-inline mrgn-lft-md mrgn-tp-md mrgn-bttm-md">
                 <legend>Front Matter code:</legend>
-                    <div class="radio label-inline">
-                        <input id="json" type="radio" name="frontmatter" value="json">
-                        <label for="json">JSON</label>
-                    </div>
-                    <div class="radio label-inline">
-                        <input id="yaml" type="radio" name="frontmatter" value="yaml" checked="checked">
-                        <label for="yaml">YAML</label>
-                    </div>
+                <div class="radio label-inline">
+                    <input id="json" type="radio" name="frontmatter" value="json">
+                    <label for="json"><abbr title="JavaScript Object Notation">JSON</abbr></label>
+                </div>
+                <div class="radio label-inline">
+                    <input id="yaml" type="radio" name="frontmatter" value="yaml" checked="checked">
+                    <label for="yaml"><abbr title="YAML Ain't Markup Language">YAML</abbr></label>
+                </div>
             </fieldset>
             <div class="col-lg-12">
                 <label class="required control-label mrgn-lft-sm h5 mrgn-tp-sm" for="uri">URL <strong class="required">(required)</strong></label>
@@ -73,22 +88,21 @@ noFooterMain: true
                 </div>
             </div>
             <div class="col-xs-12">
-                <hr>
                 <fieldset class="gc-chckbxrdio">
-                    <ul class="list-unstyled form-inline lst-spcd-2 mrgn-bttm-md">
-                        <li class="checkbox mrgn-lft-md">
+                    <ul class="list-unstyled form-inline lst-spcd-2 mrgn-bttm-sm mrgn-tp-lg">
+                        <li class="checkbox mrgn-lft-md pb-2">
                             <input id="addStyles" type="checkbox" checked="checked" value="true">
                             <label for="addStyles">Include all <code>&lt;style&gt;</code> tags</label>
                         </li>
-                        <li class="checkbox mrgn-lft-md">
+                        <li class="checkbox mrgn-lft-md pb-2">
                             <input id="addScripts" type="checkbox" checked="checked" value="true">
                             <label for="addScripts">Get all inline <code>&lt;script&gt;</code> tags</label>
                         </li>
-                        <li class="checkbox mrgn-lft-md">
+                        <li class="checkbox mrgn-lft-md pb-2">
                             <input id="usePrettier" type="checkbox" checked="checked" value="true">
                             <label for="usePrettier">Format HTML (Prettier)</label>
                         </li>
-                        <li class="checkbox mrgn-lft-md">
+                        <li class="checkbox mrgn-lft-md pb-2">
                             <input id="removeMWSTags" type="checkbox" checked="checked" value="true">
                             <label for="removeMWSTags">Remove all parent <code>&lt;div&gt;</code> tags with <abbr title="Managed Web Service">MWS</abbr> class</label>
                         </li>
@@ -99,13 +113,13 @@ noFooterMain: true
                 <div class="form-group">
                     <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8">
                         <label for="github_path" class="h5 mrgn-tp-sm">Page destination path on GitHub:</label>
-                        <input id="github_path" type="url" name="github_path" class="form-control full-width input-lg mrgn-bttm-md" placeholder="Enter path">
+                        <input id="github_path" type="text" name="github_path" class="form-control full-width input-lg mrgn-bttm-md" placeholder="Enter path">
                     </div>
                 </div>
                 <div class="clearfix"></div>
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <label for="noted_page_array" class="h5 mrgn-tp-sm">Noted page link JSON array:</label><a href="#notedpagehelp" aria-controls="notedpagehelp" class="wb-lbx mrgn-lft-sm" title="Noted page link JSON array information"><span class="glyphicon glyphicon-question-sign" role="button"></span><span class="wb-inv">Noted page link JSON array information</span></a>
+                        <label for="noted_page_array" class="h5 mrgn-tp-sm">Noted page link JSON array:</label><a href="#notedpagehelp" aria-controls="notedpagehelp" class="wb-lbx mrgn-lft-sm" title="Noted page link JSON array information"><span class="glyphicon glyphicon-question-sign"></span><span class="wb-inv">Noted page link JSON array information</span></a>
 
                         <textarea id="noted_page_array" class="form-control" rows="3" cols="47"></textarea>
                     </div>
@@ -122,6 +136,7 @@ noFooterMain: true
         </div>
     </fieldset>
 </form>
+</div>
 
 <br>
 
@@ -131,17 +146,17 @@ noFooterMain: true
         <div class="form-group">
             <label for="sourcetext" id="contentlabel" class="control-label h5 mrgn-tp-sm"><span class="field-name">Source:</span></label>
             <!-- START Result textarea -->
-            <textarea id="sourcetext" name="content" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="19"></textarea>
+            <textarea id="sourcetext" name="content" cols="132" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="19"></textarea>
             <br>
             <button id="githubsave" type="button" class="btn btn-default">Save page</button>
             <br>
-            <div id="scriptresults">
+            <div id="scriptresults" class="wb-inv">
                 <label for="scripttext" id="scriptlabel" class="control-label h5 mrgn-tp-md"><span class="field-name">Inline <code>&lt;script&gt;</code> tags:</span></label>
-                <textarea id="scripttext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="10"></textarea>
+                <textarea id="scripttext" name="scripts" cols="132" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="10"></textarea>
                 <br>
             </div>
             <label for="redirectfiletext" id="redirectfilelabel" class="control-label h5 mrgn-tp-md"><span class="field-name">JSON for redirect file:</span></label>
-            <textarea id="redirectfiletext" name="scripts" cols="132" autofocus="autofocus" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="5"></textarea>
+            <textarea id="redirectfiletext" name="scripts" cols="132" class="form-control input-md mrgn-bttm-md full-width wb-clipboard" aria-labelledby="contentlabel" aria-multiline="true" rows="5"></textarea>
             <!-- END Result textarea -->
         </div>
 <!--
@@ -152,12 +167,13 @@ noFooterMain: true
 <script type="module">
     import * as prettier from "https://unpkg.com/prettier@3.6.2/standalone.mjs";
     import * as prettierPluginEstree from "https://unpkg.com/prettier@3.6.2/plugins/estree.mjs";
-    import * as prettierPluginHtml from "https://unpkg.com/prettier@3.6.2/plugins/html.mjs";    
+    import * as prettierPluginHtml from "https://unpkg.com/prettier@3.6.2/plugins/html.mjs";
     import outputPage from "./scripts/page-convert-jekyll.js";
 
     "use strict";
 
     let fileName = "", 
+        convertDomain = window.location.hostname, 
         resultArea = document.getElementById("sourcetext"), 
         getQueryEl = function getQueryEl(field) {
             // Get a querystring value
@@ -167,76 +183,135 @@ noFooterMain: true
 
             return params[field];
         }, 
-        getFilenameFromUrl = function getFilenameFromUrl(uri) {
-            const lastSlashIndex = uri.lastIndexOf("/");
-
-            if (lastSlashIndex !== -1) {
-                return uri.substring(lastSlashIndex + 1);
+        page_url = getQueryEl("uri"), 
+        showHideInvis = function showHideInvis(isVisible, elmId) {
+            if (isVisible === true) {
+                document.getElementById(elmId).classList.remove("wb-inv");
+            } else {
+                document.getElementById(elmId).classList.add("wb-inv");
             }
-            return "";
-        }, 
-        page_url = getQueryEl("uri");
+        };
 
     // submit button
     document.getElementById("submitbutton").addEventListener("click", async function (e) {
-        let htmlMain, targetURL, frontMatterType, 
+        let htmlMain, targetURL, templateType, frontMatterType, 
             pageData = "", 
-            githubPath = "", 
-            convertObj = "";
+            convertObj = "", 
+            getFilenameFromUrl = function getFilenameFromUrl(uri) {
+                const lastSlashIndex = uri.lastIndexOf("/");
 
-        fileName = "";
+                if (lastSlashIndex !== -1) {
+                    return uri.substring(lastSlashIndex + 1);
+                }
+                return "";
+            }, 
+            loadTemplate = async function loadTemplate(url, data) {
+                // Fetch the external HTML file content
+                const response = await fetch(url);
+                let htmlString, placeholder;
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                htmlString = await response.text();
+                // Manually replace placeholders in the string with data
+                for (const key in data) {
+                    if (Object.hasOwn(data, key) === true) {
+                        // Simple string replacement for ${key}
+                        placeholder = new RegExp(`\\\$\\\{${key}\\\}`, "g");
+                        htmlString = htmlString.replace(placeholder, data[key]);
+                    }
+                }
+                return htmlString;
+            }, 
+            renderTemplate = function renderTemplate(template, data) {
+                // Create a function that takes 'frontData' and returns the evaluated template literal
+                let frontData = data.fmCode;
+                const templateFunction = new Function("frontData", `return \`${template}\``);
+
+                return templateFunction(frontData);
+            }, 
+            formatResults = function formatResults(pageData, targetURL, fileName) {            
+                let gitPathFilename, 
+                    githubPath = "";
+
+                resultArea.select();
+                resultArea.scrollTop = 0;
+                resultArea.focus();
+                showHideInvis(pageData.scriptCode !== "", "scriptresults");
+                document.getElementById("scripttext").value = pageData.scriptCode;
+                if (document.getElementById("github_path").value !== "") {
+                    githubPath = decodeURI(document.getElementById("github_path").value);
+                    gitPathFilename = getFilenameFromUrl(githubPath);
+                    if (gitPathFilename !== "" && gitPathFilename.lastIndexOf(".") > 0) {
+                        githubPath = githubPath.substring(0, githubPath.lastIndexOf("/") + 1);
+                    }
+                    if (githubPath.charAt(githubPath.length - 1) !== "/") {
+                        githubPath = githubPath + "/";
+                    }
+                }
+                fileName = getFilenameFromUrl(targetURL.pathname);
+                document.getElementById("redirectfiletext").value = "    {\n      \"origin\": \"" + targetURL.origin + targetURL.pathname + "\", \n      \"destination\": \"" + encodeURI(githubPath + fileName) + "\"\n    }, \n";
+            };
+
         resultArea.value = "";
         document.getElementById("scripttext").value = "";
         document.getElementById("redirectfiletext").value = "";
-        if (document.getElementById("uri").value !== "") {
+        if (document.getElementById("uri").value !== "" && URL.canParse(document.getElementById("uri").value) === true) {
             targetURL = new URL(document.getElementById("uri").value);
+            templateType = document.querySelector("input[type=radio][name=template]:checked").value;
             frontMatterType = document.querySelector("input[type=radio][name=frontmatter]:checked").value;
-            convertObj = await outputPage.convert(document.getElementById("layout").value, frontMatterType, document.getElementById("uri").value, document.getElementById("noted_page_array").value, document.getElementById("addStyles").checked, document.getElementById("addScripts").checked, document.getElementById("removeMWSTags").checked);
-            pageData = convertObj.pagedata();
-            if (document.getElementById("usePrettier").checked === true) {
-                htmlMain = await prettier.format(pageData.cssCode + pageData.htmlCode, {
-                    "parser": "html", 
-                    "plugins": [prettierPluginEstree, prettierPluginHtml], 
-                    "arrowParens": "always", 
-                    "bracketSameLine": false, 
-                    "bracketSpacing": false, 
-                    "embeddedLanguageFormatting": "auto", 
-                    "endOfLine": "crlf", 
-                    "htmlWhitespaceSensitivity": "css", 
-                    "jsxSingleQuote": false, 
-                    "objectWrap": "collapse", 
-                    "printWidth": Infinity, 
-                    "ProseWrap": "never", 
-                    "quoteProps": "consistent", 
-                    "singleAttributePerLine": false, 
-                    "singleQuote": false, 
-                    "tabWidth": 4, 
-                    "trailingComma": "none", 
-                    "useTabs": false, 
-                    "vueIndentScriptAndStyle": true
-                });
+            convertObj = await outputPage.convert(document.getElementById("layout").value, templateType, frontMatterType, document.getElementById("uri").value, document.getElementById("noted_page_array").value, document.getElementById("addStyles").checked, document.getElementById("addScripts").checked, document.getElementById("removeMWSTags").checked);
+            if ("pagedata" in convertObj === true) {
+                pageData = convertObj.pagedata();
+                if (document.getElementById("usePrettier").checked === true) {
+                    htmlMain = await prettier.format(pageData.cssCode + pageData.htmlCode, {
+                        "parser": "html", 
+                        "plugins": [prettierPluginEstree, prettierPluginHtml], 
+                        "arrowParens": "always", 
+                        "bracketSameLine": false, 
+                        "bracketSpacing": false, 
+                        "embeddedLanguageFormatting": "auto", 
+                        "endOfLine": "crlf", 
+                        "htmlWhitespaceSensitivity": "css", 
+                        "jsxSingleQuote": false, 
+                        "objectWrap": "collapse", 
+                        "printWidth": Infinity, 
+                        "ProseWrap": "never", 
+                        "quoteProps": "consistent", 
+                        "singleAttributePerLine": false, 
+                        "singleQuote": false, 
+                        "tabWidth": 4, 
+                        "trailingComma": "none", 
+                        "useTabs": false, 
+                        "vueIndentScriptAndStyle": true
+                    });
+                } else {
+                    htmlMain = pageData.cssCode + pageData.htmlCode;
+                }
             } else {
+                pageData = convertObj;
                 htmlMain = pageData.cssCode + pageData.htmlCode;
             }
 
-            if (frontMatterType === "yaml") {
-                resultArea.value = "---\n" + pageData.fmCode + "---\n\n" + htmlMain.replace(new RegExp("([\r\n]+?\s+)(?=>)", "gm"), "");
-            } else {
-                resultArea.value = "---\n{\n" + pageData.fmCode + "\n}\n---\n\n" + htmlMain.replace(new RegExp("([\r\n]+?\s+)(?=>)", "gm"), "");
-            }
-            resultArea.focus();
-            resultArea.scrollTop = 0;
-            resultArea.selectionStart = 0;
-            resultArea.selectionEnd = 0;
-            document.getElementById("scripttext").value = pageData.scriptCode;
-            if (document.getElementById("github_path").value !== "") {
-                githubPath = document.getElementById("github_path").value;
-                if (githubPath.charAt(githubPath.length - 1) !== "/") {
-                    githubPath = githubPath + "/";
+            if (templateType === "") {
+                if (htmlMain !== "") {
+                    resultArea.value = "---\n" + pageData.fmCode + "---\n\n" + htmlMain.replace(new RegExp("([\r\n]+?\s+)(?=>)", "gm"), "");
+                    formatResults(pageData, targetURL, fileName);
                 }
+            } else {
+                // Use the function to load, process, and display the CDTS template
+                pageData.fmCode.htmlMain = htmlMain;
+                pageData.fmCode.domain = convertDomain;
+                loadTemplate(templateType, pageData)
+                    .then(function processHTML(finalHTML) {
+                        resultArea.value = renderTemplate(finalHTML, pageData);
+                        formatResults(pageData, targetURL, fileName);
+                    })
+                    .catch(function errMSG(error) {
+                        console.error("Could not load the template:", error);
+                    });
             }
-            fileName = getFilenameFromUrl(targetURL.pathname);
-            document.getElementById("redirectfiletext").value = "    {\n      \"origin\": \"" + targetURL.origin + targetURL.pathname + "\", \n      \"destination\": \"" + githubPath + fileName + "\"\n    }, \n";
         }
         e.stopPropagation();
         e.preventDefault();
@@ -254,14 +329,28 @@ noFooterMain: true
         this.select();
     });
 
+    resultArea.addEventListener("focus", function () {
+        this.select();
+    });
+
     document.getElementById("redirectfiletext").addEventListener("focus", function () {
         this.select();
+    });
+
+    document.getElementById("addScripts").addEventListener("click", function () {
+        showHideInvis(document.getElementById("addScripts").checked  === true && document.getElementById("scripttext").value !== "", "scriptresults");
+    });
+
+    document.getElementById("tmpltType").addEventListener("change", function () {
+        showHideInvis(document.getElementById("jekyll").checked, "layoutSelect");
+        showHideInvis(document.getElementById("jekyll").checked, "fmRadiobox");
     });
 
     // Initalize function once page finishes loading
     document.addEventListener("DOMContentLoaded", async function () {
         let githubPath_qrystr = getQueryEl("github_path"), 
             page_layout = getQueryEl("layout"), 
+            template_Type = getQueryEl("template"), 
             front_Matter = getQueryEl("frontmatter"), 
             noted_page_Arr = getQueryEl("noted_page_array"), 
             evt = document.createEvent("MouseEvents"), 
@@ -280,7 +369,7 @@ noFooterMain: true
                 }
             };
 
-        document.getElementById("jekyllCnvrtBmrklt").href = encodeURI("javascript:(function(){location.href=\"https://cra-design.github.io/core-prototype/resources/tools/jekyll-converter/page-convert-jekyll.html?uri=\"+encodeURIComponent(location.href);})();");
+        document.getElementById("jekyllCnvrtBmrklt").href = encodeURI("javascript:(function(){location.href=\"https://" + convertDomain + "/core-prototype/resources/tools/jekyll-converter/page-convert-jekyll.html?uri=\"+encodeURIComponent(location.href);})();");
 
         if (page_layout !== null && page_layout !== "") {
             document.getElementById("layout").value = decodeURIComponent(page_layout);
@@ -302,6 +391,16 @@ noFooterMain: true
             });
         }
 
+        if (template_Type !== null && template_Type !== "") {
+            document.querySelectorAll("input[type='radio'][name='template']").forEach(function (radio) {
+                if (radio.value === decodeURIComponent(template_Type)) {
+                    radio.checked = true;
+                }
+            });
+        }
+
+        showHideInvis(document.getElementById("jekyll").checked, "layoutSelect");
+        showHideInvis(document.getElementById("jekyll").checked, "fmRadiobox");
         setCheckbox("style", "addStyles");
         setCheckbox("script", "addScripts");
         setCheckbox("prettier", "usePrettier");

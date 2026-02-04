@@ -44,7 +44,7 @@ let notedLinksArr, pageOrigin,
         }
     };
 
-document.addEventListener("DOMContentLoaded", function initDevOpts() {
+document.addEventListener("DOMContentLoaded", function initDevOpts(event) {
     let devOptionsLocStore = null, 
         editStartContent = "";
 
@@ -53,6 +53,8 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
     }
 
     if (devOptionsLocStore === "true" || (devOptions !== null && devOptions.value.toLowerCase() === "true" && devOptionsLocStore !== "false")) {
+//document.addEventListener("readystatechange", function(event) {
+//    if (event.target.readyState === "complete") {
         $("#site-banner-inc").on("wb-contentupdated", function () {
             let pageInfo, titleElm, subjectElm, descriptionElm, keywordsElm, modifyDateElm, issueDateElm, 
                 insertElm = document.getElementById(insertId), 
@@ -61,22 +63,27 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                 notedLinkInfo = "", 
                 metadataInfo = "", 
                 overlaySec = "", 
+                overlayBox = document.querySelector(".wb-lbx"), 
+                initOverlayEvent = new CustomEvent("wb-init.wb-lbx", {
+                    bubbles: true, 
+                    cancelable: true
+                }), 
                 setEditButton = function setEditButton() {
                     document.getElementById("editBtn").title = "Edit";
-                    document.getElementById("editIcon").classList.remove("fa-window-close", "fa-save");
-                    document.getElementById("editIcon").classList.add("fa-edit");
+                    document.getElementById("editIcon").classList.remove("glyphicon-remove", "glyphicon-floppy-disk");
+                    document.getElementById("editIcon").classList.add("glyphicon-edit");
                     document.getElementById("iconText").innerHTML = "Edit";
                 }, 
                 setStopEditButton = function setStopEditButton() {
                     document.getElementById("editBtn").title = "Stop edit";
-                    document.getElementById("editIcon").classList.remove("fa-edit", "fa-save");
-                    document.getElementById("editIcon").classList.add("fa-window-close");
+                    document.getElementById("editIcon").classList.remove("glyphicon-edit", "glyphicon-floppy-disk");
+                    document.getElementById("editIcon").classList.add("glyphicon-remove");
                     document.getElementById("iconText").innerHTML = "Stop edit";
                 }, 
                 setCacheButton = function setCacheButton() {
                     document.getElementById("editBtn").title = "Cache edits";
-                    document.getElementById("editIcon").classList.remove("fa-edit", "fa-window-close");
-                    document.getElementById("editIcon").classList.add("fa-save");
+                    document.getElementById("editIcon").classList.remove("glyphicon-edit", "glyphicon-remove");
+                    document.getElementById("editIcon").classList.add("glyphicon-floppy-disk");
                     document.getElementById("iconText").innerHTML = "Cache edits";
                 }, 
                 tinyMCEInit = function () {
@@ -133,13 +140,13 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
             if (insertElm !== null) {
                 gitURL = getGithubURL(window.location.origin + window.location.pathname);
                 pageInfo = "<div id=\"devtoolbar\" class=\"pull-right mrgn-rght-md\">\n    <ul class=\"btn-toolbar list-inline\" role=\"toolbar\">\n        <li id=\"editBtnGrp\" class=\"btn-group\">";
-                pageInfo = pageInfo + "<a id=\"editBtn\" class=\"btn btn-default btn-sm\" data-exit=\"false\" href=\"\" title=\"Edit\"><span id=\"editIcon\" class=\"fa fa-edit mrgn-tp-sm\"></span><span id=\"iconText\" class=\"wb-inv\">Edit</span></a>";
+                pageInfo = pageInfo + "<a id=\"editBtn\" class=\"btn btn-default btn-sm\" data-exit=\"false\" href=\"\" title=\"Edit\"><span id=\"editIcon\" class=\"glyphicon glyphicon-edit mrgn-tp-sm\"></span><span id=\"iconText\" class=\"wb-inv\">Edit</span></a>";
                 pageInfo = pageInfo + "<a id=\"deleteChangeBtn\" class=\"btn btn-default btn-sm";
                 if (localStorage.getItem(pageKey) === null) {
                     pageInfo = pageInfo + " hidden";
                 }
 
-                pageInfo = pageInfo + "\" title=\"Remove edits\" href=\"#\"><span class=\"far fa-trash-alt mrgn-tp-sm\"></span><span class=\"wb-inv\">Remove edits</span></a>";
+                pageInfo = pageInfo + "\" title=\"Remove edits\" href=\"#\"><span class=\"glyphicon glyphicon-trash mrgn-tp-sm\"></span><span class=\"wb-inv\">Remove edits</span></a>";
                 pageInfo = pageInfo + "</li>\n";
                 if (notedLinksList !== null && notedLinksList.value !== "") {
                     notedLinksArr = JSON.parse(notedLinksList.value);
@@ -214,7 +221,10 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                     }
                     overlaySec = overlaySec + "\n    </div>\n</section>\n";
                     insertElm.outerHTML = insertElm.outerHTML + overlaySec;
-                    $(".wb-lbx").trigger("wb-init.wb-lbx");
+
+                    if (overlayBox !== null) {
+                        overlayBox.dispatchEvent(initOverlayEvent);
+                    }
                 }
             }
 
@@ -280,9 +290,9 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                         generateResolutionPage = function generateResolutionPage(pageURL) {
                             let header, resPage, pgtitle, iframe, 
                                 resArr = [
-                                    { width: frameWidthXS, label: "Extra small devices (<768px)" },
-                                    { width: frameWidthSM, label: "Small devices (<992px)" },
-                                    { width: frameWidthMD, label: "Medium devices (<1200px)" },
+                                    { width: frameWidthXS, label: "Extra small devices (<768px)" }, 
+                                    { width: frameWidthSM, label: "Small devices (<992px)" }, 
+                                    { width: frameWidthMD, label: "Medium devices (<1200px)" }, 
                                 ], 
                                 getFilenameFromUrlSplit = function (pageURL) {
                                     let filenameWithParams, questionMarkIndex;
@@ -304,8 +314,8 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                                 header.textContent = pageURL;
                                 resPage.body.appendChild(header);
                                 resArr.forEach(function (sizedata) {
-                                    let subhead = resPage.createElement("h2"),
-                                        sp = resPage.createElement("span"),
+                                    let subhead = resPage.createElement("h2"), 
+                                        sp = resPage.createElement("span"), 
                                         frameContainer = resPage.createElement("div");
 
                                     iframe = resPage.createElement("iframe");
@@ -334,7 +344,7 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
                         getQueryEl = function getQueryEl(field, val) {
                             // Get a querystring value
                             const params = new Proxy(new URLSearchParams(window.location.search), {
-                                get: (searchParams, prop) => searchParams.get(prop),
+                                get: (searchParams, prop) => searchParams.get(prop), 
                             });
 
                             if (params[field] !== null) {
@@ -372,4 +382,6 @@ document.addEventListener("DOMContentLoaded", function initDevOpts() {
             }
         });
     }
+//});
+//    }
 }, { once: true });

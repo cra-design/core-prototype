@@ -2,13 +2,13 @@
 
 let outputPage = (function outputPage() {
     "use strict";
-    let jsonFilePath = "https://cra-design.github.io/core-prototype/resources/tools/jekyll-converter/data/template-links.json";
+    let jsonFilePath = "/core-prototype/resources/tools/jekyll-converter/data/template-links.json";
 
     return {
         "getPageObject": async function getPageObject(pageURIStr) {
             const parser = new DOMParser();
             let pageURI, data, result, 
-                absUrlRegEx = new RegExp("((?:<[a-z]+?\\s[^>]*?)(?:(?:href|src|cite|longdesc|action|formaction|poster|icon|manifest|srcset|data(?:-[a-z\\-]+)?)=['\"]))(\\/(?:[^\\/]{1}[^\'\"]+?))(?=['\"][^>]*?>)", "giv");
+                absUrlRegEx = new RegExp("((?:<[a-z]+?\\s[^>]*?)(?:(?:href|src|cite|longdesc|action|formaction|poster|icon|manifest|srcset|data(?:-[a-z\\-]+)?)=['\"]))(\\/(?:[^\\/]{1}[^'\"]+?))(?=['\"][^>]*?>)", "giv");
 
             if (pageURIStr !== "") {
                 pageURI = new URL(pageURIStr);
@@ -31,28 +31,32 @@ let outputPage = (function outputPage() {
             return null;
         }, 
         "getFileLinkList": async function getFileLinkList(jsonFilePath) {
-           // let regexLinkData = await $.get(jsonFilePath), 
-               // fileLinkArr = JSON.parse(regexLinkData);
+            // let regexLinkData = await $.get(jsonFilePath), 
+            // fileLinkArr = JSON.parse(regexLinkData);
             let fileLinkArr = await $.get(jsonFilePath);
 
             return fileLinkArr;
         }, 
-        "formatOutputType": function (frontMatterType, yamlOutput, jsonOutput) {
+        "formatOutputType": function (templateType, frontMatterType, yamlOutput, jsonOutput) {
             switch (frontMatterType) {
                 case "yaml":
-                    return yamlOutput;
+                    if (templateType === "") {
+                        return yamlOutput;
+                    } else {
+                        return jsonOutput;
+                    }
                 case "json":
                     return jsonOutput;
                 default:
                     return "";
             }
         }, 
-        "convert": async function convert(pageLayout, frontMatterType, pageURIStr, notedPagesJSONStr, includeStyles, includeScripts, removeMWSdivs) {
+        "convert": async function convert(pageLayout, templateType, frontMatterType, pageURIStr, notedPagesJSONStr, includeStyles, includeScripts, removeMWSdivs) {
             const isYAML = "yaml";
 
-            let pageObj = await this.getPageObject(pageURIStr), 
+            let pageTitleObj, 
+                pageObj = await this.getPageObject(pageURIStr), 
                 fileLinkArr = await this.getFileLinkList(jsonFilePath), 
-                pageTitleObj = pageObj.querySelector("meta[name=dcterms\\.title]"), 
                 getMetaDataContent = function getMetaDataContent(pageObj, fieldname, metafield, addQuote) {
                     // Add a Metadata value as a string
                     let encloseQuote = "", 
@@ -62,7 +66,7 @@ let outputPage = (function outputPage() {
                         encloseQuote = "\"";
                     }
                     if (metaEl !== null && metaEl.length > 0 && "content" in metaEl[0] === true) {
-                        return outputPage().formatOutputType(frontMatterType, fieldname + ": " + encloseQuote + metaEl[0].content.trim() + encloseQuote + "\n", "\"" + fieldname + "\": \"" + metaEl[0].content.trim() + "\"");
+                        return outputPage().formatOutputType(templateType, frontMatterType, fieldname + ": " + encloseQuote + metaEl[0].content.trim() + encloseQuote + "\n", "\"" + fieldname + "\": \"" + metaEl[0].content.trim() + "\"");
                     }
                     return "";
                 }, 
@@ -78,12 +82,12 @@ let outputPage = (function outputPage() {
                     }, checkURL);
                 }, 
                 cleanMain = function cleanMain(mainPageObj, pageLayout) {
-                    let headerElms, mwsElms, 
+                    let i, headerElms, mwsElms, 
                         cleanObj = mainPageObj.cloneNode(true), 
                         pagedetailsEl = cleanObj.getElementsByClassName("pagedetails");
 
                     // Removes page details section
-                    for (let i = pagedetailsEl.length - 1; i >= 0; i = i - 1) {
+                    for (i = pagedetailsEl.length - 1; i >= 0; i = i - 1) {
                         pagedetailsEl[i].remove();
                     }
                     // Removes <h1> if layout is not "without-h1"
@@ -107,20 +111,27 @@ let outputPage = (function outputPage() {
                 };
 
             if (pageObj === null || pageObj === "") {
-                return { "fmCode": "", "htmlCode": "", "cssCode": "", "scriptCode": ""};
+                return {"cssCode": "", "fmCode": "", "htmlCode": "", "scriptCode": ""};
             } else {
+                pageTitleObj = pageObj.querySelector("meta[name=dcterms\\.title]");
                 return {
                     "layout": function layout() {
+                        let mainCode = pageObj.getElementsByTagName("main")[0];
+
                         // Adds layout
-                        if (pageLayout !== "") {
-                            return outputPage().formatOutputType(frontMatterType, "layout: " + pageLayout + "\n", "\"layout\": \"" + pageLayout + "\"");
+                        if (templateType === "") {
+                            if (pageLayout !== "") {
+                                return outputPage().formatOutputType(templateType, frontMatterType, "layout: " + pageLayout + "\n", "\"layout\": \"" + pageLayout + "\"");
+                            }
+                        } else if (mainCode.classList.contains("container") === true) {
+                            return "\"layout\": \"without-h1\"";
                         }
                         return "";
                     }, 
                     "title": function title() {
                         // Adds title
                         if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                            return outputPage().formatOutputType(frontMatterType, "title: \"" + pageTitleObj.content.trim() + "\"\n",  "\"title\": \"" + pageTitleObj.content.trim() + "\"");
+                            return outputPage().formatOutputType(templateType, frontMatterType, "title: \"" + pageTitleObj.content.trim() + "\"\n", "\"title\": \"" + pageTitleObj.content.trim() + "\"");
                         }
                         return "";
                     }, 
@@ -136,14 +147,14 @@ let outputPage = (function outputPage() {
                         // Adds keywords
                         return getMetaDataContent(pageObj, "keywords", "keywords", true);
                     }, 
-                    "login": function login() {
+                    "auth": function auth() {
                         // generates CRA sign in button
                         if (pageObj.getElementById("wb-so") !== null) {
-                            return outputPage().formatOutputType(frontMatterType, "auth:\n  type: \"contextual\"\n  label: \"Sign in\"\n  labelExtended: \"CRA sign in\"\n  link: \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n", "\"auth\": [\n\"type\": \"contextual\", \n\"label\": \"Sign in\", \n\"labelExtended\": \"CRA sign in\", \n\"link\": \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n]");
+                            return outputPage().formatOutputType(templateType, frontMatterType, "auth:\n  type: \"contextual\"\n  label: \"Sign in\"\n  labelExtended: \"CRA sign in\"\n  link: \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n", "\"auth\": {\n\"type\": \"contextual\", \n\"label\": \"Sign in\", \n\"labelExtended\": \"CRA sign in\", \n\"link\": \"https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html\"\n}");
                         }
                         return "";
                     }, 
-                    "altlangpage": function altlangpage() {
+                    "altLangPage": function altLangPage() {
                         // Adds alternate language link
                         let altlangObj, 
                             pagelang = pageObj.getElementsByTagName("html")[0].lang;
@@ -154,15 +165,15 @@ let outputPage = (function outputPage() {
                             altlangObj = pageObj.querySelector("link[rel=alternate][hreflang=fr]");
                         }
                         if (altlangObj !== null && typeof altlangObj !== "undefined") {
-                            return outputPage().formatOutputType(frontMatterType, "altLangPage: \"" + altlangObj.href + "\"\n", "\"altLangPage\": \"" + altlangObj.href + "\"");
+                            return outputPage().formatOutputType(templateType, frontMatterType, "altLangPage: \"" + altlangObj.href + "\"\n", "\"altLangPage\": \"" + altlangObj.href + "\"");
                         }
                         return "";
                     }, 
-                    "datemodified": function datemodified() {
+                    "dateModified": function dateModified() {
                         // Adds date modified
                         return getMetaDataContent(pageObj, "dateModified", "dcterms.modified", false);
                     }, 
-                    "dateissued": function dateissued() {
+                    "dateIssued": function dateIssued() {
                         // Adds date issued
                         return getMetaDataContent(pageObj, "dateIssued", "dcterms.issued", false);
                     }, 
@@ -175,12 +186,12 @@ let outputPage = (function outputPage() {
                         if (typeof breadCrumbObj !== "undefined" && breadCrumbObj.length > 0) {
                             breadcrumbLinks = breadCrumbObj[0].querySelectorAll("a");
                             if (breadcrumbLinks.length > 1) {
-                                breadcrumbOutput = outputPage().formatOutputType(frontMatterType, "breadcrumbs: # By default the Canada.ca crumbs is already set\n", "\"breadcrumbs\": [");
+                                breadcrumbOutput = outputPage().formatOutputType(templateType, frontMatterType, "breadcrumbs: # By default the Canada.ca crumbs is already set\n", "\"breadcrumbs\": [");
                                 breadcrumbLinks.forEach(function addBreadCrumb(breadLink) {
                                     if (breadLink.textContent.toLowerCase() === "canada.ca") {
                                         return;
                                     }
-                                    if (frontMatterType === isYAML) {
+                                    if (frontMatterType === isYAML && templateType === "") {
                                         breadcrumbOutput += "  - title: \"" + breadLink.textContent.trim() + "\"\n    link: \"" + breadLink.href + "\"\n";
                                     } else {
                                         if (breadcrumbOutput.length > 17) {
@@ -191,15 +202,22 @@ let outputPage = (function outputPage() {
                                 });
                             }
                         }
-                        if (breadcrumbOutput === "" || frontMatterType === isYAML) {
+                        if (breadcrumbOutput === "" || (frontMatterType === isYAML && templateType === "")) {
                             return breadcrumbOutput;
                         } else {
                             return breadcrumbOutput + "\n]";
                         }
                     }, 
+                    "pageClass": function pageClass() {
+                        let bodyClass = pageObj.body.classList;
+
+                        if (bodyClass.length > 0) {
+                            return outputPage().formatOutputType(templateType, frontMatterType, "pageClass: \"" + bodyClass.toString() + "\"\n", "\"pageClass\": \"" + bodyClass.toString() + "\"");
+                        }
+                    }, 
                     "css": function css() {
                         // Adds links to CSS files
-                        let cssLinks, 
+                        let cssLink, cssLinks, 
                             cssOutput = "", 
                             noMainPageObj = pageObj.cloneNode(true);
 
@@ -207,9 +225,9 @@ let outputPage = (function outputPage() {
                             noMainPageObj.getElementsByTagName("main")[0].remove();
                         }
                         cssLinks = noMainPageObj.querySelectorAll("link[rel=stylesheet]");
-                        for (let cssLink of cssLinks) {
+                        for (cssLink of cssLinks) {
                             if (islinkInTemplate(fileLinkArr.stylsheetsRegEx, cssLink.href, "iv", true) === false) {
-                                if (frontMatterType === isYAML) {
+                                if (frontMatterType === isYAML && templateType === "") {
                                     cssOutput += "css: \"" + cssLink.href + "\"\n";
                                 } else {
                                     if (cssOutput === "") {
@@ -221,7 +239,7 @@ let outputPage = (function outputPage() {
                                 }
                             }
                         }
-                        if (cssOutput === "" || frontMatterType === isYAML) {
+                        if (cssOutput === "" || (frontMatterType === isYAML && templateType === "")) {
                             return cssOutput;
                         } else {
                             return cssOutput + "]";
@@ -240,13 +258,12 @@ let outputPage = (function outputPage() {
                         scriptElms = noMainPageObj.getElementsByTagName("script");
                         for (let scriptElm of scriptElms) {
                             if (scriptElm.innerHTML !== "") {
- 
                                 // Gets any <script> tags outside of the <main> tag and adds them to the bottom of the content
                                 if (includeScripts === true && islinkInTemplate(fileLinkArr.inlineScript, scriptElm.textContent.replace(/[\r\n\s]+/g, "").toLowerCase(), "iv", false) === false) {
                                     scriptData += scriptElm.outerHTML + "\n";
                                 }
                             } else if (islinkInTemplate(fileLinkArr.scriptsRegEx, scriptElm.src, "iv", true) === false) {
-                                if (frontMatterType === isYAML) {
+                                if (frontMatterType === isYAML && templateType === "") {
                                     scriptOutput += "script: \"" + scriptElm.src + "\"\n";
                                 } else {
                                     if (scriptOutput === "") {
@@ -258,7 +275,7 @@ let outputPage = (function outputPage() {
                                 }
                             }
                         }
-                        if (scriptOutput === "" || frontMatterType === isYAML) {
+                        if (scriptOutput === "" || (frontMatterType === isYAML && templateType === "")) {
                             return {
                                 "value": scriptOutput, 
                                 "inline": scriptData
@@ -270,21 +287,27 @@ let outputPage = (function outputPage() {
                             };
                         }
                     }, 
-                    "feedbackdata": function feedbackdata() {
+                    "feedbackData": function feedbackData() {
                         // Sets feedback box
                         if (pageTitleObj !== null && "content" in pageTitleObj === true) {
-                            return outputPage().formatOutputType(frontMatterType, "feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n", "\"feedbackData\": [\n{\n\"section\": \"" + pageTitleObj.content + "\"\n}\n]");
+                            return outputPage().formatOutputType(templateType, frontMatterType, "feedbackData:\n  section: \"" + pageTitleObj.content + "\"\n", "\"feedbackData\": {\n\"section\": \"" + pageTitleObj.content + "\"\n}");
                         }
                         return "";
                     }, 
                     "notedlinks": function notedlinks() {
                         // Adds URLs as noted page links
-                        let notedPageArr, 
+                        let notedPageArr, linkVal, 
                             linkRef = "", 
                             createNoteLink = function createNoteLink(refURIStr, linkText) {
-                                let pageURI = new URL(refURIStr);
+                                let pageURI;
 
-                                return outputPage().formatOutputType(frontMatterType, "\n  - title: \"" + linkText + "\"\n    link: \"" + pageURI.origin + pageURI.pathname + "\"", "\n{\n\"title\": \"" + linkText + "\", \n\"link\": \"" + pageURI.origin + pageURI.pathname + "\"\n}");
+                                try {
+                                    pageURI = new URL(refURIStr);
+                                    return outputPage().formatOutputType(templateType, frontMatterType, "\n  - title: \"" + linkText + "\"\n    link: \"" + pageURI.origin + pageURI.pathname + "\"", "\n{\n\"title\": \"" + linkText + "\", \n\"link\": \"" + pageURI.origin + pageURI.pathname + "\"\n}");
+                                } catch (e) {
+                                    console.error("Invalid noted link URL");
+                                    return null;
+                                }
                             }, 
                             getJSONArr = function getJSONArr(jsonStr) {
                                 let arr;
@@ -307,15 +330,18 @@ let outputPage = (function outputPage() {
                         if (notedPageArr !== null) {
                             notedPageArr.forEach(function addNotedPage(notedPage) {
                                 if ("link" in notedPage && "title" in notedPage) {
-                                    if (linkRef !== "" && frontMatterType !== isYAML) {
-                                        linkRef += ", ";
+                                    linkVal = createNoteLink(notedPage.link, notedPage.title);
+                                    if (linkVal !== null) {
+                                        if (linkRef !== "" && (frontMatterType !== isYAML || templateType !== "")) {
+                                            linkRef += ", ";
+                                        }
+                                        linkRef += linkVal;
                                     }
-                                    linkRef += createNoteLink(notedPage.link, notedPage.title);
                                 }
                             });
                         }
                         if (linkRef !== "") {
-                            return outputPage().formatOutputType(frontMatterType, "notedlinks:" + linkRef + "\n", "\"notedlinks\": [" + linkRef + "\n]");
+                            return outputPage().formatOutputType(templateType, frontMatterType, "notedlinks:" + linkRef + "\n", "\"notedlinks\": [" + linkRef + "\n]");
                         }
                         return "";
                     }, 
@@ -337,20 +363,25 @@ let outputPage = (function outputPage() {
                         return styleOutput;
                     }, 
                     "frontmatter": function frontmatter() {
-                        let outputData = [this.layout(), this.title(), this.description(), this.subject(), this.keywords(), this.login(), this.altlangpage(), this.datemodified(), this.dateissued(), this.breadcrumbs(), this.css(), this.script().value, this.feedbackdata(), this.notedlinks()];
+                        let outputData = [this.layout(), this.title(), this.description(), this.subject(), this.keywords(), this.auth(), this.altLangPage(), this.dateModified(), this.dateIssued(), this.breadcrumbs(), this.pageClass(), this.css(), this.script().value, this.feedbackData(), this.notedlinks()], 
+                            fmData = outputPage().formatOutputType(templateType, frontMatterType, outputData.join(""), "{\n" + outputData.filter(Boolean).join(", \n") + "\n}\n");
 
-                        return outputPage().formatOutputType(frontMatterType, outputData.join(""), outputData.filter(Boolean).join(", \n"));
+                        if (templateType === "") {
+                            return fmData;
+                        } else {
+                            return JSON.parse(fmData);
+                        }
                     }, 
                     "pagedata": function pagedata() {
                         return {
+                            "cssCode": this.style(), 
                             "fmCode": this.frontmatter(), 
                             "htmlCode": this.html(), 
-                            "cssCode": this.style(), 
                             "scriptCode": this.script().inline
                         };
                     }, 
                     "pagecode": function pagecode() {
-                        return outputPage().formatOutputType(frontMatterType, "---\n" + this.frontmatter() + "---\n\n" + this.style() + this.html(), "---\n{\n" + this.frontmatter() + "\n}\n---\n\n" + this.style() + this.html());
+                        return outputPage().formatOutputType(templateType, frontMatterType, "---\n" + this.frontmatter() + "---\n\n" + this.style() + this.html(), "---\n{\n" + this.frontmatter() + "\n}\n---\n\n" + this.style() + this.html());
                     }, 
                     "htmldoc": function htmldoc() {
                         let mainPageObj = pageObj.cloneNode(true), 
@@ -367,7 +398,11 @@ let outputPage = (function outputPage() {
                             mainCode = mainPageObj.getElementsByTagName("main");
 
                         if (mainCode.length > 0) {
-                            mainCodeObj = cleanMain(mainCode[0], pageLayout);
+                            if (templateType === "") {
+                                mainCodeObj = cleanMain(mainCode[0], pageLayout);
+                            } else {
+                                mainCodeObj = cleanMain(mainCode[0], "without-h1");
+                            }
                             return mainCodeObj.innerHTML.trim() + "\n";
                         }
                         return mainPageObj.documentElement.innerHTML.trim();
@@ -376,6 +411,6 @@ let outputPage = (function outputPage() {
             }
         }
     };
-}());
+})();
 
 export default outputPage;

@@ -40,9 +40,9 @@ For the GCWeb/Jekyll setup to function a `_config.yml` file must saved at the re
 # The "#" character can be used to create comments in YAML
 # none of the settings are mandatory to include
 
-layout: ["default"]                                # Available layout types: core, default, fluid, no-container, without-h1, application, home, servermesssage, splashpage-en, splashpage-fr
+layout: ["default"]                                # Available layout types: core, default, fluid, gcds, no-container, without-h1, application, home, servermesssage, splashpage-en, splashpage-fr
 
-# The following options are available for the layouts core, default, fluid, no-container, without-h1
+# The following options are available for the layouts core, default, fluid, gcds, no-container, without-h1
 
 title: "The title of the current page"             # Sets the title and H1 tag
 description: "Description of the current page"     # Sets the description metadata

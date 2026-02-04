@@ -7,9 +7,9 @@
 
 "use strict";
 
-//  exitPage.value = "https://cra-design.github.io/gst-hst-business/exit-intent.html", 
+//  exitPage.value = "/source/exit-intent-e.html", 
 //  exitPage.dataset.exitByUrl = "false", 
-//  exitPage.dataset.modLinkFile = "https://cra-design.github.io/gst-hst-business/templates/data/link_excludes.json", 
+//  exitPage.dataset.modLinkFile = "/source/data/exclude-redircet-links.json", 
 //  relExternalLnk.value = "false", 
 //  relExternalLnk.dataset.origin = "https://www.canada.ca", 
 
@@ -21,75 +21,75 @@ let inlineStyleText1, inlineStyleText2,
     adjustLinks = function adjustLinks(elm, hrefSelector, actionSelector, formActionSelector, destStartPath) {
         let linkExcludeIndex = function linkExcludeIndex(testURI) {
                 return linkExcludes.findIndex(function findlink(linkArr) {
-                if ("origin" in linkArr) {
-                    return linkArr.origin.toLowerCase() === testURI.toLowerCase();
+                    if ("origin" in linkArr) {
+                        return linkArr.origin.toLowerCase() === testURI.toLowerCase();
+                    }
+                }, testURI);
+            }, 
+            adjustHref = function adjustHref(el, destStartPath) {
+                let adjustedURI = el, 
+                    replaceChar = ["?", "#", "&"];
+
+                if (destStartPath !== "") {
+                    adjustedURI = new URL(adjustedURI, destStartPath).href;
                 }
-            }, testURI);
-        }, 
-        adjustHref = function adjustHref(el, destStartPath) {
-            let adjustedURI = el, 
-                replaceChar = ["?", "#", "&"];
+                replaceChar.forEach(function entityReplace(arrEl) {
+                    adjustedURI = adjustedURI.replace(arrEl, encodeURIComponent(arrEl));
+                }, adjustedURI);
+                return adjustedURI;
+            }, 
+            updateFormSubmit = function updateFormSubmit(formEl, formAttr, exitPageURI) {
+                let hiddenInEl;
 
-            if (destStartPath !== "") {
-                adjustedURI = new URL(adjustedURI, destStartPath).href;
-            }
-            replaceChar.forEach(function entityReplace (arrEl) {
-                adjustedURI = adjustedURI.replace(arrEl, encodeURIComponent(arrEl));
-            }, adjustedURI);
-            return adjustedURI;
-        }, 
-        updateFormSubmit = function updateFormSubmit(formEl, formAttr, exitPageURI) {
-            let hiddenInEl;
-
-            hiddenInEl = document.createElement("input");
-            hiddenInEl.value = adjustHref(formEl[formAttr], destStartPath);
-            hiddenInEl.name = "uri";
-            hiddenInEl.type = "hidden";
-            formEl.append(hiddenInEl);
-            formEl[formAttr] = exitPageURI;
-        };
+                hiddenInEl = document.createElement("input");
+                hiddenInEl.value = adjustHref(formEl[formAttr], destStartPath);
+                hiddenInEl.name = "uri";
+                hiddenInEl.type = "hidden";
+                formEl.append(hiddenInEl);
+                formEl[formAttr] = exitPageURI;
+            };
 
         if (exitPage !== null) {
             if (hrefSelector !== "") {
-                $(elm).find(hrefSelector).each(function updateExitHref() {
+                elm.querySelectorAll(hrefSelector).forEach(function updateExitHref(hrefElm) {
                     const maxURILength = 2048;
                     let urlObj, queryHash, 
-                        pagetitle = encodeURIComponent(this.innerText), 
+                        pagetitle = encodeURIComponent(hrefElm.innerText), 
                         exitPageURI = exitPage.value, 
-                        destURI = adjustHref(this.href, destStartPath), 
-                        currentURI = this.protocol + "//" + this.hostname + this.pathname, 
+                        destURI = adjustHref(hrefElm.href, destStartPath), 
+                        currentURI = hrefElm.protocol + "//" + hrefElm.hostname + hrefElm.pathname, 
                         lnkExclIdx = linkExcludeIndex(currentURI);
 
                     if (lnkExclIdx === -1) {
                         if ("exitByUrl" in exitPage.dataset && exitPage.dataset.exitByUrl.toLowerCase() === "true") {
                             urlObj = { "url": exitPageURI };
-                            this.dataset.wbExitscript = JSON.stringify(urlObj);
-                            this.classList.add("wb-exitscript");
+                            hrefElm.dataset.wbExitscript = JSON.stringify(urlObj);
+                            hrefElm.classList.add("wb-exitscript");
                         } else {
                             if (pagetitle === "") {
-                                pagetitle = encodeURIComponent(this.textContent);
+                                pagetitle = encodeURIComponent(hrefElm.textContent);
                             }
                             switch (true) {
                                 case (destURI.length > 0 && exitPageURI.length + destURI.length + 5 <= maxURILength):
                                     if (destURI.length > 0) {
                                         exitPageURI = exitPageURI + "?uri=" + destURI;
                                     }
-                                    // falls through
+                                // falls through
                                 case (pagetitle.length > 0 && exitPageURI + pagetitle.length + 11 <= maxURILength):
                                     if (pagetitle.length > 0) {
                                         exitPageURI = exitPageURI + "&pagetitle=" + pagetitle;
                                     }
                             }
-                            this.href = exitPageURI;
+                            hrefElm.href = exitPageURI;
                         }
                     } else if ("destination" in linkExcludes[lnkExclIdx] === true) {
-                        queryHash = this.href.substring(linkExcludes[lnkExclIdx].origin.length);
+                        queryHash = hrefElm.href.substring(linkExcludes[lnkExclIdx].origin.length);
                         if ("exitByUrl" in exitPage.dataset && exitPage.dataset.exitByUrl.toLowerCase() === "true") {
                             urlObj = { "url": linkExcludes[lnkExclIdx].destination + queryHash };
-                            this.dataset.wbExitscript = JSON.stringify(urlObj);
-                            this.classList.add("wb-exitscript");
+                            hrefElm.dataset.wbExitscript = JSON.stringify(urlObj);
+                            hrefElm.classList.add("wb-exitscript");
                         } else {
-                            this.href = linkExcludes[lnkExclIdx].destination + queryHash;
+                            hrefElm.href = linkExcludes[lnkExclIdx].destination + queryHash;
                         }
                     }
                 });
@@ -99,34 +99,34 @@ let inlineStyleText1, inlineStyleText2,
             }
 
             if (actionSelector !== "") {
-                $(elm).find(actionSelector).each(function updateExitAction() {
+                elm.querySelectorAll(actionSelector).forEach(function updateExitAction(actionElm) {
                     let queryHash, 
                         exitPageURI = exitPage.value, 
-                        currentURI = this.protocol + "//" + this.hostname + this.pathname, 
+                        currentURI = actionElm.protocol + "//" + actionElm.hostname + actionElm.pathname, 
                         lnkExclIdx = linkExcludeIndex(currentURI);
 
-                    this.method = "GET";
+                    actionElm.method = "GET";
                     if (lnkExclIdx === -1) {
-                        updateFormSubmit(this, "action", exitPageURI);
+                        updateFormSubmit(actionElm, "action", exitPageURI);
                     } else if ("destination" in linkExcludes[lnkExclIdx] === true) {
-                        queryHash = this.href.substring(linkExcludes[lnkExclIdx].origin.length);
-                        updateFormSubmit(this, "action", linkExcludes[lnkExclIdx].destination + queryHash);
+                        queryHash = actionElm.href.substring(linkExcludes[lnkExclIdx].origin.length);
+                        updateFormSubmit(actionElm, "action", linkExcludes[lnkExclIdx].destination + queryHash);
                     }
                 });
             }
 
             if (formActionSelector !== "") {
-                $(elm).find(formActionSelector).each(function updateExitForm() {
+                elm.querySelectorAll(formActionSelector).forEach(function updateExitForm(formActionElm) {
                     let queryHash, 
                         exitPageURI = exitPage.value, 
-                        currentURI = this.protocol + "//" + this.hostname + this.pathname, 
+                        currentURI = formActionElm.protocol + "//" + formActionElm.hostname + formActionElm.pathname, 
                         lnkExclIdx = linkExcludeIndex(currentURI);
 
                     if (lnkExclIdx === -1) {
-                        updateFormSubmit(this, "formaction", exitPageURI);
+                        updateFormSubmit(formActionElm, "formaction", exitPageURI);
                     } else if ("destination" in linkExcludes[lnkExclIdx] === true) {
-                        queryHash = this.href.substring(linkExcludes[lnkExclIdx].origin.length);
-                        updateFormSubmit(this, "formaction", linkExcludes[lnkExclIdx].destination + queryHash);
+                        queryHash = formActionElm.href.substring(linkExcludes[lnkExclIdx].origin.length);
+                        updateFormSubmit(formActionElm, "formaction", linkExcludes[lnkExclIdx].destination + queryHash);
                     }
                 });
             }
@@ -143,63 +143,77 @@ let inlineStyleText1, inlineStyleText2,
     }, 
     rootDomain = getDomain(window.location.origin + window.location.pathname), 
     defaultadjustLinks = function defaultadjustLinks(elm, isAjaxed, relExternalLnk) {
-        adjustLinks(elm, "a[href^='http']a:not([href^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript), area[href^='http']area:not([href^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", "form[action^='http']form:not([action^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", "input[formaction^='http']input:not([formaction^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript), button[formaction^='http']button:not([formaction^='" + rootDomain + "'], [formaction^='/'], [data-exit='false'], .wb-exitscript)", "");
+        adjustLinks(elm, "a[href^='http']:not([href^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript), area[href^='http']:not([href^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", "form[action^='http']:not([action^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", "input[formaction^='http']:not([formaction^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript), button[formaction^='http']:not([formaction^='" + rootDomain + "'], [formaction^='/'], [data-exit='false'], .wb-exitscript)", "");
         if ((relExternalLnk && relExternalLnk.dataset.origin !== "") && (relExternalLnk.value.toLowerCase() === "true" || isAjaxed === true)) {
-            adjustLinks(elm, "a[href^='/']a:not([data-exit='false'], .wb-exitscript), area[href^='/']area:not([data-exit='false'], .wb-exitscript)", "form[action^='/']form:not([data-exit='false'], .wb-exitscript)", "input[formaction^='/']input:not([data-exit='false'], .wb-exitscript), button[formaction^='/']button:not([data-exit='false'], .wb-exitscript)", relExternalLnk.dataset.origin);
+            adjustLinks(elm, "a[href^='/']:not([data-exit='false'], .wb-exitscript), area[href^='/']:not([data-exit='false'], .wb-exitscript)", "form[action^='/']:not([data-exit='false'], .wb-exitscript)", "input[formaction^='/']:not([data-exit='false'], .wb-exitscript), button[formaction^='/']:not([data-exit='false'], .wb-exitscript)", relExternalLnk.dataset.origin);
         }
     };
 
-//load link exclude JSON file
-if ("modLinkFile" in exitPage.dataset && exitPage.dataset.modLinkFile !== "") {
-    $.getJSON(exitPage.dataset.modLinkFile, function(data) {
-        linkExcludes = data;
-    });
-}
+//document.addEventListener("readystatechange", function(event) {
+//    if (event.target.readyState === "complete") {
 
-//Remove visited link highlighting from links to exit page
-if (exitPage !== null) {
-    inlineStyleText1 = "Not to be copied to Canada.ca";
-    inlineStyleText2 = "CSS for GitHub specific elements";
-    if (document.documentElement.lang === "fr") {
-        inlineStyleText1 = "Ne pas copier sur Canada.ca";
-        inlineStyleText2 = "CSS pour les éléments spécifiques à GitHub";
-    }
-    visitedLinkStyle.innerHTML = "/*\n*** " + inlineStyleText1 + " ***\n\n" + inlineStyleText2 + "\n*//\n\n a[href*='" + exitPage.value + "']:visited { color:inherit; }\n.btn-primary[href*='" + exitPage.value + "']:visited, .btn-success[href*='" + exitPage.value + "']:visited, .btn-info[href*='" + exitPage.value + "']:visited, .btn-danger[href*='" + exitPage.value + "']:visited { color: #ffffff; }\n.btn-default[href*='" + exitPage.value + "']:visited { color: #335075; }\n.btn-warning[href*='" + exitPage.value + "']:visited { color: #000000; }\n";
-    $("head").append(visitedLinkStyle);
-}
+        //load link exclude JSON file
+        if ("modLinkFile" in exitPage.dataset && exitPage.dataset.modLinkFile !== "") {
+            $.getJSON(exitPage.dataset.modLinkFile, function (data) {
+                linkExcludes = data;
+            });
+        }
+
+        //Remove visited link highlighting from links to exit page
+        if (exitPage !== null) {
+            inlineStyleText1 = "Not to be copied to Canada.ca";
+            inlineStyleText2 = "CSS for GitHub specific elements";
+            if (document.documentElement.lang === "fr") {
+                inlineStyleText1 = "Ne pas copier sur Canada.ca";
+                inlineStyleText2 = "CSS pour les éléments spécifiques à GitHub";
+            }
+            visitedLinkStyle.innerHTML = "/*\n*** " + inlineStyleText1 + " ***\n\n" + inlineStyleText2 + "\n*//\n\n a[href*='" + exitPage.value + "']:visited { color:inherit; }\n.btn-primary[href*='" + exitPage.value + "']:visited, .btn-success[href*='" + exitPage.value + "']:visited, .btn-info[href*='" + exitPage.value + "']:visited, .btn-danger[href*='" + exitPage.value + "']:visited { color: #ffffff; }\n.btn-default[href*='" + exitPage.value + "']:visited { color: #335075; }\n.btn-warning[href*='" + exitPage.value + "']:visited { color: #000000; }\n";
+            document.head.insertAdjacentHTML("beforeend", visitedLinkStyle);
+        }
+
+//    }
+//});
 
 // changes all external site links and forms to go to destination link
-$(document).on("wb-ready.wb", function () {
+document.addEventListener("wet-boew-ready", function() {
     defaultadjustLinks(this, false, relExternalLnk);
 });
 
 // changes all GCM Menu external site links and forms to go to destination link
-$(".gcweb-menu").on("wb-ready.gcweb-menu", function () {
-    adjustLinks(this, ".gcweb-menu a[href^='http']a:not([href^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript), .gcweb-menu area[href^='http']area:not([href^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", ".gcweb-menu form[action^='http']form:not([action^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", ".gcweb-menu input[formaction^='http']input:not([formaction^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript), .gcweb-menu button[formaction^='http']button:not([formaction^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", "");
-    if (relExternalLnk && relExternalLnk.value.toLowerCase() === "true" && relExternalLnk.dataset.origin !== "") {
-        adjustLinks(this, ".gcweb-menu a[href^='/']a:not([data-exit='false'], .wb-exitscript), .gcweb-menu area[href^='/']area:not([data-exit='false'], .wb-exitscript)", ".gcweb-menu form[action^='/']form:not([data-exit='false'], .wb-exitscript)", ".gcweb-menu input[formaction^='/']input:not([data-exit='false'], .wb-exitscript), .gcweb-menu button[formaction^='/']button:not([data-exit='false'], .wb-exitscript)", relExternalLnk.dataset.origin);
-    }
-});
+//document.addEventListener("readystatechange", function(event) {
+//    if (event.target.readyState === "complete") {
+        $(".gcweb-menu").on("wb-ready.gcweb-menu", function () {
+            adjustLinks(this, ".gcweb-menu a[href^='http']:not([href^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript), .gcweb-menu area[href^='http']:not([href^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", ".gcweb-menu form[action^='http']:not([action^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", ".gcweb-menu input[formaction^='http']:not([formaction^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript), .gcweb-menu button[formaction^='http']:not([formaction^='" + rootDomain + "'], [data-exit='false'], .wb-exitscript)", "");
+            if (relExternalLnk && relExternalLnk.value.toLowerCase() === "true" && relExternalLnk.dataset.origin !== "") {
+                adjustLinks(this, ".gcweb-menu a[href^='/']:not([data-exit='false'], .wb-exitscript), .gcweb-menu area[href^='/']:not([data-exit='false'], .wb-exitscript)", ".gcweb-menu form[action^='/']:not([data-exit='false'], .wb-exitscript)", ".gcweb-menu input[formaction^='/']:not([data-exit='false'], .wb-exitscript), .gcweb-menu button[formaction^='/']:not([data-exit='false'], .wb-exitscript)", relExternalLnk.dataset.origin);
+            }
+        });
+//    }
+//});
 
 // changes all AJAXed external site links and forms to go to destination link
-$("[data-ajax-after], [data-ajax-append], [data-ajax-before], [data-ajax-prepend], [data-ajax-replace]").on("wb-contentupdated", function () {
-    if (relExternalLnk && relExternalLnk.dataset.origin !== "") {
-        $(this).find("[icon^='/'], [poster^='/'], [src^='/'], [srcset^='/'], [data^='/']").each(function updateAjaxLinks() {
-            let elm = this, 
-                attrType = ["data", "icon", "poster", "src", "srcset"];
+//document.addEventListener("readystatechange", function(event) {
+//    if (event.target.readyState === "complete") {
+        $("[data-ajax-after], [data-ajax-append], [data-ajax-before], [data-ajax-prepend], [data-ajax-replace]").on("wb-contentupdated", function () {
+            if (relExternalLnk && relExternalLnk.dataset.origin !== "") {
+                this.querySelectorAll("[icon^='/'], [poster^='/'], [src^='/'], [srcset^='/'], [data^='/']").forEach(function updateAjaxLinks(ajaxElm) {
+                    let elm = ajaxElm, 
+                        attrType = ["data", "icon", "poster", "src", "srcset"];
 
-            attrType.forEach(function checkAttr (attrItem) {
-                let attrValue;
-    
-                if (elm.hasAttribute(attrItem) === true) {
-                    attrValue = elm.getAttribute(attrItem);
-                    if (attrValue.startsWith("/") === true) {
-                        elm.setAttribute(attrItem, relExternalLnk.dataset.origin + attrValue);
-                        return;
-                    }
-                }
-            }, elm)
+                    attrType.forEach(function checkAttr(attrItem) {
+                        let attrValue;
+
+                        if (elm.hasAttribute(attrItem) === true) {
+                            attrValue = elm.getAttribute(attrItem);
+                            if (attrValue.startsWith("/") === true) {
+                                elm.setAttribute(attrItem, relExternalLnk.dataset.origin + attrValue);
+                                return;
+                            }
+                        }
+                    }, elm)
+                });
+            }
+            defaultadjustLinks(this, true, relExternalLnk);
         });
-    }
-    defaultadjustLinks(this, true, relExternalLnk);
-});
+//    }
+//});
