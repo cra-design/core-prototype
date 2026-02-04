@@ -190,6 +190,14 @@ script: https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2
             } else {
                 document.getElementById(elmId).classList.add("wb-inv");
             }
+        }, 
+        getFilenameFromUrl = function getFilenameFromUrl(uri) {
+            const lastSlashIndex = uri.lastIndexOf("/");
+
+            if (lastSlashIndex !== -1) {
+                return uri.substring(lastSlashIndex + 1);
+            }
+            return "";
         };
 
     // submit button
@@ -197,14 +205,6 @@ script: https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2
         let htmlMain, targetURL, templateType, frontMatterType, 
             pageData = "", 
             convertObj = "", 
-            getFilenameFromUrl = function getFilenameFromUrl(uri) {
-                const lastSlashIndex = uri.lastIndexOf("/");
-
-                if (lastSlashIndex !== -1) {
-                    return uri.substring(lastSlashIndex + 1);
-                }
-                return "";
-            }, 
             loadTemplate = async function loadTemplate(url, data) {
                 // Fetch the external HTML file content
                 const response = await fetch(url);
@@ -414,31 +414,37 @@ script: https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2
     }, false);
 
     document.getElementById("githubsave").addEventListener("click", function (e) {
-        let saveTextAsFile = function saveTextAsFile() {
-            let textToWrite = document.getElementById("sourcetext").value, 
-                textFileAsBlob = new Blob([textToWrite], {
-                    type: "text/plain"
-                }), 
-                downloadLink = document.createElement("a");
+        let targetURL, fileName, 
+            saveTextAsFile = function saveTextAsFile() {
+                let textToWrite = document.getElementById("sourcetext").value, 
+                    textFileAsBlob = new Blob([textToWrite], {
+                        type: "text/plain"
+                    }), 
+                    downloadLink = document.createElement("a");
 
-            downloadLink.download = fileName;
-            downloadLink.innerHTML = "Download File";
+                downloadLink.download = fileName;
+                downloadLink.innerHTML = "Download File";
 
-            if (window.webkitURL != null) {
-                // Chrome allows the link to be clicked without being added to the document
-                downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-            } else {
-                // Firefox requires the link to be added to the document
-                downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-                downloadLink.onclick = destroyClickedElement;
-                downloadLink.style.display = "none";
-                document.body.appendChild(downloadLink);
-            }
-            downloadLink.click();
-        }, 
-        destroyClickedElement = function destroyClickedElement(event) {
-            document.body.removeChild(event.target);
-        };
+                if (window.webkitURL != null) {
+                    // Chrome allows the link to be clicked without being added to the document
+                    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+                } else {
+                    // Firefox requires the link to be added to the document
+                    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                    downloadLink.onclick = destroyClickedElement;
+                    downloadLink.style.display = "none";
+                    document.body.appendChild(downloadLink);
+                }
+                downloadLink.click();
+            }, 
+            destroyClickedElement = function destroyClickedElement(event) {
+                document.body.removeChild(event.target);
+            };
+
+        if (document.getElementById("uri").value !== "" && URL.canParse(document.getElementById("uri").value) === true) {
+            targetURL = new URL(document.getElementById("uri").value);
+            fileName = getFilenameFromUrl(targetURL.pathname);
+        }
 
         if (fileName !== "" && resultArea.value !== "") {
             saveTextAsFile();
